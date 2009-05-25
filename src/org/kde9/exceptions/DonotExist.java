@@ -1,8 +1,8 @@
 package org.kde9.exceptions;
 
-public class MemAlreadyExist
+public class DonotExist 
 extends Exception {
-	public MemAlreadyExist(String str) {
+	public DonotExist(String str) {
 		super(str);
 	}
 }
