@@ -12,7 +12,7 @@ implements Constants {
 	HashMap<String, Integer> registers;
 	
 	public RegisterHeap() {
-		registers = new LinkedHashMap<String, Integer>();
+		registers = new HashMap<String, Integer>();
 	}
 	
 	public void addReg(String name) 
