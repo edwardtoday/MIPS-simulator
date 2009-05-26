@@ -68,7 +68,7 @@ implements Constants {
 			RegVal2 = rs.read(String.valueOf(RegAddr2));
 		}
 		if(storePC)
-			rs.write("13", PC);
+			rs.write(String.valueOf(RA_Reg), PC);
 		if(RegAddr1 == 9)
 			RegVal1 = PC;
 	}

@@ -27,6 +27,13 @@ public class Control {
 	boolean needStop;  //是否需要暂停，'1'为是
 	boolean islwsw;
 	
+	private static int cutInt(int ins, int a, int b) {
+		int aa = (int) Math.pow(2, a);
+		int bb = (int) Math.pow(2, b+1);
+		int cc = (int) Math.pow(2, b+1-a);
+		return ins/aa - ins/bb*cc;
+	}
+	
 	public void start() {
 		signal = SignalPool.getCurrentSignals();
 		next = SignalPool.getNextSignals();
@@ -40,6 +47,7 @@ public class Control {
 	}
 	
 	private void run() {
+		
 	}
 	
 	private void set() {
@@ -61,6 +69,6 @@ public class Control {
 	}
 	
 	public static void main(String args[]) {
-		
+		System.out.println(Control.cutInt(0x8A1F, 0, 3));
 	}
 }
