@@ -1,0 +1,49 @@
+package org.kde9.register;
+
+import org.kde9.cpu.SignalPool;
+import org.kde9.cpu.Signals;
+import org.kde9.util.Constants;
+
+public class IF2IDReg
+implements Constants {
+	Signals signal;
+	Signals next;
+	
+	// in
+	int insIn;
+	int pcIn;
+	boolean reset;
+	
+	// out
+	int insOut;
+	int pcOut;
+	
+	public void start(boolean r) {
+		signal = SignalPool.getCurrentSignals();
+		next = SignalPool.getNextSignals();
+		check(r);
+		run();
+		set();
+	}
+	
+	public void check(boolean r) {
+		insIn = signal.getIns_Mem();
+		pcIn = signal.getPC_PC();
+		reset = r;
+	}
+	
+	private void run() {
+		if(reset == true) {
+			insOut = NOP_INS;
+			pcOut = 0;
+		} else {
+			insOut = insIn;
+			pcOut = pcIn;
+		}
+	}
+	
+	private void set() {
+		next.setPCOut_IF(pcOut);
+		next.setInsOut_IF(insOut);
+	}
+}
