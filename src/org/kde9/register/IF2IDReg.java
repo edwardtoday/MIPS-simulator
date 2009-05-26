@@ -46,4 +46,12 @@ implements Constants {
 		next.setPCOut_IF(pcOut);
 		next.setInsOut_IF(insOut);
 	}
+	
+	public static void main(String args[]) {
+		SignalPool.a.setIns_Mem(12344);
+		SignalPool.a.setPC_PC(4321);
+		new IF2IDReg().start(true);
+		System.out.println(SignalPool.b.getPCOut_IF());
+		System.out.println(SignalPool.b.getInsOut_IF());
+	}
 }

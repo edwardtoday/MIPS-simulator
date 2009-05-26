@@ -40,4 +40,16 @@ public class PCUnit {
 		System.out.println(lastPc);
 		next.setPC_PC(pc);
 	}
+	
+	public static void main(String args[]) {
+		PCUnit p = new PCUnit();
+		SignalPool.a.setLastPC_CPC(22);
+		SignalPool.b.setLastPC_CPC(42);
+		SignalPool.b.setHold_Stop(true);
+		p.start(false);
+		System.out.println(SignalPool.b.getPC_PC());
+		SignalPool.next();
+		p.start(false);
+		System.out.println(SignalPool.a.getPC_PC());
+	}
 }

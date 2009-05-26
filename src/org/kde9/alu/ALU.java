@@ -2,6 +2,7 @@ package org.kde9.alu;
 
 import org.kde9.cpu.SignalPool;
 import org.kde9.cpu.Signals;
+import org.kde9.pcunit.PCUnit;
 
 public class ALU {
 	Signals signal;
@@ -65,5 +66,17 @@ public class ALU {
 	private void set() {
 		next.setRet_ALU(ret);
 		next.setT_ALU(t);
+	}
+	
+	public static void main(String args[]) {
+		ALU p = new ALU();
+		SignalPool.a.setA_CALU1(22);
+		SignalPool.a.setB_CALU2(42);
+		SignalPool.a.setALUCtrlOut_ID(3);
+		p.start();
+		System.out.println(SignalPool.b.getRet_ALU());
+		SignalPool.next();
+		p.start();
+		System.out.println(SignalPool.a.getRet_ALU());
 	}
 }

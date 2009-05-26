@@ -1,8 +1,8 @@
 package org.kde9.cpu;
 
 public class SignalPool {
-	static Signals a = new Signals();
-	static Signals b = new Signals();
+	public static Signals a = new Signals();
+	public static Signals b = new Signals();
 	static boolean flag = true;
 	
 	public static Signals getCurrentSignals() {
