@@ -2,29 +2,35 @@ package org.kde9.memory;
 
 import org.kde9.cpu.SignalPool;
 import org.kde9.cpu.Signals;
+import org.kde9.exceptions.AlreadyExist;
+import org.kde9.exceptions.DonotExist;
 
 public class MemInterface {
 	Signals signal;
 	Signals next;
 	
+	Memory mem;
+	String DATA = "data";
+	int addr;
+	
 	// in
 	int pc;
 	int memAddr;
-	int we;
+	boolean we;
 	int memWVal;
 	boolean islwsw;
 	
 	// out
 	int ins;
-	int insAddr1;
-	int insAddr2;
 	
-	// inout
-	int insVal1;
-	int insVal2;
+	public MemInterface() 
+	throws AlreadyExist {
+		mem = new Memory();
+		mem.addMem(DATA);
+	}
 	
-	
-	public void start() {
+	public void start() 
+	throws DonotExist {
 		signal = SignalPool.getCurrentSignals();
 		next = SignalPool.getNextSignals();
 		check();
@@ -33,12 +39,23 @@ public class MemInterface {
 	}
 	
 	public void check() {
+		pc = signal.getPC_PC();
+		memAddr = signal.getALUValOut_EXE();
+		we = signal.isMemWEOut_EXE();
+		memWVal = signal.getRegValOut2_EXE();
+		islwsw = signal.isIslwswOut_EXE();
 	}
 	
-	private void run() {
-
+	private void run() 
+	throws DonotExist {
+		if(we)
+			mem.write(DATA, memAddr, memWVal);
+		if(!islwsw)
+			addr = pc;
+		ins = mem.read(DATA, addr);
 	}
 	
 	private void set() {
+		next.setIns_Mem(ins);
 	}
 }

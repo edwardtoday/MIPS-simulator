@@ -1,76 +1,84 @@
 package org.kde9.register;
 
-import java.util.HashMap;
-
+import org.kde9.cpu.SignalPool;
+import org.kde9.cpu.Signals;
 import org.kde9.exceptions.AlreadyExist;
 import org.kde9.exceptions.DonotExist;
 import org.kde9.util.Constants;
 
-public class RegisterHeap 
+public class RegisterHeap
 implements Constants {
-	HashMap<String, Integer> registers;
+	Signals signal;
+	Signals next;
 	
-	public RegisterHeap() {
-		registers = new HashMap<String, Integer>();
-	}
+	Registers rs;
 	
-	public void addReg(String name) 
+	// in
+	int RegAddr1;
+	int RegAddr2;
+	boolean WE;
+	int RegWAddr;
+	int RegWVal;
+	boolean storePC;
+	int PC;
+	boolean reset;
+	
+	// out
+	int RegVal1;
+	int RegVal2;
+	
+	public RegisterHeap() 
 	throws AlreadyExist {
-		if(registers.containsKey(name))
-			throw new AlreadyExist("register '" +
-					name +
-					"' you tried to add has already exist!");
-		else
-			registers.put(name, REGISTER_INITIAL_VALUE);
+		rs = new Registers();
+		for(int i = 0; i < 15; i++)
+			rs.addReg(String.valueOf(i));
 	}
 	
-	public void removeReg(String name) {
-		registers.remove(name);
+	public void start(boolean r) 
+	throws DonotExist {
+		signal = SignalPool.getCurrentSignals();
+		next = SignalPool.getNextSignals();
+		check(r);
+		run();
+		set();
 	}
 	
-	public void clear() {
-		for(String name : registers.keySet()) {
-			registers.put(name, REGISTER_INITIAL_VALUE);
+	public void check(boolean r) {
+		reset = r;
+		RegAddr1 = signal.getRegAddr1_Ctrl();
+		RegAddr2 = signal.getRegAddr2_Ctrl();
+		WE = signal.isRegWEOut_MEM();
+		RegWAddr = signal.getRegWAddrOut_MEM();
+		RegWVal = signal.getRegWVal_CReg();
+		storePC = signal.isStorePC_Ctrl();
+		PC = signal.getPCOut_IF();
+	}
+	
+	private void run() 
+	throws DonotExist {
+		if(reset) {
+			rs.clear();
+			RegVal1 = REGISTER_INITIAL_VALUE;
+			RegVal2 = REGISTER_INITIAL_VALUE;
+		} else { 
+			if(WE) {
+				rs.write(String.valueOf(RegWAddr), RegWVal);
+			}
+			RegVal1 = rs.read(String.valueOf(RegAddr1));
+			RegVal2 = rs.read(String.valueOf(RegAddr2));
 		}
+		if(storePC)
+			rs.write("13", PC);
+		if(RegAddr1 == 9)
+			RegVal1 = PC;
 	}
 	
-	public void write(String name, int value) 
-	throws DonotExist {
-		Integer r = registers.get(name);
-		if(r == null)
-			throw new DonotExist("register '" +
-					name +
-					"' you wanted to write does not exist!");
-		else
-			registers.put(name, value);
-	}
-	
-	public int read(String name) 
-	throws DonotExist {
-		Integer r = registers.get(name);
-		if(r == null)
-			throw new DonotExist("register '" +
-					name +
-					"' you wanted to read does not exist!");
-		else
-			return r;
+	private void set() {
+		next.setRegVal1_Reg(RegVal1);
+		next.setRegVal2_Reg(RegVal2);
 	}
 	
 	public static void main(String args[]) {
-		RegisterHeap r = new RegisterHeap();
-		try {
-			r.addReg("pc");
-			System.out.println(r.read("pc"));
-			r.write("pc", 333);
-			System.out.println(r.read("pc"));
-			r.clear();
-			System.out.println(r.read("pc"));
-		} catch (DonotExist e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (AlreadyExist e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
 	}
 }
