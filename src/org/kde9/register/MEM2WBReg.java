@@ -48,10 +48,14 @@ public class MEM2WBReg {
 	
 	private void run() {
 		if(reset) {
+			ALUValOut = 0;
+			TOut = false;
 			RegWAddrOut = 0;
 			RegWEOut = false;
 			CChoRegWValOut = 0;
 		} else {
+			ALUValOut = ALUValIn;
+			TOut = TIn;
 			RegWAddrOut = RegWAddrIn;
 			RegWEOut = RegWEIn;
 			CChoRegWValOut =CChoRegWValIn;

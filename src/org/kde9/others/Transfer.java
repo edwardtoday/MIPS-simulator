@@ -1,4 +1,4 @@
-package org.ked9.others;
+package org.kde9.others;
 
 import org.kde9.cpu.SignalPool;
 import org.kde9.cpu.Signals;

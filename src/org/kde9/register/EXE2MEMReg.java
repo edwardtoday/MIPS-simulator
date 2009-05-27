@@ -57,14 +57,18 @@ public class EXE2MEMReg {
 	
 	private void run() {
 		if(reset) {
+			ALUValOut = 0;
 			RegValOut2 = 0;
+			TOut = false;
 			RegWAddrOut = 0;
 			MemWEOut = false;
 			RegWEOut = false;
 			CChoRegWValOut = 0;
 			islwswOut = false;
 		} else {
+			ALUValOut = ALUValIn;
 			RegValOut2 = RegValIn2;
+			TOut = TIn;
 			RegWAddrOut = RegWAddrIn;
 			MemWEOut = MemWEIn;
 			RegWEOut = RegWEIn;
