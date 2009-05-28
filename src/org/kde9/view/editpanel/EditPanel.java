@@ -33,6 +33,8 @@ implements ActionListener, KeyListener, Constants {
 	JRadioButton backward;
 	JButton button1;
 	JButton button2;
+	JButton button3;
+	JButton button4;
 	JTextArea editPane;
 	JScrollPane scroll;
 	JTextArea line;
@@ -58,6 +60,14 @@ implements ActionListener, KeyListener, Constants {
 		button2.setPreferredSize(new Dimension(17,12));
 		button2.putClientProperty("Quaqua.Button.style", "toolBarTab");
 		button2.addActionListener(this);
+		button3 = new JButton(new ImageIcon("./img/circle.png"));
+		button3.setPreferredSize(new Dimension(17,12));
+		button3.putClientProperty("Quaqua.Button.style", "toolBarTab");
+		button3.addActionListener(this);
+		button4 = new JButton(new ImageIcon("./img/one.png"));
+		button4.setPreferredSize(new Dimension(17,12));
+		button4.putClientProperty("Quaqua.Button.style", "toolBarTab");
+		button4.addActionListener(this);
 		edit = new JToggleButton("Edit");
 		edit.addActionListener(this);
 		edit.setSelected(true);
@@ -65,6 +75,8 @@ implements ActionListener, KeyListener, Constants {
 		innerPanel.add("Center", edit);
 		inPanel.add(button1);
 		inPanel.add(button2);
+		inPanel.add(button3);
+		inPanel.add(button4);
 		inPanel.setOpaque(true);
 		inPanel.setBackground(Color.WHITE);
 		innerPanel.add("North", inPanel);
