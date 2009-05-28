@@ -21,6 +21,5 @@ extends JTabbedPane {
 		add("Register", reg);
 		add("Memory", mem);
 		add("Cache",cache);
-
 	}
 }

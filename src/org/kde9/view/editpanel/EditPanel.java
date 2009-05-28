@@ -51,11 +51,11 @@ implements ActionListener, KeyListener, Constants {
 		flow.setAlignment(FlowLayout.LEFT);
 		JPanel inPanel = new JPanel(flow);
 		button1 = new JButton(new ImageIcon("./img/add2.png"));
-		button1.setPreferredSize(new Dimension(12,12));
+		button1.setPreferredSize(new Dimension(17,12));
 		button1.putClientProperty("Quaqua.Button.style", "toolBarTab");
 		button1.addActionListener(this);
 		button2 = new JButton(new ImageIcon("./img/sub2.png"));
-		button2.setPreferredSize(new Dimension(12,12));
+		button2.setPreferredSize(new Dimension(17,12));
 		button2.putClientProperty("Quaqua.Button.style", "toolBarTab");
 		button2.addActionListener(this);
 		edit = new JToggleButton("Edit");
