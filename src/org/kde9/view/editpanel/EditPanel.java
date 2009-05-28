@@ -38,6 +38,7 @@ implements ActionListener, KeyListener, Constants {
 	JTextArea line;
 	
 	boolean editable = true;
+	boolean forw = true;
 	
 	int rowCount = 1;
 	String[] items = {"IF", "ID", "EXE", "MEM", "WB"};
@@ -52,9 +53,11 @@ implements ActionListener, KeyListener, Constants {
 		button1 = new JButton(new ImageIcon("./img/add2.png"));
 		button1.setPreferredSize(new Dimension(12,12));
 		button1.putClientProperty("Quaqua.Button.style", "toolBarTab");
+		button1.addActionListener(this);
 		button2 = new JButton(new ImageIcon("./img/sub2.png"));
 		button2.setPreferredSize(new Dimension(12,12));
 		button2.putClientProperty("Quaqua.Button.style", "toolBarTab");
+		button2.addActionListener(this);
 		edit = new JToggleButton("Edit");
 		edit.addActionListener(this);
 		edit.setSelected(true);
@@ -84,10 +87,11 @@ implements ActionListener, KeyListener, Constants {
 					int s = w/5;
 					int c = getRowHeight();
 					g.setColor(new Color(0, 0, 255, 40));
+					g.setFont(new Font("", 0, 10));
 					for (int i = 0; i < 5; i++)
 						for(int j = 0; j < h; j++) {
 							g.drawRoundRect(i*s+1, j*c+1, w/5-2, c-2, 10, 15);
-							g.drawString(items[i], i*s+7, j*c+15);
+							g.drawString(items[i], i*s+6, j*c+c-2);
 						}
 				}
 			}
@@ -104,7 +108,10 @@ implements ActionListener, KeyListener, Constants {
 		
 		JPanel upPanel = new JPanel(new GridLayout(0, 2));
 		forward = new JRadioButton("Forward");
+		forward.addActionListener(this);
+		forward.setSelected(true);
 		backward = new JRadioButton("Backward");
+		backward.addActionListener(this);
 		upPanel.add(forward);
 		upPanel.add(backward);
 		add("North", upPanel);
@@ -126,6 +133,14 @@ implements ActionListener, KeyListener, Constants {
 				editable = false;
 				editPane.setEnabled(false);
 			}
+		} else if(e.getSource() == forward) {
+			forw = true;
+			forward.setSelected(true);
+			backward.setSelected(false);
+		} else if(e.getSource() == backward) {
+			forw = false;
+			forward.setSelected(false);
+			backward.setSelected(true);
 		}
 	}
 
