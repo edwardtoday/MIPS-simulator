@@ -7,6 +7,8 @@ public interface Constants {
 	
 	static int NOP_INS = 0x8000;
 	
+	static String NEWLINE = System.getProperty("line.separator");
+	
 	// RegisterHeap
 	static int RA_Reg = 14 ;    //RA
 	static int T_Reg = 15 ;     //T

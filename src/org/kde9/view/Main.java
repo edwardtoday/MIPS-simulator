@@ -4,11 +4,16 @@ import java.awt.BorderLayout;
 import java.security.AccessControlException;
 import java.util.Arrays;
 
+import javax.swing.BorderFactory;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JMenuBar;
+import javax.swing.JPanel;
 import javax.swing.UIManager;
 
+import org.kde9.view.detailpanel.DetailPanel;
 import org.kde9.view.editpanel.EditPanel;
+import org.kde9.view.menubar.Menubar;
 
 import ch.randelshofer.quaqua.QuaquaManager;
 import ch.randelshofer.quaqua.util.Methods;
@@ -16,16 +21,25 @@ import ch.randelshofer.quaqua.util.Methods;
 public class Main 
 extends JFrame {
 	private EditPanel edit;
+	private DetailPanel detail;
+	private JMenuBar menu;
 	
 	public Main() {
 		edit = new EditPanel();
+		detail = new DetailPanel();
+		menu = new Menubar();
 		
-		setLayout(new BorderLayout());
+		JPanel panel = new JPanel();
+		panel.setLayout(new BorderLayout());
 		
-		add("West", edit);
+		panel.add("West", edit);
+		panel.add("Center", detail);
+		panel.setBorder(BorderFactory.createEmptyBorder(0, 4, 4, 4));
 		
+		setContentPane(panel);
+		setJMenuBar(menu);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(600, 500);
+		setSize(800, 500);
 		setVisible(true);
 	}
 	
