@@ -12,8 +12,8 @@ extends JTabbedPane {
 	
 	public DetailPanel() {
 		super();//JTabbedPane.LEFT);
-		reg = new JPanel();
-		mem = new JPanel();
+		reg = new Reg();
+		mem = new Mem();
 		cache = new JPanel();
 		summary = new JPanel();
 				

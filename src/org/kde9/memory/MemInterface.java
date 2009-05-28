@@ -2,6 +2,7 @@ package org.kde9.memory;
 
 import org.kde9.cpu.SignalPool;
 import org.kde9.cpu.Signals;
+import org.kde9.cpu.UnitPool;
 import org.kde9.exceptions.AlreadyExist;
 import org.kde9.exceptions.DonotExist;
 
@@ -23,10 +24,14 @@ public class MemInterface {
 	// out
 	int ins;
 	
-	public MemInterface() 
-	throws AlreadyExist {
-		mem = new Memory();
-		mem.addMem(DATA);
+	public MemInterface() {
+		mem = UnitPool.getMemory();
+		try {
+			mem.addMem(DATA);
+		} catch (AlreadyExist e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public void start() 
