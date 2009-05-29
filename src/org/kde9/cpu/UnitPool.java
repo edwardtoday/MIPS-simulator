@@ -3,6 +3,7 @@ package org.kde9.cpu;
 import org.kde9.alu.ALU;
 import org.kde9.control.Control;
 import org.kde9.exceptions.AlreadyExist;
+import org.kde9.memory.Cache;
 import org.kde9.memory.MemInterface;
 import org.kde9.memory.Memory;
 import org.kde9.others.ChoALU1;
@@ -15,6 +16,7 @@ import org.kde9.others.TransferChoPCVal;
 
 public class UnitPool {
 	static Memory memory = new Memory();
+	static Cache cache = new Cache();
 	static MemInterface memInterface = new MemInterface();
 	static ALU alu = new ALU();
 	static Control control = new Control();
@@ -29,6 +31,9 @@ public class UnitPool {
 	
 	public static Memory getMemory() {
 		return memory;
+	}	
+	public static Cache getCache() {
+		return cache;
 	}
 	public static MemInterface getMemInterface() {
 		return memInterface;
