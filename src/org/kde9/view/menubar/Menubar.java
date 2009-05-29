@@ -12,19 +12,33 @@ public class Menubar
 extends JMenuBar 
 implements ActionListener {
 	JMenu file;
+	JMenu run;
+	JMenu help;
 	
 	JMenuItem newFile;
 	JMenuItem importFile;
 	JMenuItem exportFile;
 	JMenuItem quit;
 	
+	JMenuItem runOneStep;
+	JMenuItem runAll;
+	
+	JMenuItem about;
+	
 	public Menubar() {
-		file = new JMenu("file");
+		file = new JMenu("File");
+		run = new JMenu("Run");
+		help = new JMenu("Help");
 		
 		newFile = new JMenuItem("New...");
 		importFile = new JMenuItem("Import");
 		exportFile = new JMenuItem("Export");
 		quit = new JMenuItem("Quit");
+		
+		runOneStep = new JMenuItem("Run One Step");
+		runAll = new JMenuItem("Run");
+		
+		about = new JMenuItem("About");
 		
 		add(file);	
 		file.add(newFile);
@@ -34,10 +48,22 @@ implements ActionListener {
 		file.addSeparator();
 		file.add(quit);
 		
+		add(run);
+		run.add(runOneStep);
+		run.add(runAll);
+		
+		add(help);
+		help.add(about);
+		
 		newFile.addActionListener(this);
 		importFile.addActionListener(this);
 		exportFile.addActionListener(this);
 		quit.addActionListener(this);
+		
+		runOneStep.addActionListener(this);
+		runAll.addActionListener(this);
+		
+		about.addActionListener(this);
 	}
 
 	public void actionPerformed(ActionEvent e) {
@@ -50,6 +76,12 @@ implements ActionListener {
 			System.out.println("export a new file!");
 		}else if(e.getSource() == quit) {
 			System.exit(0);
+		}else if(e.getSource() == runOneStep) {
+			System.out.println("run ont step!");
+		}else if(e.getSource() == runAll) {
+			System.out.println("run All!");
+		}else if(e.getSource() == about) {
+			System.out.println("about!!");
 		}
 	}
 }

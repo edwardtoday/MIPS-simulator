@@ -28,13 +28,14 @@ extends JFrame {
 	private JMenuBar menu;
 	
 	public Main() {
+		super("what's this?");
+		
 		edit = new EditPanel();
 		detail = new DetailPanel();
 		menu = new Menubar();
 		
 		JPanel panel = new JPanel();
 		panel.setLayout(new BorderLayout());
-		
 		panel.add("West", edit);
 		panel.add("Center", detail);
 		panel.setBorder(BorderFactory.createEmptyBorder(0, 4, 4, 4));
