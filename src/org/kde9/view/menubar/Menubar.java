@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu.Separator;
 
 public class Menubar
@@ -69,6 +70,12 @@ implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		if(e.getSource() == newFile) {
+//			String[] options = { "OK", "Cancel", "NO" };
+//			int result=JOptionPane.showOptionDialog(null, "Do you want to save the file existed?", 
+//					"CA-Simulator", 
+//					JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
+//					  null, options, options[0]);
+			
 			System.out.println("a new file added!");
 		}else if(e.getSource() == importFile) {
 			System.out.println("import a new file!");
