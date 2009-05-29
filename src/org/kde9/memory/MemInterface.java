@@ -5,13 +5,14 @@ import org.kde9.cpu.Signals;
 import org.kde9.cpu.UnitPool;
 import org.kde9.exceptions.AlreadyExist;
 import org.kde9.exceptions.DonotExist;
+import org.kde9.util.Constants;
 
-public class MemInterface {
+public class MemInterface
+implements Constants {
 	Signals signal;
 	Signals next;
 	
 	Memory mem;
-	String DATA = "data";
 	int addr;
 	
 	// in

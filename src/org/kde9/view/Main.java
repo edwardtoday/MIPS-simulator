@@ -11,6 +11,8 @@ import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 
+import org.kde9.cpu.UnitPool;
+import org.kde9.exceptions.DonotExist;
 import org.kde9.view.detailpanel.DetailPanel;
 import org.kde9.view.editpanel.EditPanel;
 import org.kde9.view.menubar.Menubar;
@@ -39,7 +41,7 @@ extends JFrame {
 		setContentPane(panel);
 		setJMenuBar(menu);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(800, 500);
+		setSize(1000, 600);
 		setVisible(true);
 	}
 	

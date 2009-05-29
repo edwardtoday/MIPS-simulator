@@ -9,6 +9,8 @@ public interface Constants {
 	
 	static String NEWLINE = System.getProperty("line.separator");
 	
+	static String DATA = "data";
+	
 	// RegisterHeap
 	static int RA_Reg = 14 ;    //RA
 	static int T_Reg = 15 ;     //T
