@@ -14,6 +14,7 @@ import java.awt.event.MouseListener;
 import java.util.Vector;
 
 import javax.swing.BorderFactory;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -40,7 +41,8 @@ import org.kde9.util.Functions;
 
 public class Mem 
 extends JPanel 
-implements ActionListener, KeyListener, MouseListener, TableModelListener, 
+implements ActionListener, KeyListener, ListSelectionListener,
+		MouseListener, TableModelListener, 
 		Constants {
 	Memory mem = UnitPool.getMemory();
 	
@@ -52,9 +54,13 @@ implements ActionListener, KeyListener, MouseListener, TableModelListener,
 	JRadioButton keepMem;
 	JTable table;
 	JScrollPane pane;
+	JList read;
+	JList write;
 	JLabel detail;
 	JLabel inputLabel;
 	JTextField input;
+	DefaultListModel d1;
+	DefaultListModel d2;
 	
 	boolean connectCache = false;
 	boolean keep = false;
@@ -93,7 +99,6 @@ implements ActionListener, KeyListener, MouseListener, TableModelListener,
 				}
 			}
 		};
-		table.setBorder(BorderFactory.createEtchedBorder());
 		table.setCellSelectionEnabled(true);
 		table.setRowHeight(20);
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -116,10 +121,27 @@ implements ActionListener, KeyListener, MouseListener, TableModelListener,
 		table.addMouseListener(this);
 		table.getModel().addTableModelListener(this);
 		pane = new JScrollPane(table);
+		pane.setBorder(BorderFactory.createEtchedBorder());
 		detail = new JLabel(" ");
+		read = new JList();
+		read.setPreferredSize(new Dimension(80, 100));
+		read.setBorder(BorderFactory.createEtchedBorder());
+		read.setEnabled(false);
+		d1 = new DefaultListModel();
+		read.setModel(d1);
+		read.addListSelectionListener(this);
+		write = new JList();
+		write.setPreferredSize(new Dimension(80, 100));
+		write.setBorder(BorderFactory.createEtchedBorder());
+		write.setEnabled(false);
+		write.addListSelectionListener(this);
+		d2 = new DefaultListModel();
+		write.setModel(d2);
 		JPanel center = new JPanel(new BorderLayout());
 		center.add("Center", pane);
 		center.add("South", detail);
+		center.add("West", read);
+		center.add("East", write);
 		
 		JPanel down = new JPanel();
 		clear = new JButton("Clear Memory");
@@ -136,8 +158,23 @@ implements ActionListener, KeyListener, MouseListener, TableModelListener,
 		add("North", up);
 		add("Center", center);
 		add("South", down);
+		
+		updateList();
 	}
 
+	public void updateList() {
+		d1.removeAllElements();
+		Vector<Integer> r = UnitPool.getMemory().getRead();
+		for(int addr : r)
+			d1.add(0, Integer.toHexString(addr));
+		d1.add(0, "最近读取地址");
+		d2.removeAllElements();
+		Vector<Integer> w = UnitPool.getMemory().getWrite();
+		for(int addr : w)
+			d2.add(0, Integer.toHexString(addr));
+		d2.add(0, "最近写入地址");
+	}
+	
 	public void update(int addr) {
 		if(keep) {
 			input.setText(String.valueOf(addr));
@@ -187,7 +224,7 @@ implements ActionListener, KeyListener, MouseListener, TableModelListener,
 							this.j = i;
 							this.i = j+1;
 						}
-						int value = UnitPool.getMemory().read(DATA, bound[0]+i*8+j);
+						int value = UnitPool.getMemory().read(DATA, bound[0]+i*8+j, false);
 						row.add(Integer.toHexString(value));
 					}
 					model.addRow(row);
@@ -227,7 +264,7 @@ implements ActionListener, KeyListener, MouseListener, TableModelListener,
 		int addr = bound[0] + row*8 + col - 1;
 		int value = 0;
 		try {
-			value = UnitPool.getMemory().read(DATA, addr);
+			value = UnitPool.getMemory().read(DATA, addr, false);
 		} catch (DonotExist e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -274,7 +311,7 @@ implements ActionListener, KeyListener, MouseListener, TableModelListener,
 			} catch (NumberFormatException ex) {
 				int value = 0;
 				try {
-					value = UnitPool.getMemory().read(DATA, addr);
+					value = UnitPool.getMemory().read(DATA, addr, false);
 				} catch (DonotExist e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -284,6 +321,22 @@ implements ActionListener, KeyListener, MouseListener, TableModelListener,
 				valueChanfed = true;
 			}
 			mousePressed(null);
+			updateList();
+		}
+	}
+
+	public void valueChanged(ListSelectionEvent e) {
+		// TODO Auto-generated method stub
+		if((e.getSource() == read && read.getSelectedIndex() > 0) ||
+				(e.getSource() == write && write.getSelectedIndex() > 0)) {
+			String addr;
+			if(e.getSource() == read)
+				addr = (String) d1.getElementAt(read.getSelectedIndex());
+			else
+				addr = (String) d2.getElementAt(write.getSelectedIndex());
+			input.setText("0x" + addr);
+			input.dispatchEvent(new KeyEvent(input, KeyEvent.KEY_RELEASED,
+					System.currentTimeMillis(), 0, KeyEvent.VK_ENTER, 'c'));
 		}
 	}
 }

@@ -3,6 +3,7 @@ package org.kde9.memory;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Set;
+import java.util.Vector;
 
 import org.kde9.exceptions.AlreadyExist;
 import org.kde9.exceptions.DonotExist;
@@ -17,11 +18,36 @@ implements Constants{
 	String conflictMemName;
 	int conflictAddr;
 	
+	Vector<Integer> write;
+	Vector<Integer> read;
+	
 	public Memory() {
+		write = new Vector<Integer>();
+		read = new Vector<Integer>();
 		memorys = new HashMap<String, HashMap<Integer,Integer>>();
 		locks = new LinkedHashMap<String, Integer>();
 	}
 	
+	public void addWrite(int addr) {
+		write.add(addr);
+		if(write.size() > MEM_HIS_COUNT)
+			write.remove(0);
+	}
+	
+	public void addRead(int addr) {
+		read.add(addr);
+		if(read.size() > MEM_HIS_COUNT)
+			read.remove(0);
+	}
+	
+	public Vector<Integer> getWrite() {
+		return write;
+	}
+
+	public Vector<Integer> getRead() {
+		return read;
+	}
+
 	public void addMem(String name) 
 	throws AlreadyExist {
 		if(memorys.containsKey(name)) {
@@ -110,6 +136,8 @@ implements Constants{
 		} else {
 			mem.clear();
 		}
+		read.clear();
+		write.clear();
 	}
 	
 	public void resetMem(String name) 
@@ -137,6 +165,7 @@ implements Constants{
 		} else if(locks.get(memName) == 0) {
 			mem.put(addr, value);
 			conflict = false;
+			addWrite(addr);
 		} else {
 			System.err.println("Waining: Memory '" +
 					memName +
@@ -149,7 +178,7 @@ implements Constants{
 		}
 	}
 	
-	public int read(String memName, int addr)
+	public int read(String memName, int addr, boolean log)
 	throws DonotExist {
 		HashMap<Integer, Integer> mem = memorys.get(memName);
 		if(mem == null) {
@@ -159,6 +188,8 @@ implements Constants{
 		} else if(locks.get(memName) == 0) {
 			Integer value = mem.get(addr);
 			conflict = false;
+			if(log)
+				addRead(addr);
 			if(value == null)
 				return MEM_INITIAL_VALUE;
 			else
@@ -203,27 +234,27 @@ implements Constants{
 		return conflictAddr;
 	}
 	
-	public static void main(String args[]) {
-		Memory m = new Memory();
-		System.out.println(m.getExistMemName());
-		try {
-			m.addMem("data");
-			System.out.println(m.getExistMemName());
-			m.require("data");
-			m.write("data", 0x10, 22);
-			System.out.println(m.read("data", 0x10));
-			m.release("data");
-			System.out.println(m.read("data", 0x10));
-			System.out.println("Conflict: " + m.getConflictMemName() + " " +
-					m.getConflictAddr());
-			m.clearMem("data");
-			System.out.println(m.read("data", 0x10));
-		} catch (AlreadyExist e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (DonotExist e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+//	public static void main(String args[]) {
+//		Memory m = new Memory();
+//		System.out.println(m.getExistMemName());
+//		try {
+//			m.addMem("data");
+//			System.out.println(m.getExistMemName());
+//			m.require("data");
+//			m.write("data", 0x10, 22);
+//			System.out.println(m.read("data", 0x10));
+//			m.release("data");
+//			System.out.println(m.read("data", 0x10));
+//			System.out.println("Conflict: " + m.getConflictMemName() + " " +
+//					m.getConflictAddr());
+//			m.clearMem("data");
+//			System.out.println(m.read("data", 0x10));
+//		} catch (AlreadyExist e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (DonotExist e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//	}
 }

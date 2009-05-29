@@ -58,7 +58,7 @@ implements Constants {
 			mem.write(DATA, memAddr, memWVal);
 		if(!islwsw)
 			addr = pc;
-		ins = mem.read(DATA, addr);
+		ins = mem.read(DATA, addr, true);
 	}
 	
 	private void set() {

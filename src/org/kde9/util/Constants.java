@@ -11,6 +11,8 @@ public interface Constants {
 	
 	static String DATA = "data";
 	
+	static int MEM_HIS_COUNT = 20;
+	
 	// RegisterHeap
 	static int RA_Reg = 14 ;    //RA
 	static int T_Reg = 15 ;     //T

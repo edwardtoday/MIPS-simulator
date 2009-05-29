@@ -5,6 +5,8 @@ import org.kde9.pcunit.PCUnit;
 import sun.misc.Signal;
 
 public class CPU {
+	static int circle = 0;
+	
 	PCUnit pcUnit;
 	
 	public CPU() {
