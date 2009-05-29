@@ -126,14 +126,12 @@ implements ActionListener, KeyListener, ListSelectionListener,
 		read = new JList();
 		read.setPreferredSize(new Dimension(80, 100));
 		read.setBorder(BorderFactory.createEtchedBorder());
-		read.setEnabled(false);
 		d1 = new DefaultListModel();
 		read.setModel(d1);
 		read.addListSelectionListener(this);
 		write = new JList();
 		write.setPreferredSize(new Dimension(80, 100));
 		write.setBorder(BorderFactory.createEtchedBorder());
-		write.setEnabled(false);
 		write.addListSelectionListener(this);
 		d2 = new DefaultListModel();
 		write.setModel(d2);

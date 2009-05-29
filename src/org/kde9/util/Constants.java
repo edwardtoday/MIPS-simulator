@@ -13,6 +13,8 @@ public interface Constants {
 	
 	static int MEM_HIS_COUNT = 20;
 	
+	static int CACHE_SIZE = 128;
+	
 	// RegisterHeap
 	static int RA_Reg = 14 ;    //RA
 	static int T_Reg = 15 ;     //T
