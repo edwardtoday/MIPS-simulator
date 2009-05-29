@@ -41,7 +41,7 @@ import org.kde9.util.Functions;
 
 public class Mem 
 extends JPanel 
-implements ActionListener, KeyListener, ListSelectionListener,
+implements ActionListener, KeyListener,
 		MouseListener, TableModelListener, 
 		Constants {
 	Memory mem = UnitPool.getMemory();
@@ -128,11 +128,11 @@ implements ActionListener, KeyListener, ListSelectionListener,
 		read.setBorder(BorderFactory.createEtchedBorder());
 		d1 = new DefaultListModel();
 		read.setModel(d1);
-		read.addListSelectionListener(this);
+		read.addMouseListener(this);
 		write = new JList();
 		write.setPreferredSize(new Dimension(80, 100));
 		write.setBorder(BorderFactory.createEtchedBorder());
-		write.addListSelectionListener(this);
+		write.addMouseListener(this);
 		d2 = new DefaultListModel();
 		write.setModel(d2);
 		JPanel center = new JPanel(new BorderLayout());
@@ -255,27 +255,39 @@ implements ActionListener, KeyListener, ListSelectionListener,
 		
 	}
 
-	public void mousePressed(MouseEvent arg0) {
+	public void mousePressed(MouseEvent e) {
 		// TODO Auto-generated method stub
-		int row = table.getSelectedRow();
-		int col = table.getSelectedColumn(); 
-		int addr = bound[0] + row*8 + col - 1;
-		int value = 0;
-		try {
-			value = UnitPool.getMemory().read(DATA, addr, false);
-		} catch (DonotExist e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		if (e.getSource() == table) {
+			int row = table.getSelectedRow();
+			int col = table.getSelectedColumn();
+			int addr = bound[0] + row * 8 + col - 1;
+			int value = 0;
+			try {
+				value = UnitPool.getMemory().read(DATA, addr, false);
+			} catch (DonotExist ex) {
+				// TODO Auto-generated catch block
+				ex.printStackTrace();
+			}
+			if (col > 0) {
+				String str = "addr£º[hex: 0x" + Integer.toHexString(addr) + " ]";
+				str += "[dec: " + String.valueOf(addr) + " ]    ";
+				str += "value£º[hex: 0x" + Integer.toHexString(value) + " ]";
+				str += "[dec: " + value + " ]";
+				str += "[ins: " + "not support yet!" + " ]";
+				detail.setText(str);
+			} else
+				detail.setText(" ");
+		} else if((e.getSource() == read && read.getSelectedIndex() > 0) ||
+				(e.getSource() == write && write.getSelectedIndex() > 0)) {
+			String addr;
+			if(e.getSource() == read)
+				addr = (String) d1.getElementAt(read.getSelectedIndex());
+			else
+				addr = (String) d2.getElementAt(write.getSelectedIndex());
+			input.setText("0x" + addr);
+			input.dispatchEvent(new KeyEvent(input, KeyEvent.KEY_RELEASED,
+					System.currentTimeMillis(), 0, KeyEvent.VK_ENTER, 'c'));
 		}
-		if (col > 0) {
-			String str = "addr£º[hex: 0x" + Integer.toHexString(addr) + " ]";
-			str += "[dec: " + String.valueOf(addr) + " ]    ";
-			str += "value£º[hex: 0x" + Integer.toHexString(value) + " ]";
-			str += "[dec: " + value + " ]";
-			str += "[ins: " + "not support yet!" + " ]";
-			detail.setText(str);
-		} else
-			detail.setText(" ");
 	}
 
 	public void mouseReleased(MouseEvent arg0) {
@@ -318,23 +330,8 @@ implements ActionListener, KeyListener, ListSelectionListener,
 				table.setValueAt(Integer.toHexString(value), row, col);
 				valueChanfed = true;
 			}
-			mousePressed(null);
+			mousePressed(new MouseEvent(table, 0, 0, 0, 0, 0, 0, false));
 			updateList();
-		}
-	}
-
-	public void valueChanged(ListSelectionEvent e) {
-		// TODO Auto-generated method stub
-		if((e.getSource() == read && read.getSelectedIndex() > 0) ||
-				(e.getSource() == write && write.getSelectedIndex() > 0)) {
-			String addr;
-			if(e.getSource() == read)
-				addr = (String) d1.getElementAt(read.getSelectedIndex());
-			else
-				addr = (String) d2.getElementAt(write.getSelectedIndex());
-			input.setText("0x" + addr);
-			input.dispatchEvent(new KeyEvent(input, KeyEvent.KEY_RELEASED,
-					System.currentTimeMillis(), 0, KeyEvent.VK_ENTER, 'c'));
 		}
 	}
 }

@@ -8,13 +8,17 @@ import org.kde9.util.Constants;
 public class Cache 
 implements Constants {
 	HashMap<Integer, Integer> cache;
-	HashMap<Integer, Integer> addr2index;
-	Vector<Integer> usage;
+	HashMap<Integer, Integer> addr2showindex;
+	int[] showindex;
+	HashMap<Integer, Integer> addr2changeindex;
+	int[] changeindex;
 	
 	public Cache() {
 		cache = new HashMap<Integer, Integer>();
-		addr2index = new HashMap<Integer, Integer>();
-		usage = new Vector<Integer>();
+		addr2showindex = new HashMap<Integer, Integer>();
+		showindex = new int[CACHE_SIZE];
+		for(int i = 0; i < CACHE_SIZE; i++)
+			showindex[i] = -1;
 	}
 	
 	public Integer read(int addr) {
@@ -22,12 +26,15 @@ implements Constants {
 		if(value == null) {
 			load(addr);
 		} else {
-			int index = addr2index.get(addr);
-			
+			update(addr);
 		}
 		return value;
 	}
 		
+	private void update(int addr) {
+		
+	}
+	
 	private void load(int addr) {
 		
 	}
