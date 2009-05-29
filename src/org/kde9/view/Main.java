@@ -1,6 +1,7 @@
 package org.kde9.view;
 
 import java.awt.BorderLayout;
+import java.awt.Toolkit;
 import java.security.AccessControlException;
 import java.util.Arrays;
 
@@ -43,6 +44,20 @@ extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(1000, 600);
 		setVisible(true);
+		
+		int screenHeight = Toolkit.getDefaultToolkit().getScreenSize().height;
+		int screenWidth = Toolkit.getDefaultToolkit().getScreenSize().width;
+		// 得到Shell窗口的宽度和高度
+		int shellHeight = getBounds().height;
+		int shellWidth = getBounds().width;
+		// 如果窗口大小超过屏幕大小，让窗口与屏幕等大
+		if (shellHeight > screenHeight)
+			shellHeight = screenHeight;
+		if (shellWidth > screenWidth)
+			shellWidth = screenWidth;
+		// 让窗口在屏幕中间显示
+		setLocation(((screenWidth - shellWidth) / 2),
+				((screenHeight - shellHeight) / 2));
 	}
 	
 	public static void main(String args[]) {
