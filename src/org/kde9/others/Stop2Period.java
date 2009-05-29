@@ -11,9 +11,11 @@ public class Stop2Period {
 	// in 
 	boolean needStop;
 	boolean islwsw;
+	boolean ready;
 	
 	// out
 	boolean hold;
+	boolean holdEXE;
 	boolean nreset;
 	
 	boolean temp = false;
@@ -27,19 +29,24 @@ public class Stop2Period {
 	}
 	
 	public void check(boolean r) {
-		needStop = signal.isNeedStop_Ctrl();
-		islwsw = signal.isIslwswOut_EXE();
+		needStop = next.isNeedStop_Ctrl();
+		islwsw = next.isIslwswOut_EXE();
+		ready = next.isReady_Mem();
 	}
 	
 	private void run() {
+		holdEXE = false;
 		if(needStop) {
 			hold = needStop;
 			nreset = needStop;
 			temp = needStop;
-		} else if(islwsw) {
+		} else if (islwsw) {
 			hold = islwsw;
 			nreset = islwsw;
 			temp = needStop;
+			if (!ready) {
+				holdEXE = true;
+			}
 		} else {
 			hold = temp;
 			nreset = temp;
@@ -50,6 +57,7 @@ public class Stop2Period {
 	private void set() {
 		next.setHold_Stop(hold);
 		next.setNreset_Stop(nreset);
+		next.setHoldEXE_Stop(holdEXE);
 	}
 	
 	public static void main(String args[]) {

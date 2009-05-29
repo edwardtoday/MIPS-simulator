@@ -34,6 +34,8 @@ public class EXE2MEMReg {
 	boolean reset;  //异步???唬?1'为清零
 	boolean nreset;  //同步复?唬敝由仙厍?为'1'??清零
 	
+	boolean hold;
+	
 	public void start(boolean r) {
 		signal = SignalPool.getCurrentSignals();
 		next = SignalPool.getNextSignals();
@@ -51,6 +53,7 @@ public class EXE2MEMReg {
 		RegWEIn = signal.isRegWEOut_ID();
 		CChoRegWValIn = signal.getCChoRegWValOut_ID();
 		islwswIn = signal.isIslwswOut_ID();
+		hold = signal.isHoldEXE_Stop();
 		reset = r;
 		nreset = false;
 	}
@@ -66,13 +69,15 @@ public class EXE2MEMReg {
 			CChoRegWValOut = 0;
 			islwswOut = false;
 		} else {
-			ALUValOut = ALUValIn;
-			RegValOut2 = RegValIn2;
-			TOut = TIn;
-			RegWAddrOut = RegWAddrIn;
-			MemWEOut = MemWEIn;
-			RegWEOut = RegWEIn;
-			CChoRegWValOut =CChoRegWValIn;
+			if (!hold) {
+				RegValOut2 = RegValIn2;
+				TOut = TIn;
+				RegWAddrOut = RegWAddrIn;
+				ALUValOut = ALUValIn;
+				MemWEOut = MemWEIn;
+				RegWEOut = RegWEIn;
+				CChoRegWValOut = CChoRegWValIn;
+			}
 			islwswOut = islwswIn;
 		}
 	}

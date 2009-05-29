@@ -26,11 +26,11 @@ public class ChoPCCtrl {
 	}
 	
 	public void check() {
-		im = signal.getIm_Ctrl();
-		val = signal.getVal_T();
-		pc = signal.getPC_PC();
-		pcx = signal.getPCOut_IF();
-		cChoPCCtrl = signal.getCChoPCCtrl_Ctrl();
+		im = next.getIm_Ctrl();
+		val = next.getVal_T();
+		pc = next.getPC_PC();
+		pcx = next.getPCOut_IF();
+		cChoPCCtrl = next.getCChoPCCtrl_Ctrl();
 	}
 	
 	private void run() {

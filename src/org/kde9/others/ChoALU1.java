@@ -25,10 +25,10 @@ public class ChoALU1 {
 	}
 	
 	public void check() {
-		regVal = signal.getRegValOut1_ID();
-		aluVal1 = signal.getALUValOut_EXE();
-		aluVal2 = signal.getALUValOut_MEM();
-		tChoALU1 = signal.getTChoALU1_T();
+		regVal = next.getRegValOut1_ID();
+		aluVal1 = next.getALUValOut_EXE();
+		aluVal2 = next.getALUValOut_MEM();
+		tChoALU1 = next.getTChoALU1_T();
 	}
 	
 	private void run() {

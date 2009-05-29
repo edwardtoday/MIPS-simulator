@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -15,6 +16,7 @@ import java.util.Vector;
 
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -89,13 +91,16 @@ implements ActionListener, KeyListener,
 			public void paint(Graphics g) {
 				super.paint(g);
 				if(i != -1 && j != -1) {
-					int x = 0;
-					g.setColor(new Color(255, 0, 0, 40));
-					for(int index = 0; index < i; index++)
+					int x = 0, xx = 0;
+					g.setColor(new Color(11, 11, 77, 40));
+					for(int index = 0; index < i; index++) {
 						x += getColumnModel().getColumn(index).getWidth();
-					g.fillRect(x, getRowHeight()*j, 
-							getColumnModel().getColumn(i).getWidth(), 
-							getRowHeight());
+						xx = getColumnModel().getColumn(index).getWidth();
+					}
+					g.drawRect(x-1, getRowHeight()*j+1, 
+							getColumnModel().getColumn(i).getWidth(), getRowHeight()-2);
+					g.drawImage(new ImageIcon("./img/warning.png").getImage(), 
+							x+xx-20, getRowHeight()*j+1, null);
 				}
 			}
 		};

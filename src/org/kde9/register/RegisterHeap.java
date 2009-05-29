@@ -30,7 +30,7 @@ implements Constants {
 	public RegisterHeap() 
 	throws AlreadyExist {
 		rs = new Registers();
-		for(int i = 0; i < 15; i++)
+		for(int i = 0; i < 31; i++)
 			rs.addReg(String.valueOf(i));
 	}
 	
@@ -45,13 +45,13 @@ implements Constants {
 	
 	public void check(boolean r) {
 		reset = r;
-		RegAddr1 = signal.getRegAddr1_Ctrl();
-		RegAddr2 = signal.getRegAddr2_Ctrl();
-		WE = signal.isRegWEOut_MEM();
-		RegWAddr = signal.getRegWAddrOut_MEM();
-		RegWVal = signal.getRegWVal_CReg();
-		storePC = signal.isStorePC_Ctrl();
-		PC = signal.getPCOut_IF();
+		RegAddr1 = next.getRegAddr1_Ctrl();
+		RegAddr2 = next.getRegAddr2_Ctrl();
+		WE = next.isRegWEOut_MEM();
+		RegWAddr = next.getRegWAddrOut_MEM();
+		RegWVal = next.getRegWVal_CReg();
+		storePC = next.isStorePC_Ctrl();
+		PC = next.getPCOut_IF();
 	}
 	
 	private void run() 

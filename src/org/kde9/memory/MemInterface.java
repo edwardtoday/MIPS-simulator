@@ -12,7 +12,8 @@ implements Constants {
 	Signals signal;
 	Signals next;
 	
-	Memory mem;
+	Cache insCache;
+	Cache dataCache;
 	int addr;
 	
 	// in
@@ -24,15 +25,11 @@ implements Constants {
 	
 	// out
 	int ins;
+	boolean Ready;
 	
 	public MemInterface() {
-		mem = UnitPool.getMemory();
-		try {
-			mem.addMem(DATA);
-		} catch (AlreadyExist e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		insCache = UnitPool.getInsCache();
+		dataCache = UnitPool.getDataCache();
 	}
 	
 	public void start() 
@@ -45,23 +42,36 @@ implements Constants {
 	}
 	
 	public void check() {
-		pc = signal.getPC_PC();
-		memAddr = signal.getALUValOut_EXE();
-		we = signal.isMemWEOut_EXE();
-		memWVal = signal.getRegValOut2_EXE();
-		islwsw = signal.isIslwswOut_EXE();
+		pc = next.getPC_PC();
+		memAddr = next.getALUValOut_EXE();
+		we = next.isMemWEOut_EXE();
+		memWVal = next.getRegValOut2_EXE();
+		islwsw = next.isIslwswOut_EXE();
 	}
 	
 	private void run() 
 	throws DonotExist {
 		if(we)
-			mem.write(DATA, memAddr, memWVal);
-		if(!islwsw)
+			insCache.write(memAddr, memWVal);
+		Integer i;
+		if (!islwsw) {
 			addr = pc;
-		ins = mem.read(DATA, addr, true);
+			i = insCache.read(addr);
+		} else {
+			addr = memAddr;
+			i = dataCache.read(addr);
+		}
+		if (i == null) {
+			Ready = false;
+			ins = 0;
+		} else {
+			Ready = true;
+			ins = i;
+		}
 	}
 	
 	private void set() {
 		next.setIns_Mem(ins);
+		next.setReady_Mem(Ready);
 	}
 }

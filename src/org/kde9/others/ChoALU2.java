@@ -28,12 +28,12 @@ public class ChoALU2 {
 	}
 	
 	public void check() {
-		regVal = signal.getRegValOut2_ID();
-		imVal = signal.getImOut_ID();
-		aluVal1 = signal.getALUValOut_EXE();
-		aluVal2 = signal.getALUValOut_MEM();
-		cChoALU2 = signal.isCChoALUOut2_ID();
-		tChoALU2 = signal.getTChoALU2_T();
+		regVal = next.getRegValOut2_ID();
+		imVal = next.getImOut_ID();
+		aluVal1 = next.getALUValOut_EXE();
+		aluVal2 = next.getALUValOut_MEM();
+		cChoALU2 = next.isCChoALUOut2_ID();
+		tChoALU2 = next.getTChoALU2_T();
 	}
 	
 	private void run() {

@@ -25,10 +25,10 @@ public class ChoRegWVal {
 	}
 	
 	public void check() {
-		aluVal = signal.getALUValOut_MEM();
-		memVal = signal.getMemValOut_MEM();
-		t = signal.isTOut_MEM();
-		cChoRegWVal = signal.getRegWVal_CReg();
+		aluVal = next.getALUValOut_MEM();
+		memVal = next.getMemValOut_MEM();
+		t = next.isTOut_MEM();
+		cChoRegWVal = next.getCChoRegWValOut_MEM();
 	}
 	
 	private void run() {

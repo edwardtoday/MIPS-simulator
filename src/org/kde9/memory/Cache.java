@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Vector;
 
 import org.kde9.cpu.UnitPool;
+import org.kde9.exceptions.AlreadyExist;
 import org.kde9.exceptions.DonotExist;
 import org.kde9.util.Constants;
 
@@ -18,6 +19,9 @@ implements Constants {
 	
 	public Cache() {
 		mem = UnitPool.getMemory();
+		try {
+			mem.addMem(DATA);
+		} catch (AlreadyExist e) {}
 		cache = new HashMap<Integer, Integer>();
 		showindex = new int[CACHE_SIZE];
 		addr2showindex = new HashMap<Integer, Integer>();

@@ -30,14 +30,14 @@ public class Transfer {
 	}
 	
 	public void check() {
-		regWaddr1 = signal.getRegWAddrOut_EXE();
-		regWaddr2 = signal.getRegWAddrOut_MEM();
-		regWE1 = signal.isRegWEOut_EXE();
-		regWE2 = signal.isRegWEOut_MEM();
-		regAddr1 = signal.getRegAddrOut1_ID();
-		regAddrE1 = signal.isRegEOut1_ID();
-		regAddr2 = signal.getRegAddrOut2_ID();
-		regAddrE2 = signal.isRegEOut2_ID();
+		regWaddr1 = next.getRegWAddrOut_EXE();
+		regWaddr2 = next.getRegWAddrOut_MEM();
+		regWE1 = next.isRegWEOut_EXE();
+		regWE2 = next.isRegWEOut_MEM();
+		regAddr1 = next.getRegAddrOut1_ID();
+		regAddrE1 = next.isRegEOut1_ID();
+		regAddr2 = next.getRegAddrOut2_ID();
+		regAddrE2 = next.isRegEOut2_ID();
 	}
 	
 	private void run() {

@@ -16,7 +16,8 @@ import org.kde9.others.TransferChoPCVal;
 
 public class UnitPool {
 	static Memory memory = new Memory();
-	static Cache cache = new Cache();
+	static Cache insCache = new Cache();
+	static Cache dataCache = new Cache();
 	static MemInterface memInterface = new MemInterface();
 	static ALU alu = new ALU();
 	static Control control = new Control();
@@ -32,8 +33,11 @@ public class UnitPool {
 	public static Memory getMemory() {
 		return memory;
 	}	
-	public static Cache getCache() {
-		return cache;
+	public static Cache getInsCache() {
+		return insCache;
+	}
+	public static Cache getDataCache() {
+		return dataCache;
 	}
 	public static MemInterface getMemInterface() {
 		return memInterface;

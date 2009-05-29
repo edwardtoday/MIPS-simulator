@@ -29,14 +29,14 @@ public class TransferChoPCVal {
 	}
 	
 	public void check() {
-		regVal = signal.getRegVal1_Reg();
-		aluVal1 = signal.getRet_ALU();
-		aluVal2 = signal.getALUValOut_EXE();
-		regWAddr1 = signal.getRegWAddrOut_ID();
-		regWE1 = signal.isRegWEOut_ID();
-		regWAddr2 = signal.getRegWAddrOut_EXE();
-		regWE2 = signal.isRegWEOut_EXE();
-		regAddr = signal.getRegAddr1_Ctrl();
+		regVal = next.getRegVal1_Reg();
+		aluVal1 = next.getRet_ALU();
+		aluVal2 = next.getALUValOut_EXE();
+		regWAddr1 = next.getRegWAddrOut_ID();
+		regWE1 = next.isRegWEOut_ID();
+		regWAddr2 = next.getRegWAddrOut_EXE();
+		regWE2 = next.isRegWEOut_EXE();
+		regAddr = next.getRegAddr1_Ctrl();
 	}
 	
 	private void run() {

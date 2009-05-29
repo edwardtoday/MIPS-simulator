@@ -6,7 +6,8 @@ public class Signals {
 	
 	// MemInterface
 	private int Ins_Mem;
-	
+	private boolean Ready_Mem;
+
 	// IF2IDReg
 	private int PCOut_IF;
 	private int InsOut_IF;
@@ -31,7 +32,8 @@ public class Signals {
 	// Stop2Period
 	private boolean nreset_Stop;
 	private boolean hold_Stop;
-	
+	private boolean holdEXE_Stop;
+
 	// RegHeap
 	private int RegVal1_Reg;
 	private int RegVal2_Reg;
@@ -108,6 +110,14 @@ public class Signals {
 
 	public void setIns_Mem(int ins_Mem) {
 		Ins_Mem = ins_Mem;
+	}
+	
+	public boolean isReady_Mem() {
+		return Ready_Mem;
+	}
+
+	public void setReady_Mem(boolean ready_Mem) {
+		Ready_Mem = ready_Mem;
 	}
 
 	public int getPCOut_IF() {
@@ -258,6 +268,14 @@ public class Signals {
 		return hold_Stop;
 	}
 
+	public boolean isHoldEXE_Stop() {
+		return holdEXE_Stop;
+	}
+
+	public void setHoldEXE_Stop(boolean holdEXE_Stop) {
+		this.holdEXE_Stop = holdEXE_Stop;
+	}
+	
 	public void setHold_Stop(boolean hold_Stop) {
 		this.hold_Stop = hold_Stop;
 	}

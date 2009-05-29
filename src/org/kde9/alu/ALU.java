@@ -27,9 +27,9 @@ public class ALU {
 	}
 	
 	public void check() {
-		a = signal.getA_CALU1();
-		b = signal.getB_CALU2();
-		q = signal.getALUCtrlOut_ID();
+		a = next.getA_CALU1();
+		b = next.getB_CALU2();
+		q = next.getALUCtrlOut_ID();
 		cin = 0;
 	}
 	

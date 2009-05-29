@@ -43,7 +43,7 @@ public class Control {
 	}
 	
 	public void check() {
-		Ins = signal.getInsOut_IF();
+		Ins = next.getInsOut_IF();
 	}
 	
 	private void run() {
