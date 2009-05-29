@@ -138,6 +138,14 @@ implements ActionListener, KeyListener, MouseListener, TableModelListener,
 		add("South", down);
 	}
 
+	public void update(int addr) {
+		if(keep) {
+			input.setText(String.valueOf(addr));
+		}
+		input.dispatchEvent(new KeyEvent(input, KeyEvent.KEY_RELEASED,
+				System.currentTimeMillis(), 0, KeyEvent.VK_ENTER, 'c'));
+	}
+	
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		if(e.getSource() == cache) {
@@ -225,11 +233,11 @@ implements ActionListener, KeyListener, MouseListener, TableModelListener,
 			e.printStackTrace();
 		}
 		if (col > 0) {
-			String str = "addr£º[hex 0x" + Integer.toHexString(addr) + " ]";
-			str += "[dec " + String.valueOf(addr) + " ]    ";
-			str += "value£º[hex 0x" + Integer.toHexString(value) + " ]";
-			str += "[dec " + value + " ]";
-			str += "[ins " + "not support yet!" + " ]";
+			String str = "addr£º[hex: 0x" + Integer.toHexString(addr) + " ]";
+			str += "[dec: " + String.valueOf(addr) + " ]    ";
+			str += "value£º[hex: 0x" + Integer.toHexString(value) + " ]";
+			str += "[dec: " + value + " ]";
+			str += "[ins: " + "not support yet!" + " ]";
 			detail.setText(str);
 		} else
 			detail.setText(" ");
@@ -275,6 +283,7 @@ implements ActionListener, KeyListener, MouseListener, TableModelListener,
 				table.setValueAt(Integer.toHexString(value), row, col);
 				valueChanfed = true;
 			}
+			mousePressed(null);
 		}
 	}
 }
