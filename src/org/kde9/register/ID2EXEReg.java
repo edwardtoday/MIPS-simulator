@@ -85,6 +85,8 @@ public class ID2EXEReg {
 			RegValOut2 = 0;
 			RegEOut1 = false;
 			RegEOut2 = false;
+			RegAddrOut1 = 0;
+			RegAddrOut2 = 0;
 			ImOut = 0;
 			RegWAddrOut = 0;
 			ALUCtrlOut = 0;
@@ -98,6 +100,8 @@ public class ID2EXEReg {
 			RegValOut2 = RegValIn2;
 			RegEOut1 = RegEIn1;
 			RegEOut2 = RegEIn2;
+			RegAddrOut1 = RegAddrIn1;
+			RegAddrOut2 = RegAddrIn2;
 			ImOut = ImIn;
 			RegWAddrOut = RegWAddrIn;
 			ALUCtrlOut = ALUCtrlIn;
@@ -114,6 +118,8 @@ public class ID2EXEReg {
 		next.setRegValOut2_ID(RegValOut2);
 		next.setRegEOut1_ID(RegEOut1);
 		next.setRegEOut2_ID(RegEOut2);
+		next.setRegAddrOut1_ID(RegAddrOut1);
+		next.setRegAddrOut2_ID(RegAddrOut2);
 		next.setImOut_ID(ImOut);
 		next.setRegWAddrOut_ID(RegWAddrOut);
 		next.setALUCtrlOut_ID(ALUCtrlOut);

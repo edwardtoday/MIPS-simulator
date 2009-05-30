@@ -28,16 +28,32 @@ implements Constants {
 	boolean Ready;
 	
 	public MemInterface() {
-		insCache = UnitPool.getInsCache();
-		dataCache = UnitPool.getDataCache();
+		insCache = new Cache();
+		dataCache = new Cache();
 	}
 	
-	public void start() 
-	throws DonotExist {
+	public Cache getInsCache() {
+		return insCache;
+	}
+
+	public Cache getDataCache() {
+		return dataCache;
+	}
+	
+	public Memory getMem() {
+		return Cache.getMem();
+	}
+
+	public void start() {
 		signal = SignalPool.getCurrentSignals();
 		next = SignalPool.getNextSignals();
 		check();
-		run();
+		try {
+			run();
+		} catch (DonotExist e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		set();
 	}
 	

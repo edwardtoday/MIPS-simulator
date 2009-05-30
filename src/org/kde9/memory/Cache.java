@@ -10,15 +10,18 @@ import org.kde9.util.Constants;
 
 public class Cache 
 implements Constants {
-	Memory mem;
-	
+	static Memory mem = new Memory();
+
 	HashMap<Integer, Integer> cache;
+
 	HashMap<Integer, Integer> addr2showindex;
 	int[] showindex;
 	Vector<Integer> changeindex;
 	
+	int flag = 0;
+	int addr = -1;
+	
 	public Cache() {
-		mem = UnitPool.getMemory();
 		try {
 			mem.addMem(DATA);
 		} catch (AlreadyExist e) {}
@@ -30,6 +33,10 @@ implements Constants {
 			showindex[i] = -1;
 	}
 	
+	public static Memory getMem() {
+		return mem;
+	}
+	
 	public void write(int addr, int value) {
 		Integer val = cache.get(addr);
 		if(val != null) {
@@ -38,15 +45,25 @@ implements Constants {
 			load(addr, false);
 		}
 		cache.put(addr, value);
+		if(flag != 0)
+			flag--;
 	}
 	
 	public Integer read(int addr) {
 		Integer value = cache.get(addr);
 		if(value == null) {
-			load(addr, true);
+			if(flag == 1 && this.addr == addr) {
+				load(addr, true);
+				value = cache.get(addr);
+			} else {
+				flag = 2;
+				this.addr = addr;
+			}
 		} else {
 			update(addr);
 		}
+		if(flag != 0)
+			flag--;
 		return value;
 	}
 		
@@ -83,5 +100,9 @@ implements Constants {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	public HashMap<Integer, Integer> getCache() {
+		return cache;
 	}
 }

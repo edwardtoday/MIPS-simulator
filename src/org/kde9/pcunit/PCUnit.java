@@ -37,7 +37,6 @@ public class PCUnit {
 	}
 	
 	private void set() {
-		System.out.println(lastPc);
 		next.setPC_PC(pc);
 	}
 	

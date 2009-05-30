@@ -97,10 +97,10 @@ implements ActionListener, KeyListener,
 						x += getColumnModel().getColumn(index).getWidth();
 						xx = getColumnModel().getColumn(index).getWidth();
 					}
-					g.drawRect(x-1, getRowHeight()*j+1, 
+					g.fillRect(x-1, getRowHeight()*j+1, 
 							getColumnModel().getColumn(i).getWidth(), getRowHeight()-2);
-					g.drawImage(new ImageIcon("./img/warning.png").getImage(), 
-							x+xx-20, getRowHeight()*j+1, null);
+//					g.drawImage(new ImageIcon("./img/warning.png").getImage(), 
+//							x+xx-20, getRowHeight()*j+1, null);
 				}
 			}
 		};

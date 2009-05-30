@@ -2,6 +2,7 @@ package org.kde9.register;
 
 import org.kde9.cpu.SignalPool;
 import org.kde9.cpu.Signals;
+import org.kde9.cpu.UnitPool;
 import org.kde9.exceptions.AlreadyExist;
 import org.kde9.exceptions.DonotExist;
 import org.kde9.util.Constants;
@@ -12,7 +13,7 @@ implements Constants {
 	Signals next;
 	
 	Registers rs;
-	
+
 	// in
 	int RegAddr1;
 	int RegAddr2;
@@ -27,19 +28,31 @@ implements Constants {
 	int RegVal1;
 	int RegVal2;
 	
-	public RegisterHeap() 
-	throws AlreadyExist {
+	public RegisterHeap() {
 		rs = new Registers();
 		for(int i = 0; i < 31; i++)
-			rs.addReg(String.valueOf(i));
+			try {
+				rs.addReg(String.valueOf(i));
+			} catch (AlreadyExist e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 	}
 	
-	public void start(boolean r) 
-	throws DonotExist {
+	public Registers getRs() {
+		return rs;
+	}
+	
+	public void start(boolean r) {
 		signal = SignalPool.getCurrentSignals();
 		next = SignalPool.getNextSignals();
 		check(r);
-		run();
+		try {
+			run();
+		} catch (DonotExist e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		set();
 	}
 	

@@ -13,12 +13,21 @@ import org.kde9.others.ChoRegWVal;
 import org.kde9.others.Stop2Period;
 import org.kde9.others.Transfer;
 import org.kde9.others.TransferChoPCVal;
+import org.kde9.pcunit.PCUnit;
+import org.kde9.register.EXE2MEMReg;
+import org.kde9.register.ID2EXEReg;
+import org.kde9.register.IF2IDReg;
+import org.kde9.register.MEM2WBReg;
+import org.kde9.register.RegisterHeap;
+import org.kde9.register.Registers;
 
 public class UnitPool {
-	static Memory memory = new Memory();
-	static Cache insCache = new Cache();
-	static Cache dataCache = new Cache();
+	static PCUnit pc = new PCUnit();
 	static MemInterface memInterface = new MemInterface();
+	static Memory memory;
+	static Cache insCache;
+	static Cache dataCache;
+	static Registers registers;
 	static ALU alu = new ALU();
 	static Control control = new Control();
 	static ChoALU1 choALU1 = new ChoALU1();
@@ -28,17 +37,72 @@ public class UnitPool {
 	static Stop2Period stop2Period = new Stop2Period();
 	static Transfer transfer = new Transfer();
 	static TransferChoPCVal transferChoPCVal = new TransferChoPCVal();
+	static IF2IDReg if2id = new IF2IDReg();
+	static ID2EXEReg id2exe = new ID2EXEReg();
+	static EXE2MEMReg exe2mem = new EXE2MEMReg();
+	static RegisterHeap reg = new RegisterHeap();
+	static MEM2WBReg mem2wb = new MEM2WBReg();
 	
+	public static RegisterHeap getReg() {
+		return reg;
+	}
+	
+	public static void setMemory(Memory memory) {
+		UnitPool.memory = memory;
+	}
+
+	public static void setInsCache(Cache insCache) {
+		UnitPool.insCache = insCache;
+	}
+
+	public static void setDataCache(Cache dataCache) {
+		UnitPool.dataCache = dataCache;
+	}
+
+	public static void setRegisters(Registers registers) {
+		UnitPool.registers = registers;
+	}
 	
 	public static Memory getMemory() {
 		return memory;
-	}	
+	}
+
 	public static Cache getInsCache() {
 		return insCache;
 	}
+
 	public static Cache getDataCache() {
 		return dataCache;
 	}
+	
+	public static Registers getRegisters() {
+		return registers;
+	}
+
+	public static IF2IDReg getIf2id() {
+		return if2id;
+	}
+
+	public static ID2EXEReg getId2exe() {
+		return id2exe;
+	}
+
+	public static EXE2MEMReg getExe2mem() {
+		return exe2mem;
+	}
+
+//	public static RegisterHeap getReg() {
+//		return reg;
+//	}
+
+	public static MEM2WBReg getMem2wb() {
+		return mem2wb;
+	}
+
+	public static PCUnit getPc() {
+		return pc;
+	}
+	
 	public static MemInterface getMemInterface() {
 		return memInterface;
 	}

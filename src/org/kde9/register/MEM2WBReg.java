@@ -38,6 +38,7 @@ public class MEM2WBReg {
 	
 	public void check(boolean r) {
 		ALUValIn = signal.getALUValOut_EXE();
+		MemValIn = signal.getIns_Mem();
 		TIn = signal.isTOut_EXE();
 		RegWAddrIn = signal.getRegWAddrOut_EXE();
 		RegWEIn = signal.isRegWEOut_EXE();
@@ -49,12 +50,14 @@ public class MEM2WBReg {
 	private void run() {
 		if(reset) {
 			ALUValOut = 0;
+			MemValOut = 0;
 			TOut = false;
 			RegWAddrOut = 0;
 			RegWEOut = false;
 			CChoRegWValOut = 0;
 		} else {
 			ALUValOut = ALUValIn;
+			MemValOut = MemValIn;
 			TOut = TIn;
 			RegWAddrOut = RegWAddrIn;
 			RegWEOut = RegWEIn;
@@ -64,6 +67,7 @@ public class MEM2WBReg {
 	
 	private void set() {
 		next.setALUValOut_MEM(ALUValOut);
+		next.setMemValOut_MEM(MemValOut);
 		next.setTOut_MEM(TOut);
 		next.setRegWAddrOut_MEM(RegWAddrOut);
 		next.setRegWEOut_MEM(RegWEOut);

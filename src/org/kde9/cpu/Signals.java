@@ -94,7 +94,7 @@ public class Signals {
 	private int Val_T;
 	
 	// ChoPCCtrl
-	private int lastPC_CPC;
+	private int lastPC_CPC = -1;
 
 	public int getPC_PC() {
 		return PC_PC;

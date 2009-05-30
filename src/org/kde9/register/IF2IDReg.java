@@ -13,6 +13,7 @@ implements Constants {
 	int insIn;
 	int pcIn;
 	boolean reset;
+	boolean nreset;
 	
 	// out
 	int insOut;
@@ -29,11 +30,12 @@ implements Constants {
 	public void check(boolean r) {
 		insIn = signal.getIns_Mem();
 		pcIn = signal.getPC_PC();
+		nreset = signal.isNreset_Stop();
 		reset = r;
 	}
 	
 	private void run() {
-		if(reset == true) {
+		if(reset || nreset) {
 			insOut = NOP_INS;
 			pcOut = 0;
 		} else {

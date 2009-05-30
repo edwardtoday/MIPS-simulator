@@ -5,7 +5,7 @@ public interface Constants {
 	
 	static int REGISTER_INITIAL_VALUE = 0;
 	
-	static int NOP_INS = 0x8000;
+	static int NOP_INS = 0x0;
 	
 	static String NEWLINE = System.getProperty("line.separator");
 	

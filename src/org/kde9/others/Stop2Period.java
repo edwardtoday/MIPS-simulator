@@ -48,9 +48,15 @@ public class Stop2Period {
 				holdEXE = true;
 			}
 		} else {
-			hold = temp;
-			nreset = temp;
-			temp = needStop;
+			if(!ready) {
+				hold = !ready;
+				nreset = !ready;
+				temp = needStop;
+			} else {
+				hold = temp;
+				nreset = temp;
+				temp = needStop;
+			}
 		}
 	}
 	

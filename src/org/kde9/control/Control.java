@@ -2,8 +2,10 @@ package org.kde9.control;
 
 import org.kde9.cpu.SignalPool;
 import org.kde9.cpu.Signals;
+import org.kde9.util.Constants;
 
-public class Control {
+public class Control 
+implements Constants {
 	Signals signal;
 	Signals next;
 	
@@ -47,7 +49,41 @@ public class Control {
 	}
 	
 	private void run() {
-		
+		if(cutInt(Ins, 26, 31) == 0) {
+			if(cutInt(Ins, 0, 10) == 0x20) {
+				RegAddr1 = cutInt(Ins, 21, 25);  //输出第一个寄存器号
+				RegAddrE1 = Able;  //输出第一个寄存器号是否有效，'1'为有效
+				RegAddr2 = cutInt(Ins, 16, 20);  //输出第二个寄存器号
+				RegAddrE2 = Able;  //输??第二个寄存器号是否有效，'1'为有??
+				RegWAddr = cutInt(Ins, 11, 15);  //输出要写入的寄存器号
+				Im = 0;  //输出指令中的立即数	
+				CChoALU2 = Reg_ALU2;  //ALU第二输入 数据选择器的控制码
+				CChoRegWVal = ALU_RegWVal;  //寄存器的写数据 数据选择器控制码
+				CChoPCCtrl = PC_PC;  //PC加法 数据选择器??制码
+				CALU = Add_ALU;  //ALU 控制
+				CRegWE = Able;  //寄??器堆写使能 控制，'1'为写
+				CMemWE = Unable;  //内存写???? 控制，'1'为写
+				storePC = No;  //是否需要存储PC
+				needStop = No;  //是否需要暂停，'1'为是
+				islwsw = No;
+			}
+		} else {
+			RegAddr1 = 0;  //输出第一个寄存器号
+			RegAddrE1 = Unable;  //输出第一个寄存器号是否有效，'1'为有效
+			RegAddr2 = 0;  //输出第二个寄存器号
+			RegAddrE2 = Unable;  //输??第二个寄存器号是否有效，'1'为有??
+			RegWAddr = 0;  //输出要写入的寄存器号
+			Im = 0;  //输出指令中的立即数	
+			CChoALU2 = Reg_ALU2;  //ALU第二输入 数据选择器的控制码
+			CChoRegWVal = ALU_RegWVal;  //寄存器的写数据 数据选择器控制码
+			CChoPCCtrl = PC_PC;  //PC加法 数据选择器??制码
+			CALU = Zero_ALU;  //ALU 控制
+			CRegWE = Unable;  //寄??器堆写使能 控制，'1'为写
+			CMemWE = Unable;  //内存写???? 控制，'1'为写
+			storePC = No;  //是否需要存储PC
+			needStop = No;  //是否需要暂停，'1'为是
+			islwsw = No;
+		}
 	}
 	
 	private void set() {
@@ -69,6 +105,6 @@ public class Control {
 	}
 	
 	public static void main(String args[]) {
-		System.out.println(Control.cutInt(0x8A1F, 0, 3));
+		System.out.println(Control.cutInt(0x00011020, 16, 20));
 	}
 }

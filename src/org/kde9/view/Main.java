@@ -12,6 +12,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 
+import org.kde9.cpu.CPU;
 import org.kde9.cpu.UnitPool;
 import org.kde9.exceptions.DonotExist;
 import org.kde9.view.detailpanel.DetailPanel;
@@ -114,6 +115,7 @@ extends JFrame {
 			}
 		}
 
+		new CPU();
 		new Main();
 	}
 }
