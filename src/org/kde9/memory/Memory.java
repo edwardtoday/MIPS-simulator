@@ -155,7 +155,7 @@ implements Constants{
 		}
 	}
 	
-	public void write(String memName, int addr, int value) 
+	public void write(String memName, int addr, int value, boolean log) 
 	throws DonotExist {
 		HashMap<Integer, Integer> mem = memorys.get(memName);
 		if(mem == null) {
@@ -165,7 +165,8 @@ implements Constants{
 		} else if(locks.get(memName) == 0) {
 			mem.put(addr, value);
 			conflict = false;
-			addWrite(addr);
+			if(log)
+				addWrite(addr);
 		} else {
 			System.err.println("Waining: Memory '" +
 					memName +

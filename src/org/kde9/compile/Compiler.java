@@ -34,9 +34,10 @@ public class Compiler {
 		result.clear();
 		StringReader sr = new StringReader(text);
 		BufferedReader br = new BufferedReader(sr);
-		String temp = br.readLine().trim();
+		String temp = br.readLine();
 		int i = 1;
 		while(temp != null) {
+			temp = temp.trim();
 			Integer ins;
 			if (temp.length() != 0) {
 				ins = check.compile(temp);

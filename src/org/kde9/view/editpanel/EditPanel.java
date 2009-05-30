@@ -28,7 +28,10 @@ import javax.swing.JToggleButton;
 import javax.swing.border.TitledBorder;
 
 import org.kde9.compile.Compiler;
+import org.kde9.cpu.UnitPool;
+import org.kde9.exceptions.DonotExist;
 import org.kde9.util.Constants;
+import org.kde9.view.Factory;
 
 public class EditPanel 
 extends JPanel 
@@ -214,6 +217,12 @@ implements ActionListener, KeyListener, Constants {
 			} else {
 				try {
 					if (compiler.compile(editPane.getText())) {
+						try {
+							UnitPool.getMemory().clearMem(DATA);
+						} catch (DonotExist e2) {
+							// TODO Auto-generated catch block
+							e2.printStackTrace();
+						}
 						editable = false;
 						editPane.setEnabled(false);
 						edit.setText("Edit");
@@ -223,6 +232,17 @@ implements ActionListener, KeyListener, Constants {
 						button4.setEnabled(true);
 						button5.setEnabled(true);
 						result = compiler.getRet();
+						int i = 0;
+						for (int ins : result) {
+							try {
+								UnitPool.getMemory().write(DATA, i, ins, false);		
+							} catch (DonotExist e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+							i++;
+						}
+						Factory.getMem().update();
 					} else {
 						error = true;
 						edit.setSelected(true);

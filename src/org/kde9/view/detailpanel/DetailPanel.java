@@ -3,6 +3,8 @@ package org.kde9.view.detailpanel;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
+import org.kde9.view.Factory;
+
 public class DetailPanel 
 extends JTabbedPane {
 	JPanel reg;
@@ -12,10 +14,10 @@ extends JTabbedPane {
 	
 	public DetailPanel() {
 		super();//JTabbedPane.LEFT);
-		reg = new Reg();
-		mem = new Mem();
-		cache = new JPanel();
-		summary = new JPanel();
+		reg = Factory.getReg();
+		mem = Factory.getMem();
+		cache = Factory.getCache();
+		summary = Factory.getSummary();
 				
 		add("Summary", summary);
 		add("Register", reg);

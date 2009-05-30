@@ -31,9 +31,11 @@ extends JFrame {
 	public Main() {
 		super("what's this?");
 		
-		edit = new EditPanel();
-		detail = new DetailPanel();
-		menu = new Menubar();
+		Factory.setMain(this);
+		
+		edit = Factory.getEdit();
+		detail = Factory.getDetail();
+		menu = Factory.getMenu();
 		
 		JPanel panel = new JPanel();
 		panel.setLayout(new BorderLayout());

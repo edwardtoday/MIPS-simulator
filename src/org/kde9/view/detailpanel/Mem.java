@@ -186,6 +186,11 @@ implements ActionListener, KeyListener,
 				System.currentTimeMillis(), 0, KeyEvent.VK_ENTER, 'c'));
 	}
 	
+	public void update() {
+		input.dispatchEvent(new KeyEvent(input, KeyEvent.KEY_RELEASED,
+				System.currentTimeMillis(), 0, KeyEvent.VK_ENTER, 'c'));
+	}
+	
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		if(e.getSource() == cache) {
@@ -314,7 +319,7 @@ implements ActionListener, KeyListener,
 				else
 					value = Integer.valueOf(str);
 				try {
-					UnitPool.getMemory().write(DATA, addr, value);
+					UnitPool.getMemory().write(DATA, addr, value, true);
 				} catch (DonotExist e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
