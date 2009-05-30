@@ -55,7 +55,39 @@ public class ALU {
 			break;
 		case 6:
 			ret = ~a;
+			break;
 		case 7:
+			ret = a << (b & 0x1f);
+			break;
+		case 8:
+			ret = a >>> (b & 0x1f);
+			break;
+		case 9:
+			ret = a >> (b & 0x1f);
+			break;
+		case 10:
+			ret = (a==b) ? 1:0;
+			break;
+		case 11:
+			ret = (a==b) ? 0:1;
+			break;
+		case 12:
+			ret = (a<b) ? 1:0;
+			break;
+		case 13:
+			ret = (a>b) ? 1:0;
+			break;
+		case 14:
+			ret = (a>b) ? 0:1;
+			break;
+		case 15:
+			ret = a*b;
+			break;
+		case 16:
+			ret = a/b;
+			break;
+		case 17:
+			ret = b;
 			break;
 		default:
 			ret = 0;

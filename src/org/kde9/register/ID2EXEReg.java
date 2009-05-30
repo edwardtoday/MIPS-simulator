@@ -125,7 +125,7 @@ public class ID2EXEReg {
 		next.setALUCtrlOut_ID(ALUCtrlOut);
 		next.setMemWEOut_ID(MemWEOut);
 		next.setRegWEOut_ID(RegWEOut);
-		next.setCChoALU2_Ctrl(CChoALUOut2);
+		next.setCChoALUOut2_ID(CChoALUOut2);
 		next.setCChoRegWValOut_ID(CChoRegWValOut);
 		next.setIslwswOut_ID(islwswOut);
 	}

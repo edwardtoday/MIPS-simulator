@@ -7,6 +7,8 @@ public class PCUnit {
 	Signals signal;
 	Signals next;
 	
+	int temp = -5;
+	
 	// in
 	private int lastPc;
 	private boolean reset;
@@ -32,8 +34,15 @@ public class PCUnit {
 	private void run() {
 		if(reset == true)
 			pc = 0;
-		else if(hold == false)
-			pc = 1 + lastPc;
+		else if(hold == false) {
+			if(temp != -5) {
+				pc = 1 + temp;
+				temp = -5;
+			} else
+				pc = 1 + lastPc;		
+		}
+		else
+			temp = lastPc;
 	}
 	
 	private void set() {

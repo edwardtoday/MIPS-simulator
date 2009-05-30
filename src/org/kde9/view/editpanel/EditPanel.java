@@ -76,7 +76,14 @@ implements ActionListener, KeyListener, Constants {
 		button5.setPreferredSize(new Dimension(19,14));
 		button5.putClientProperty("Quaqua.Button.style", "toolBarTab");
 		button5.addActionListener(this);
-		edit = new JToggleButton("Edit");
+		
+		button1.setEnabled(false);
+		button2.setEnabled(false);
+		button3.setEnabled(false);
+		button4.setEnabled(false);
+		button5.setEnabled(false);
+		
+		edit = new JToggleButton("Compile");
 		edit.addActionListener(this);
 		edit.setSelected(true);
 		edit.putClientProperty("Quaqua.Button.style", "toolBarRollover");
@@ -151,9 +158,21 @@ implements ActionListener, KeyListener, Constants {
 			if(edit.isSelected()) {
 				editable = true;
 				editPane.setEnabled(true);
+				edit.setText("Compile");
+				button1.setEnabled(false);
+				button2.setEnabled(false);
+				button3.setEnabled(false);
+				button4.setEnabled(false);
+				button5.setEnabled(false);
 			} else {
 				editable = false;
 				editPane.setEnabled(false);
+				edit.setText("Edit");
+				button1.setEnabled(true);
+				button2.setEnabled(true);
+				button3.setEnabled(true);
+				button4.setEnabled(true);
+				button5.setEnabled(true);
 			}
 		} else if(e.getSource() == forward) {
 			forw = true;

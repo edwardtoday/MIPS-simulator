@@ -5,7 +5,7 @@ public interface Constants {
 	
 	static int REGISTER_INITIAL_VALUE = 0;
 	
-	static int NOP_INS = 0x0;
+	static int NOP_INS = 0xf8000000;
 	
 	static String NEWLINE = System.getProperty("line.separator");
 	
@@ -14,6 +14,8 @@ public interface Constants {
 	static int MEM_HIS_COUNT = 20;
 	
 	static int CACHE_SIZE = 128;
+	
+	static int HALT = 0xfc000000;
 	
 	// RegisterHeap
 	static int RA_Reg = 14 ;    //RA
@@ -31,6 +33,17 @@ public interface Constants {
 	static int Or_ALU = 4 ;    //or
 	static int Xor_ALU = 5 ;   //xor
 	static int Not_ALU = 6 ;   //not
+	static int Sll_ALU = 7 ;   //sll
+	static int Srl_ALU = 8 ;   //srl
+	static int Sra_ALU = 9 ;   //sra
+	static int Seq_ALU = 10;   //seq
+	static int Sne_ALU = 11;   //sne
+	static int Slt_ALU = 12;   //slt
+	static int Sgt_ALU = 13;   //sgt
+	static int Sle_ALU = 14;   //sle
+	static int Mult_ALU = 15;  //mult
+	static int Div_ALU = 16;   //div
+	static int B_ALU = 17;     //b
 	
 	// WE
 	static boolean Able = true ;
