@@ -36,6 +36,9 @@ public class EXE2MEMReg {
 	
 	boolean hold;
 	
+	int pcin;
+	int pcout;
+	
 	public void start(boolean r) {
 		signal = SignalPool.getCurrentSignals();
 		next = SignalPool.getNextSignals();
@@ -45,6 +48,7 @@ public class EXE2MEMReg {
 	}
 	
 	public void check(boolean r) {
+		pcin = signal.getPCOut_ID();
 		ALUValIn = signal.getRet_ALU();
 		RegValIn2 = signal.getRegVal2_CALU2();
 		TIn = signal.isT_ALU();
@@ -60,6 +64,7 @@ public class EXE2MEMReg {
 	
 	private void run() {
 		if(reset) {
+			pcout = -1;
 			ALUValOut = 0;
 			RegValOut2 = 0;
 			TOut = false;
@@ -70,6 +75,7 @@ public class EXE2MEMReg {
 			islwswOut = false;
 		} else {
 			if (!hold) {
+				pcout = pcin;
 				RegValOut2 = RegValIn2;
 				TOut = TIn;
 				RegWAddrOut = RegWAddrIn;
@@ -77,12 +83,14 @@ public class EXE2MEMReg {
 				MemWEOut = MemWEIn;
 				RegWEOut = RegWEIn;
 				CChoRegWValOut = CChoRegWValIn;
-			}
-			islwswOut = islwswIn;
+				islwswOut = islwswIn;
+			} else
+				pcout = -1;
 		}
 	}
 	
 	private void set() {
+		next.setPCOut_EXE(pcout);
 		next.setALUValOut_EXE(ALUValOut);
 		next.setRegValOut2_EXE(RegValOut2);
 		next.setTOut_EXE(TOut);

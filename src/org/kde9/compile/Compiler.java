@@ -12,11 +12,17 @@ public class Compiler {
 	HashMap<Integer, Integer> errors;
 	Vector<Integer> result;
 	Check check;
+	HashMap<Integer, Integer> pc2rownum;
 	
+	public HashMap<Integer, Integer> getPc2rownum() {
+		return pc2rownum;
+	}
+
 	public Compiler() {
 		errors = new HashMap<Integer, Integer>();
 		result = new Vector<Integer>();
 		check = new Check();
+		pc2rownum = new HashMap<Integer, Integer>();
 	}
 	
 	public Vector<Integer> getRet() {
@@ -46,6 +52,7 @@ public class Compiler {
 					flag = false;
 				} else {
 					result.add(ins);
+					pc2rownum.put(result.size(), i);
 				}
 			}
 			temp = br.readLine();

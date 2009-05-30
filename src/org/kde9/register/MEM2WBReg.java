@@ -28,6 +28,9 @@ public class MEM2WBReg {
 	boolean reset;  //异步???唬?1'为清零
 	boolean nreset;  //同步复?唬敝由仙厍?为'1'??清零
 	
+	int pcin;
+	int pcout;
+	
 	public void start(boolean r) {
 		signal = SignalPool.getCurrentSignals();
 		next = SignalPool.getNextSignals();
@@ -37,6 +40,7 @@ public class MEM2WBReg {
 	}
 	
 	public void check(boolean r) {
+		pcin = signal.getPCOut_EXE();
 		ALUValIn = signal.getALUValOut_EXE();
 		MemValIn = signal.getIns_Mem();
 		TIn = signal.isTOut_EXE();
@@ -49,6 +53,7 @@ public class MEM2WBReg {
 	
 	private void run() {
 		if(reset) {
+			pcout = -1;
 			ALUValOut = 0;
 			MemValOut = 0;
 			TOut = false;
@@ -56,6 +61,7 @@ public class MEM2WBReg {
 			RegWEOut = false;
 			CChoRegWValOut = 0;
 		} else {
+			pcout = pcin;
 			ALUValOut = ALUValIn;
 			MemValOut = MemValIn;
 			TOut = TIn;
@@ -66,6 +72,7 @@ public class MEM2WBReg {
 	}
 	
 	private void set() {
+		next.setPCOut_MEM(pcout);
 		next.setALUValOut_MEM(ALUValOut);
 		next.setMemValOut_MEM(MemValOut);
 		next.setTOut_MEM(TOut);

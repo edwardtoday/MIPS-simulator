@@ -2,8 +2,10 @@ package org.kde9.register;
 
 import org.kde9.cpu.SignalPool;
 import org.kde9.cpu.Signals;
+import org.kde9.util.Constants;
 
-public class ID2EXEReg {
+public class ID2EXEReg 
+implements Constants {
 	Signals signal;
 	Signals next;
 	
@@ -52,6 +54,9 @@ public class ID2EXEReg {
 	boolean reset;  //异步???唬?1'为清零
 	boolean nreset;  //同步复?唬敝由仙厍?为'1'??清零
 	
+	int pcin;
+	int pcout;
+	
 	public void start(boolean r) {
 		signal = SignalPool.getCurrentSignals();
 		next = SignalPool.getNextSignals();
@@ -61,6 +66,10 @@ public class ID2EXEReg {
 	}
 	
 	public void check(boolean r) {
+		if(signal.getInsOut_IF() == NOP_INS)
+			pcin = -1;
+		else
+			pcin = signal.getPCOut_IF();
 		RegValIn1 = signal.getRegVal1_Reg();
 		RegValIn2 = signal.getRegVal2_Reg();
 		RegAddrIn1 = signal.getRegAddr1_Ctrl();
@@ -81,6 +90,7 @@ public class ID2EXEReg {
 	
 	private void run() {
 		if(reset) {
+			pcout = -1;
 			RegValOut1 = 0;
 			RegValOut2 = 0;
 			RegEOut1 = false;
@@ -96,6 +106,7 @@ public class ID2EXEReg {
 			CChoRegWValOut = 0;
 			islwswOut = false;
 		} else {
+			pcout = pcin;
 			RegValOut1 = RegValIn1;
 			RegValOut2 = RegValIn2;
 			RegEOut1 = RegEIn1;
@@ -114,6 +125,7 @@ public class ID2EXEReg {
 	}
 	
 	private void set() {
+		next.setPCOut_ID(pcout);
 		next.setRegValOut1_ID(RegValOut1);
 		next.setRegValOut2_ID(RegValOut2);
 		next.setRegEOut1_ID(RegEOut1);

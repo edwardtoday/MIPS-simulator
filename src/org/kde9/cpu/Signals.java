@@ -39,6 +39,7 @@ public class Signals {
 	private int RegVal2_Reg;
 	
 	// ID2EXEReg
+	private int PCOut_ID;
 	private int RegValOut1_ID;
 	private int RegValOut2_ID;
 	private int RegAddrOut1_ID;
@@ -66,6 +67,7 @@ public class Signals {
 	private int RegVal2_CALU2;
 	
 	// EXE2MEMReg
+	private int PCOut_EXE;
 	private int ALUValOut_EXE;
 	private int RegValOut2_EXE;
 	private boolean TOut_EXE;
@@ -76,6 +78,7 @@ public class Signals {
 	private boolean islwswOut_EXE;
 	
 	// MEM2WBReg
+	private int PCOut_MEM;
 	private int ALUValOut_MEM;	
 	private int MemValOut_MEM;
 	private boolean TOut_MEM;
@@ -95,6 +98,30 @@ public class Signals {
 	
 	// ChoPCCtrl
 	private int lastPC_CPC = -1;
+
+	public void setPCOut_ID(int out_ID) {
+		PCOut_ID = out_ID;
+	}
+
+	public void setPCOut_EXE(int out_EXE) {
+		PCOut_EXE = out_EXE;
+	}
+
+	public void setPCOut_MEM(int out_MEM) {
+		PCOut_MEM = out_MEM;
+	}
+
+	public int getPCOut_ID() {
+		return PCOut_ID;
+	}
+
+	public int getPCOut_EXE() {
+		return PCOut_EXE;
+	}
+
+	public int getPCOut_MEM() {
+		return PCOut_MEM;
+	}
 
 	public int getPC_PC() {
 		return PC_PC;

@@ -28,6 +28,7 @@ import javax.swing.JToggleButton;
 import javax.swing.border.TitledBorder;
 
 import org.kde9.compile.Compiler;
+import org.kde9.cpu.FPGA;
 import org.kde9.cpu.UnitPool;
 import org.kde9.exceptions.DonotExist;
 import org.kde9.util.Constants;
@@ -49,6 +50,7 @@ implements ActionListener, KeyListener, Constants {
 	JTextArea line;
 	
 	Compiler compiler;
+	FPGA fpga;
 	
 	boolean editable = true;
 	boolean forw = true;
@@ -57,12 +59,14 @@ implements ActionListener, KeyListener, Constants {
 	String text;
 	boolean error = false;
 	boolean binary = false;
+	HashMap<Integer, Integer> pc2rownum;
 	
 	int rowCount = 1;
 	String[] items = {"IF", "ID", "EXE", "MEM", "WB"};
 	
 	public EditPanel() {
 		compiler = new Compiler();
+		fpga = new FPGA();
 		
 		setLayout(new BorderLayout());
 		
@@ -133,11 +137,20 @@ implements ActionListener, KeyListener, Constants {
 					int c = getRowHeight();
 					g.setColor(new Color(0, 0, 255, 40));
 					g.setFont(new Font("", 0, 10));
-					for (int i = 0; i < 5; i++)
+					int[] pcs = fpga.getPcs();
+					for (int i = 0; i < 5; i++) {
 						for(int j = 0; j < h; j++) {
 							g.drawRoundRect(i*s+1, j*c+1, w/5-2, c-2, 10, 15);
 							g.drawString(items[i], i*s+6, j*c+c-2);
+						}						
+						System.err.println("current " + i + " " + pcs[i]);//////////////////////////////
+						System.err.println("pc2rownum " + pc2rownum);
+						if(pcs[i] != -1) {
+							Integer row = pc2rownum.get(pcs[i]+1);
+							if(row != null)
+								g.fillRoundRect(i*s+1, (row-1)*c+1, w/5-2, c-2, 10, 15);
 						}
+					}
 				}
 				if(error) {
 					int c = getRowHeight();
@@ -219,6 +232,8 @@ implements ActionListener, KeyListener, Constants {
 					if (compiler.compile(editPane.getText())) {
 						try {
 							UnitPool.getMemory().clearMem(DATA);
+							fpga.run(0, true);
+							UnitPool.getInsCache().clear();
 						} catch (DonotExist e2) {
 							// TODO Auto-generated catch block
 							e2.printStackTrace();
@@ -232,6 +247,7 @@ implements ActionListener, KeyListener, Constants {
 						button4.setEnabled(true);
 						button5.setEnabled(true);
 						result = compiler.getRet();
+						pc2rownum = compiler.getPc2rownum();
 						int i = 0;
 						for (int ins : result) {
 							try {
@@ -281,6 +297,12 @@ implements ActionListener, KeyListener, Constants {
 				editPane.setText(temp);
 				binary = true;
 			}
+		} else if(e.getSource() == button3) {
+			
+		} else if(e.getSource() == button4) {
+			fpga.run(1);
+			editPane.repaint();
+//			Factory.getMem().update();
 		}
 	}
 

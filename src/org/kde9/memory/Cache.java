@@ -37,6 +37,14 @@ implements Constants {
 		return mem;
 	}
 	
+	public void clear() {
+		cache.clear();
+		addr2showindex.clear();
+		changeindex.clear();
+		for(int i = 0; i < CACHE_SIZE; i++)
+			showindex[i] = -1;
+	}
+	
 	public void write(int addr, int value) {
 		Integer val = cache.get(addr);
 		if(val != null) {

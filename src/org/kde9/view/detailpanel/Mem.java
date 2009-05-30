@@ -37,6 +37,7 @@ import javax.swing.table.JTableHeader;
 
 import org.kde9.cpu.UnitPool;
 import org.kde9.exceptions.DonotExist;
+import org.kde9.memory.Cache;
 import org.kde9.memory.Memory;
 import org.kde9.util.Constants;
 import org.kde9.util.Functions;
@@ -47,6 +48,8 @@ implements ActionListener, KeyListener,
 		MouseListener, TableModelListener, 
 		Constants {
 	Memory mem = UnitPool.getMemory();
+	Cache insCache = UnitPool.getInsCache();
+	Cache dataCache = UnitPool.getDataCache();
 	
 	JButton clear;
 	JButton save;
@@ -101,6 +104,35 @@ implements ActionListener, KeyListener,
 							getColumnModel().getColumn(i).getWidth(), getRowHeight()-2);
 //					g.drawImage(new ImageIcon("./img/warning.png").getImage(), 
 //							x+xx-20, getRowHeight()*j+1, null);
+					for(int j = 0; j < 32; j++) {
+						int xxx = 0;
+						for(int i = 0; i < 8; i++) {
+							xxx += getColumnModel().getColumn(i).getWidth();
+							xx = getColumnModel().getColumn(i).getWidth();
+							int addr = bound[0] + j*8 + i - 1;
+							try {
+								if(insCache.getCache().get(addr) != null &&
+										mem.read(DATA, addr, false) == insCache.read(addr))
+									g.drawImage(new ImageIcon("./img/okI.png").getImage(), 
+									xxx-15, getRowHeight()*j+1, null);
+								else if(insCache.getCache().get(addr) != null &&
+										mem.read(DATA, addr, false) != insCache.read(addr))
+									g.drawImage(new ImageIcon("./img/warningI.png").getImage(), 
+									xxx-15, getRowHeight()*j+1, null);
+								else if(dataCache.getCache().get(addr) != null &&
+										mem.read(DATA, addr, false) == dataCache.read(addr))
+									g.drawImage(new ImageIcon("./img/okD.png").getImage(), 
+									xxx-30, getRowHeight()*j+1, null);
+								else if(dataCache.getCache().get(addr) != null &&
+										mem.read(DATA, addr, false) != dataCache.read(addr))
+									g.drawImage(new ImageIcon("./img/warningD.png").getImage(), 
+									xxx-30, getRowHeight()*j+1, null);
+							} catch (DonotExist e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						}
+					}
 				}
 			}
 		};
@@ -187,7 +219,7 @@ implements ActionListener, KeyListener,
 	}
 	
 	public void update() {
-		input.dispatchEvent(new KeyEvent(input, KeyEvent.KEY_RELEASED,
+		keyReleased(new KeyEvent(input, KeyEvent.KEY_RELEASED,
 				System.currentTimeMillis(), 0, KeyEvent.VK_ENTER, 'c'));
 	}
 	
