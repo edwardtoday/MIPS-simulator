@@ -11,6 +11,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Vector;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -24,6 +27,7 @@ import javax.swing.JTextArea;
 import javax.swing.JToggleButton;
 import javax.swing.border.TitledBorder;
 
+import org.kde9.compile.Compiler;
 import org.kde9.util.Constants;
 
 public class EditPanel 
@@ -41,13 +45,22 @@ implements ActionListener, KeyListener, Constants {
 	JScrollPane scroll;
 	JTextArea line;
 	
+	Compiler compiler;
+	
 	boolean editable = true;
 	boolean forw = true;
+	HashMap<Integer, Integer> errors;
+	Vector<Integer> result;
+	String text;
+	boolean error = false;
+	boolean binary = false;
 	
 	int rowCount = 1;
 	String[] items = {"IF", "ID", "EXE", "MEM", "WB"};
 	
 	public EditPanel() {
+		compiler = new Compiler();
+		
 		setLayout(new BorderLayout());
 		
 		JPanel innerPanel = new JPanel(new BorderLayout());
@@ -110,7 +123,7 @@ implements ActionListener, KeyListener, Constants {
 		editPane = new JTextArea() {
 			public void paint(Graphics g) {
 				super.paint(g);
-				if (!editable) {
+				if (!editable && !binary) {
 					int w = getWidth();
 					int h = getLineCount();
 					int s = w/5;
@@ -122,6 +135,36 @@ implements ActionListener, KeyListener, Constants {
 							g.drawRoundRect(i*s+1, j*c+1, w/5-2, c-2, 10, 15);
 							g.drawString(items[i], i*s+6, j*c+c-2);
 						}
+				}
+				if(error) {
+					int c = getRowHeight();
+					g.setColor(new Color(255, 0, 0, 100));
+					for (int row : errors.keySet()) {
+						switch(errors.get(row)) {
+						case 0:
+							g.drawImage(new ImageIcon("./img/e1.png").getImage(), 
+									120, row*c-c, null);
+							break;
+						case 1:
+							g.drawImage(new ImageIcon("./img/e2.png").getImage(), 
+									120, row*c-c, null);
+							break;
+						case 2:
+							g.drawImage(new ImageIcon("./img/e3.png").getImage(), 
+									120, row*c-c, null);
+							break;
+						case 3:
+							g.drawImage(new ImageIcon("./img/e4.png").getImage(), 
+									120, row*c-c, null);
+							break;
+						case 4:
+							g.drawImage(new ImageIcon("./img/e5.png").getImage(), 
+									120, row*c-c, null);
+							break;
+						default:
+							break;
+						}
+					}
 				}
 			}
 		};
@@ -156,6 +199,10 @@ implements ActionListener, KeyListener, Constants {
 		// TODO Auto-generated method stub
 		if(e.getSource() == edit) {
 			if(edit.isSelected()) {
+				if(binary) {
+					editPane.setText(text);
+					binary = false;
+				}
 				editable = true;
 				editPane.setEnabled(true);
 				edit.setText("Compile");
@@ -165,14 +212,27 @@ implements ActionListener, KeyListener, Constants {
 				button4.setEnabled(false);
 				button5.setEnabled(false);
 			} else {
-				editable = false;
-				editPane.setEnabled(false);
-				edit.setText("Edit");
-				button1.setEnabled(true);
-				button2.setEnabled(true);
-				button3.setEnabled(true);
-				button4.setEnabled(true);
-				button5.setEnabled(true);
+				try {
+					if (compiler.compile(editPane.getText())) {
+						editable = false;
+						editPane.setEnabled(false);
+						edit.setText("Edit");
+						button1.setEnabled(true);
+						button2.setEnabled(true);
+						button3.setEnabled(true);
+						button4.setEnabled(true);
+						button5.setEnabled(true);
+						result = compiler.getRet();
+					} else {
+						error = true;
+						edit.setSelected(true);
+						errors = compiler.getErrRows();
+						editPane.updateUI();
+					}
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		} else if(e.getSource() == forward) {
 			forw = true;
@@ -182,10 +242,30 @@ implements ActionListener, KeyListener, Constants {
 			forw = false;
 			forward.setSelected(false);
 			backward.setSelected(true);
+		} else if(e.getSource() == button1) {
+			if(binary) {
+				editPane.setText(text);
+				binary = false;
+			}
+		} else if(e.getSource() == button2) {
+			if(!binary) {
+				text = editPane.getText();
+				String temp = "";
+				for(int ins : result) {
+					String i = Integer.toBinaryString(ins);
+					while(i.length() < 32)
+						i = "0" + i;
+					temp += i;
+					temp += NEWLINE;
+				}
+				editPane.setText(temp);
+				binary = true;
+			}
 		}
 	}
 
 	public void keyPressed(KeyEvent e) {
+		error = false;
 		// TODO Auto-generated method stub
 		if(e.getKeyCode() == KeyEvent.VK_ENTER || 
 				e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
