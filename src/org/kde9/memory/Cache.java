@@ -16,10 +16,15 @@ implements Constants {
 
 	HashMap<Integer, Integer> addr2showindex;
 	int[] showindex;
+
 	Vector<Integer> changeindex;
 	
 	int flag = 0;
 	int addr = -1;
+	
+	public int[] getShowindex() {
+		return showindex;
+	}
 	
 	public Cache() {
 		try {

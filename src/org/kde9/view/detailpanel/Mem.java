@@ -92,6 +92,7 @@ implements ActionListener, KeyListener,
 		input.setPreferredSize(new Dimension(100, 30));
 		input.addKeyListener(this);
 		keepMem = new JRadioButton("自动跟踪");
+		keepMem.addActionListener(this);
 		cache = new JRadioButton("同时修改cache");
 		cache.addActionListener(this);
 		//((FlowLayout)up.getLayout()).setAlignment(FlowLayout.LEFT);
@@ -236,8 +237,19 @@ implements ActionListener, KeyListener,
 	}
 	
 	public void update() {
+		System.err.println(keep);
+		if(keep) {
+			if(mem.getRead().size() > 0 && 
+					!String.valueOf(mem.getRead().lastElement()).equals(input.getText()))
+				update(mem.getRead().lastElement());
+			else if(mem.getWrite().size() > 0 && 
+					!String.valueOf(mem.getWrite().lastElement()).equals(input.getText()))
+				update(mem.getWrite().lastElement());
+		} else {
 		keyReleased(new KeyEvent(input, KeyEvent.KEY_RELEASED,
 				System.currentTimeMillis(), 0, KeyEvent.VK_ENTER, 'c'));
+		}
+		updateList();
 	}
 	
 	public void actionPerformed(ActionEvent e) {
