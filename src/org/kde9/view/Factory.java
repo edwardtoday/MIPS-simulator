@@ -3,19 +3,22 @@ package org.kde9.view;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 
+import org.kde9.view.detailpanel.Cac;
 import org.kde9.view.detailpanel.DetailPanel;
 import org.kde9.view.detailpanel.Mem;
 import org.kde9.view.detailpanel.Reg;
 import org.kde9.view.editpanel.EditPanel;
+import org.kde9.view.menubar.Menubar;
 
 public class Factory {
 	static Reg reg = new Reg();
 	static Mem mem = new Mem();
-	static JPanel cache = new JPanel();
+	static Cac cac = new Cac();
+//	static JPanel cache = new JPanel();
 	static JPanel summary = new JPanel();
 	static private DetailPanel detail = new DetailPanel();
 	static private EditPanel edit = new EditPanel();
-	static private JMenuBar menu = new JMenuBar();
+	static private Menubar menu = new Menubar();
 	static private Main main;
 	
 	public static Main getMain() {
@@ -30,9 +33,12 @@ public class Factory {
 	public static Mem getMem() {
 		return mem;
 	}
-	public static JPanel getCache() {
-		return cache;
+	public static Cac getCac() {
+		return cac;
 	}
+//	public static JPanel getCache() {
+//		return cache;
+//	}
 	public static JPanel getSummary() {
 		return summary;
 	}

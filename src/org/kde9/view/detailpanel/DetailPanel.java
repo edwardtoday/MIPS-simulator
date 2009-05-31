@@ -16,7 +16,7 @@ extends JTabbedPane {
 		super();//JTabbedPane.LEFT);
 		reg = Factory.getReg();
 		mem = Factory.getMem();
-		cache = Factory.getCache();
+		cache = Factory.getCac();
 		summary = Factory.getSummary();
 				
 		add("Summary", summary);
