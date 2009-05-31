@@ -2,13 +2,18 @@ package org.kde9.view.detailpanel;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Vector;
 
@@ -36,11 +41,12 @@ public class Cac
 extends JPanel 
 implements ActionListener, KeyListener,
 		MouseListener, TableModelListener, 
+		ItemListener, 
 		Constants{
-	Memory mem = UnitPool.getMemory();
 	Cache insCache = UnitPool.getInsCache();
 	Cache dataCache = UnitPool.getDataCache();
 	
+	JPanel cachePanel;
 	JPanel insPanel;
 	JPanel dataPanel;
 	JLabel insLabel;
@@ -63,10 +69,20 @@ implements ActionListener, KeyListener,
 	JButton saveDataCache;
 	JComboBox restoreIns;
 	JComboBox restoreData;
+	JButton hexb;
+	JButton decb;
+	JPanel upButton;
 	
+	String justBefore = "Just before clear";
 	
+	boolean hexOrNot = false;
+	HashMap<String, HashMap<Integer, Integer>> savedInsCac;
+	HashMap<String, HashMap<Integer, Integer>> savedDataCac;
+	boolean combobox = true;
 	
 	public Cac() {
+		savedInsCac = new HashMap<String, HashMap<Integer,Integer>>();
+		savedDataCac = new HashMap<String, HashMap<Integer,Integer>>();
 		insPanel = new JPanel(new BorderLayout());
 		dataPanel = new JPanel(new BorderLayout());
 		insLabel = new JLabel("Instruction Cache");
@@ -80,7 +96,12 @@ implements ActionListener, KeyListener,
 		clearDataCache = new JButton("Clear");
 		saveDataCache = new JButton("Save");
 		
-		insTable = new JTable(CACHE_SIZE, 3) {
+		clearInsCache.addActionListener(this);
+		clearDataCache.addActionListener(this);
+		saveInsCache.addActionListener(this);
+		saveDataCache.addActionListener(this);
+		
+		insTable = new JTable(0, 3) {
 			
 		};
 		insTable.setCellSelectionEnabled(true);
@@ -92,7 +113,7 @@ implements ActionListener, KeyListener,
 		insTable.getColumnModel().getColumn(0).setWidth(250);
 		insPane = new JScrollPane(insTable);
 		insPane.setBorder(BorderFactory.createEtchedBorder());
-		dataTable = new JTable(CACHE_SIZE, 3) {
+		dataTable = new JTable(0, 3) {
 			
 		};
 		dataTable.setCellSelectionEnabled(true);
@@ -108,9 +129,14 @@ implements ActionListener, KeyListener,
 		JLabel restoreInsLabel = new JLabel("Restore to");
 		JLabel restoreDataLabel = new JLabel("Restore to");
 		restoreIns = new JComboBox();
+		restoreIns.addItem("");
 		restoreIns.setPreferredSize(new Dimension(100, 30));
 		restoreData = new JComboBox();
+		restoreData.addItem("");
 		restoreData.setPreferredSize(new Dimension(100, 30));
+		
+		restoreIns.addItemListener(this);
+		restoreData.addItemListener(this);
 		
 		insList1.setPreferredSize(new Dimension(80, 100));
 		insList1.setBorder(BorderFactory.createEtchedBorder());
@@ -160,17 +186,43 @@ implements ActionListener, KeyListener,
 		dataPanel.add("Center", dataPane);
 		dataPanel.add("South", tempDataB);
 		
-		setLayout(new GridLayout(0, 2));
+		cachePanel = new JPanel(new GridLayout(0, 2));
 		TitledBorder t1 = new TitledBorder("Instruction Cache");
 		TitledBorder t2 = new TitledBorder("Data Cache");
 		t1.setTitleJustification(TitledBorder.CENTER);
 		t2.setTitleJustification(TitledBorder.CENTER);
 		insPanel.setBorder(t1);
 		dataPanel.setBorder(t2);
-		add(insPanel);
-		add(dataPanel);
 		
+		cachePanel.add(insPanel);
+		cachePanel.add(dataPanel);
+		
+		setLayout(new BorderLayout());
+		
+		upButton = new JPanel();
+		((FlowLayout)upButton.getLayout()).setVgap(0);
+		hexb = new JButton("十六进制显示");
+		decb = new JButton(" 十进制显示  ");
+		upButton.add(decb);
+		upButton.add(hexb);
+		decb.addActionListener(this);
+		hexb.addActionListener(this);
+		
+		add("South", upButton);
+		add("Center", cachePanel);
 		update();
+	}
+	
+	public void clearIns() {
+		DefaultTableModel insModel = ((DefaultTableModel)insTable.getModel());
+		while(insTable.getRowCount() > 0)
+			insModel.removeRow(0);
+	}
+	
+	public void clearData() {
+		DefaultTableModel dataModel = ((DefaultTableModel)dataTable.getModel());
+		while(dataTable.getRowCount() > 0)
+			dataModel.removeRow(0);
 	}
 	
 	public void update() {
@@ -180,23 +232,101 @@ implements ActionListener, KeyListener,
 			insModel.removeRow(0);
 		while(dataTable.getRowCount() > 0)
 			dataModel.removeRow(0);
-		HashMap<Integer, Integer> inscache = UnitPool.getInsCache().getCache();
-		HashMap<Integer, Integer> datacache = UnitPool.getDataCache().getCache();
-		for(int i = 0; i < CACHE_SIZE; i++) {
+		HashMap<Integer, Integer> inscache = insCache.getCache();
+		HashMap<Integer, Integer> datacache = dataCache.getCache();
+		int []insIndex = insCache.getShowindex();
+		int []dataIndex = dataCache.getShowindex();
+		for(int i = 0; i < insIndex.length; i++) {
 			Vector<String> row = new Vector<String>();
-			row.add("0x" + Integer.toHexString(i));
+			if(hexOrNot) {
+				if(insIndex[i] != -1) {
+					row.add("0x" + Integer.toHexString(i));
+					row.add("0x" + Integer.toHexString(inscache.get(insIndex[i])));
+					row.add("0x" + Integer.toHexString(insIndex[i]));
+				}else {
+					row.add("0x" + Integer.toHexString(i));
+					row.add("null");
+					row.add("-1");
+				}
+			}else {
+				row.add(String.valueOf(i));
+				row.add(String.valueOf(inscache.get(insIndex[i])));
+				row.add(String.valueOf(insIndex[i]));
+			}
 			insModel.addRow(row);
 		}
-		for(int i = 0; i < CACHE_SIZE; i++) {
+		for(int i = 0; i < dataIndex.length; i++) {
 			Vector<String> row = new Vector<String>();
-			row.add("0x" + Integer.toHexString(i));
+			if(hexOrNot) {
+				if(dataIndex[i] != -1) {
+					row.add("0x" + Integer.toHexString(i));
+					row.add("0x" + Integer.toHexString(datacache.get(dataIndex[i])));
+					row.add("0x" + Integer.toHexString(dataIndex[i]));
+				}else {
+					row.add("0x" + Integer.toHexString(i));
+					row.add("null");
+					row.add("-1");
+				}
+			}else {
+				row.add(String.valueOf(i));
+				row.add(String.valueOf(datacache.get(dataIndex[i])));
+				row.add(String.valueOf(dataIndex[i]));
+			}
 			dataModel.addRow(row);
 		}
 	}
 	
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-		
+		if(e.getSource() == decb) {
+			hexOrNot = false;
+			update();
+		}else if(e.getSource() == hexb) {
+			hexOrNot = true;
+			update();
+		}else if(e.getSource() == clearInsCache) {
+			saveInsCac(justBefore);
+			insCache.clear();
+			update();
+			//clearIns();
+		}else if(e.getSource() == clearDataCache) {
+			saveDataCac(justBefore);
+			dataCache.clear();
+			update();
+			//clearData();
+		}else if(e.getSource() == saveInsCache) {
+			Date date = new Date();
+			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
+			String dateString = formatter.format(date);
+			
+			saveInsCac(dateString);
+		}else if(e.getSource() == saveDataCache) {
+			Date date = new Date();
+			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
+			String dateString = formatter.format(date);
+			
+			saveDataCac(dateString);
+		}
+	}
+	
+	public void saveInsCac(String name) {
+		HashMap<Integer, Integer> temp = new HashMap<Integer, Integer>();
+		for(int addr : insCache.getCache().keySet()) {
+			temp.put(addr, insCache.getCache().get(addr));
+		}
+		restoreIns.removeItem(name);
+		restoreIns.addItem(name);
+		savedInsCac.put(name, temp);
+	}
+	
+	public void saveDataCac(String name) {
+		HashMap<Integer, Integer> temp = new HashMap<Integer, Integer>();
+		for(int addr : dataCache.getCache().keySet()) {
+			temp.put(addr, dataCache.getCache().get(addr));
+		}
+		restoreData.removeItem(name);
+		restoreData.addItem(name);
+		savedDataCac.put(name, temp);
 	}
 
 	public void keyPressed(KeyEvent e) {
@@ -242,5 +372,42 @@ implements ActionListener, KeyListener,
 	public void tableChanged(TableModelEvent e) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	public void itemStateChanged(ItemEvent e) {
+		// TODO Auto-generated method stub
+		if (e.getSource() == restoreIns) {
+			if (combobox) {
+				combobox = false;
+				System.out.println(e.getItem());
+				HashMap<Integer, Integer> m = insCache.getCache();
+				HashMap<Integer, Integer> r = savedInsCac.get(e.getItem()
+						.toString());
+				if (r != null) {
+					m.clear();
+					for (int addr : r.keySet())
+						m.put(addr, r.get(addr));
+					restoreIns.setSelectedIndex(0);
+					update();
+				}
+				combobox = true;
+			}
+		} else if (e.getSource() == restoreData) {
+			if (combobox) {
+				combobox = false;
+				System.out.println(e.getItem());
+				HashMap<Integer, Integer> m = dataCache.getCache();
+				HashMap<Integer, Integer> r = savedDataCac.get(e.getItem()
+						.toString());
+				if (r != null) {
+					m.clear();
+					for (int addr : r.keySet())
+						m.put(addr, r.get(addr));
+					restoreData.setSelectedIndex(0);
+					update();
+				}
+				combobox = true;
+			}
+		}
 	}
 }
