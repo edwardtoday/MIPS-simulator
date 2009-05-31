@@ -7,6 +7,7 @@ import org.kde9.view.detailpanel.Cac;
 import org.kde9.view.detailpanel.DetailPanel;
 import org.kde9.view.detailpanel.Mem;
 import org.kde9.view.detailpanel.Reg;
+import org.kde9.view.detailpanel.Summary;
 import org.kde9.view.editpanel.EditPanel;
 import org.kde9.view.menubar.Menubar;
 
@@ -15,7 +16,7 @@ public class Factory {
 	static Mem mem = new Mem();
 	static Cac cac = new Cac();
 //	static JPanel cache = new JPanel();
-	static JPanel summary = new JPanel();
+	static Summary summary = new Summary();
 	static private DetailPanel detail = new DetailPanel();
 	static private EditPanel edit = new EditPanel();
 	static private Menubar menu = new Menubar();
@@ -39,7 +40,7 @@ public class Factory {
 //	public static JPanel getCache() {
 //		return cache;
 //	}
-	public static JPanel getSummary() {
+	public static Summary getSummary() {
 		return summary;
 	}
 	public static EditPanel getEdit() {

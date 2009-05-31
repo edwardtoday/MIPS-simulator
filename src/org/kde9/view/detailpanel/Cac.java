@@ -210,7 +210,7 @@ implements ActionListener, KeyListener,
 		
 		add("South", upButton);
 		add("Center", cachePanel);
-		update();
+//		update();
 	}
 	
 	public void clearIns() {
@@ -225,7 +225,7 @@ implements ActionListener, KeyListener,
 			dataModel.removeRow(0);
 	}
 	
-	public void update() {
+	synchronized public void update() {
 		DefaultTableModel insModel = ((DefaultTableModel)insTable.getModel());
 		DefaultTableModel dataModel = ((DefaultTableModel)dataTable.getModel());
 		while(insTable.getRowCount() > 0)

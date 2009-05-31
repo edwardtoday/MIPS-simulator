@@ -411,7 +411,7 @@ implements ActionListener, KeyListener,
 					UnitPool.getMemory().write(DATA, addr, value, true);
 					if(connectCache) {
 						if(UnitPool.getInsCache().getCache().containsKey(addr))
-							UnitPool.getInsCache().load(addr, false);
+							UnitPool.getInsCache().getCache().put(addr, value);
 					}
 				} catch (DonotExist e1) {
 					// TODO Auto-generated catch block

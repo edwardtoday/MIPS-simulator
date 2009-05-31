@@ -1,5 +1,7 @@
 package org.kde9.cpu;
 
+import java.util.HashMap;
+
 import org.kde9.util.Constants;
 import org.kde9.view.Factory;
 
@@ -16,6 +18,17 @@ implements Constants {
 	private int currentPc;
 	private boolean runto = false;
 	
+	private HashMap<Integer, Integer> pc2circle;
+	private HashMap<Integer, Integer> whichPart;
+	
+	public HashMap<Integer, Integer> getWhichPart() {
+		return whichPart;
+	}
+
+	public HashMap<Integer, Integer> getPc2circle() {
+		return pc2circle;
+	}
+
 	public int getCurrentPc() {
 		return currentPc;
 	}
@@ -35,17 +48,25 @@ implements Constants {
 	private void checkPcs() {
 		Signals s = SignalPool.getCurrentSignals();
 		currentPc = s.getPC_PC();
-		if (s.isReady_Mem() && !s.isIslwswOut_EXE())
+		if (s.isReady_Mem()) {// && !s.isIslwswOut_EXE())
 			pcs[0] = s.getPC_PC();
+			pc2circle.put(s.getPC_PC(), count);
+			whichPart.put(s.getPC_PC(), 0);
+		}
 		else
 			pcs[0] = -1;
-		if (s.getInsOut_IF() != NOP_INS)
+		if (s.getInsOut_IF() != NOP_INS) {
 			pcs[1] = s.getPCOut_IF();
+			whichPart.put(s.getPCOut_IF(), 1);
+		}
 		else
 			pcs[1] = -1;
 		pcs[2] = s.getPCOut_ID();
+		whichPart.put(s.getPCOut_ID(), 2);
 		pcs[3] = s.getPCOut_EXE();
+		whichPart.put(s.getPCOut_EXE(), 3);
 		pcs[4] = s.getPCOut_MEM();
+		whichPart.put(s.getPCOut_MEM(), 4);
 	}
 	
 	private void needStop() {
@@ -57,6 +78,8 @@ implements Constants {
 	
 	public FPGA() {
 		cpu = new CPU();
+		pc2circle = new HashMap<Integer, Integer>();
+		whichPart = new HashMap<Integer, Integer>();
 		thread = new Thread() {
 			public void run() {
 				while (true) {
@@ -120,6 +143,8 @@ implements Constants {
 //			private int loc;
 			currentPc = 0;
 			UnitPool.getRegisters().clear();
+			pc2circle.clear();
+			whichPart.clear();
 //			reset = false;
 		}
 		synchronized (thread) {

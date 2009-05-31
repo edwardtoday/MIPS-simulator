@@ -426,7 +426,18 @@ implements ActionListener, KeyListener, MouseListener, Constants {
 			System.out.println(rownum2pc);
 			if (pc != null) {
 				System.out.println(pc + "+++++++" + loc);
-				fpga.run(pc-1, loc);
+				if(forw) {
+					fpga.run(pc - 1, loc);
+				} else {
+					UnitPool.getInsCache().clear();
+					UnitPool.getDataCache().clear();
+					Integer c = fpga.getPc2circle().get(pc-1);
+					if(c != null && fpga.getWhichPart().get(pc-1) >= loc) {
+						fpga.run(0, true);
+						fpga.run(c);
+						fpga.run(pc - 1, loc);
+					}
+				}
 			}
 		}
 	}
