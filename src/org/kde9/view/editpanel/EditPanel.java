@@ -53,6 +53,7 @@ implements ActionListener, KeyListener, MouseListener, Constants {
 	JLabel circle;
 	JLabel pc;
 	
+	int rowHeight;
 	Compiler compiler;
 	FPGA fpga;
 	
@@ -139,7 +140,7 @@ implements ActionListener, KeyListener, MouseListener, Constants {
 		line.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 1, 
 				new Color(0, 0, 255, 20)));
 		line.setPreferredSize(new Dimension(30, 200));
-		editPane = new JTextArea() {
+		editPane = new JTextArea() {			
 			public void paint(Graphics g) {
 				super.paint(g);
 				if (!editable && !binary) {
@@ -147,6 +148,7 @@ implements ActionListener, KeyListener, MouseListener, Constants {
 					int h = getLineCount();
 					int s = w/5;
 					int c = getRowHeight();
+					rowHeight = c;
 					g.setColor(new Color(0, 0, 255, 40));
 					g.setFont(new Font("", 0, 10));
 					pcs = fpga.getPcs();
@@ -410,8 +412,18 @@ implements ActionListener, KeyListener, MouseListener, Constants {
 		
 	}
 
-	public void mouseReleased(MouseEvent arg0) {
+	public void mouseReleased(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
+		if (!editable && !binary) {
+			int w = editPane.getWidth() / 5;
+			int h = rowHeight;
+			Integer pc = rownum2pc.get(e.getY() / h + 1);
+			int loc = e.getX() / w;
+			System.out.println(rownum2pc);
+			if (pc != null) {
+				System.out.println(pc + "+++++++" + loc);
+				fpga.run(pc-1, loc);
+			}
+		}
 	}
 }

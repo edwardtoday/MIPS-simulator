@@ -14,6 +14,7 @@ implements Constants {
 	private int pc;
 	private int loc;
 	private int currentPc;
+	private boolean runto = false;
 	
 	public int getCurrentPc() {
 		return currentPc;
@@ -48,8 +49,10 @@ implements Constants {
 	}
 	
 	private void needStop() {
-		if(pcs[loc] == pc)
+		if(pcs[loc] == pc) {
 			goon = false;
+			runto = false;
+		}
 	}
 	
 	public FPGA() {
@@ -82,7 +85,8 @@ implements Constants {
 							if(!cpu.circle(reset))
 								break;
 							checkPcs();
-//							needStop();
+							if(runto)
+								needStop();
 							count++;
 							if(reset) {
 								reset = false;
@@ -135,6 +139,7 @@ implements Constants {
 		this.pc = pc;
 		this.loc = loc;
 		this.circle = -1;
+		runto = true;
 		synchronized (thread) {
 			thread.notify();
 		}
