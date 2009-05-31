@@ -66,12 +66,12 @@ public class CPU {
 		UnitPool.setRegisters(reg.getRs());
 	}
 	
-	public void circle(boolean reset) {
+	public boolean circle(boolean reset) {
 		Integer ins = SignalPool.getCurrentSignals().getIns_Mem();
 		boolean islwsw = SignalPool.getCurrentSignals().isIslwswOut_EXE();
 		if(!islwsw && ins != null && ins == 0xfc000000) {
 			System.out.println("Halt!!!!!!!");
-			return;
+			return false;
 		}
 		pcUnit.start(reset);
 		if2id.start(reset);
@@ -109,6 +109,8 @@ public class CPU {
 		System.out.print("WB:  ");
 		System.out.println("RegW [" + s.getRegWAddrOut_MEM() + "/" + s.getRegWVal_CReg() + " " + s.isRegWEOut_MEM() + "]");
 		System.out.println("***************************************************");
+		
+		return true;
 	}
 	
 	public static void main(String args[]) {

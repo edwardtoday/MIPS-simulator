@@ -64,6 +64,11 @@ extends JFrame {
 				((screenHeight - shellHeight) / 2));
 	}
 	
+	public void updata() {
+		Factory.getEdit().updata();
+		Factory.getMem().update();
+	}
+	
 	public static void main(String args[]) {
 		final java.util.List argList = Arrays.asList(args);
 		

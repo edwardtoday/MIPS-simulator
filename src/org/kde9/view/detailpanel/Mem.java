@@ -112,19 +112,19 @@ implements ActionListener, KeyListener,
 							int addr = bound[0] + j*8 + i - 1;
 							try {
 								if(insCache.getCache().get(addr) != null &&
-										mem.read(DATA, addr, false) == insCache.read(addr))
+										mem.read(DATA, addr, false) == insCache.getCache().get(addr))
 									g.drawImage(new ImageIcon("./img/okI.png").getImage(), 
 									xxx-15, getRowHeight()*j+1, null);
 								else if(insCache.getCache().get(addr) != null &&
-										mem.read(DATA, addr, false) != insCache.read(addr))
+										mem.read(DATA, addr, false) != insCache.getCache().get(addr))
 									g.drawImage(new ImageIcon("./img/warningI.png").getImage(), 
 									xxx-15, getRowHeight()*j+1, null);
 								else if(dataCache.getCache().get(addr) != null &&
-										mem.read(DATA, addr, false) == dataCache.read(addr))
+										mem.read(DATA, addr, false) == dataCache.getCache().get(addr))
 									g.drawImage(new ImageIcon("./img/okD.png").getImage(), 
 									xxx-30, getRowHeight()*j+1, null);
 								else if(dataCache.getCache().get(addr) != null &&
-										mem.read(DATA, addr, false) != dataCache.read(addr))
+										mem.read(DATA, addr, false) != dataCache.getCache().get(addr))
 									g.drawImage(new ImageIcon("./img/warningD.png").getImage(), 
 									xxx-30, getRowHeight()*j+1, null);
 							} catch (DonotExist e) {

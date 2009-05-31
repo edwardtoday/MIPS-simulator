@@ -13,7 +13,12 @@ public class Compiler {
 	Vector<Integer> result;
 	Check check;
 	HashMap<Integer, Integer> pc2rownum;
+	HashMap<Integer, Integer> rownum2pc;
 	
+	public HashMap<Integer, Integer> getRownum2pc() {
+		return rownum2pc;
+	}
+
 	public HashMap<Integer, Integer> getPc2rownum() {
 		return pc2rownum;
 	}
@@ -23,6 +28,7 @@ public class Compiler {
 		result = new Vector<Integer>();
 		check = new Check();
 		pc2rownum = new HashMap<Integer, Integer>();
+		rownum2pc = new HashMap<Integer, Integer>();
 	}
 	
 	public Vector<Integer> getRet() {
@@ -38,6 +44,8 @@ public class Compiler {
 		boolean flag = true;
 		errors.clear();
 		result.clear();
+		pc2rownum.clear();
+		rownum2pc.clear();
 		StringReader sr = new StringReader(text);
 		BufferedReader br = new BufferedReader(sr);
 		String temp = br.readLine();
@@ -53,6 +61,7 @@ public class Compiler {
 				} else {
 					result.add(ins);
 					pc2rownum.put(result.size(), i);
+					rownum2pc.put(i, result.size());
 				}
 			}
 			temp = br.readLine();

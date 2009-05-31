@@ -60,6 +60,8 @@ implements ActionListener, KeyListener, Constants {
 	boolean error = false;
 	boolean binary = false;
 	HashMap<Integer, Integer> pc2rownum;
+	HashMap<Integer, Integer> rownum2pc;
+	int[] pcs = new int[] {-1,-1,-1,-1,-1};
 	
 	int rowCount = 1;
 	String[] items = {"IF", "ID", "EXE", "MEM", "WB"};
@@ -137,7 +139,7 @@ implements ActionListener, KeyListener, Constants {
 					int c = getRowHeight();
 					g.setColor(new Color(0, 0, 255, 40));
 					g.setFont(new Font("", 0, 10));
-					int[] pcs = fpga.getPcs();
+					pcs = fpga.getPcs();
 					for (int i = 0; i < 5; i++) {
 						for(int j = 0; j < h; j++) {
 							g.drawRoundRect(i*s+1, j*c+1, w/5-2, c-2, 10, 15);
@@ -248,6 +250,7 @@ implements ActionListener, KeyListener, Constants {
 						button5.setEnabled(true);
 						result = compiler.getRet();
 						pc2rownum = compiler.getPc2rownum();
+						rownum2pc = compiler.getRownum2pc();
 						int i = 0;
 						for (int ins : result) {
 							try {
@@ -301,11 +304,15 @@ implements ActionListener, KeyListener, Constants {
 			
 		} else if(e.getSource() == button4) {
 			fpga.run(1);
-			editPane.repaint();
+//			editPane.repaint();
 //			Factory.getMem().update();
 		}
 	}
 
+	public void updata() {
+		editPane.repaint();
+	}
+	
 	public void keyPressed(KeyEvent e) {
 		error = false;
 		// TODO Auto-generated method stub

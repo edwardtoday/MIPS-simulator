@@ -1,6 +1,7 @@
 package org.kde9.cpu;
 
 import org.kde9.util.Constants;
+import org.kde9.view.Factory;
 
 public class FPGA 
 implements Constants {
@@ -10,6 +11,8 @@ implements Constants {
 	private int circle = 0;
 	private boolean goon = true;
 	private boolean reset = false;
+	private int pc;
+	private int loc;
 	
 	private int count = 0;
 	private int[] pcs = new int[] {-1, -1, -1, -1, -1};
@@ -33,6 +36,11 @@ implements Constants {
 		pcs[4] = s.getPCOut_MEM();
 	}
 	
+	private void needStop() {
+		if(pcs[loc] == pc)
+			goon = false;
+	}
+	
 	public FPGA() {
 		cpu = new CPU();
 		thread = new Thread() {
@@ -46,7 +54,7 @@ implements Constants {
 							e.printStackTrace();
 						}
 					}
-					if(circle > 0) {
+					while(circle > 0) {
 						System.out.println("reset: " + reset);
 						cpu.circle(reset);
 						checkPcs();
@@ -57,10 +65,12 @@ implements Constants {
 							count = 0;
 						}
 						circle--;
-					} else if(circle < 0){
+					}
+					if(circle < 0){
 						while(goon) {
 							cpu.circle(reset);
 							checkPcs();
+							needStop();
 							count++;
 							if(reset) {
 								reset = false;
@@ -71,6 +81,7 @@ implements Constants {
 						if(!goon)
 							goon = true;
 					}
+					Factory.getMain().updata();
 				}
 			}
 		};
@@ -92,6 +103,20 @@ implements Constants {
 		synchronized (thread) {
 			thread.notify();
 		}
+	}
+	
+	public void run(int pc, int loc) {
+		goon = true;
+		this.pc = pc;
+		this.loc = loc;
+		this.circle = -1;
+		synchronized (thread) {
+			thread.notify();
+		}
+	}
+	
+	public void stop() {
+		goon = false;
 	}
 	
 	public int getCircle() {
