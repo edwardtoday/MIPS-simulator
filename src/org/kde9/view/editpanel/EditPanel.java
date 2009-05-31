@@ -120,10 +120,10 @@ implements ActionListener, KeyListener, MouseListener, Constants {
 		inPanel.add(button3);
 		inPanel.add(button4);
 		inPanel.add(button5);
-		inPanel.add(new JLabel("  circle: "));
+		inPanel.add(new JLabel(" circle:"));
 		circle = new JLabel("");
 		inPanel.add(circle);
-		inPanel.add(new JLabel("  pc: "));
+		inPanel.add(new JLabel(" pc:"));
 		pc = new JLabel("");
 		inPanel.add(pc);
 		inPanel.setOpaque(true);
@@ -251,6 +251,7 @@ implements ActionListener, KeyListener, MouseListener, Constants {
 				button5.setEnabled(false);
 				circle.setText("0");
 				pc.setText("0");
+				Factory.getReg().clear();
 			} else {
 				try {
 					fpga.stop();
@@ -259,7 +260,6 @@ implements ActionListener, KeyListener, MouseListener, Constants {
 							UnitPool.getMemory().clearMem(DATA);
 							UnitPool.getInsCache().clear();
 							UnitPool.getDataCache().clear();
-							fpga.run(0, true);
 						} catch (DonotExist e2) {
 							// TODO Auto-generated catch block
 							e2.printStackTrace();
@@ -285,6 +285,7 @@ implements ActionListener, KeyListener, MouseListener, Constants {
 							}
 							i++;
 						}
+						fpga.run(0, true);
 						circle.setText("0");
 						pc.setText("0");
 						//Factory.getMem().update();
@@ -337,7 +338,7 @@ implements ActionListener, KeyListener, MouseListener, Constants {
 		}
 	}
 
-	public void updata() {
+	public void update() {
 		editPane.repaint();
 		if(fpga.getCount() > 0)
 			circle.setText(String.valueOf(fpga.getCount()));

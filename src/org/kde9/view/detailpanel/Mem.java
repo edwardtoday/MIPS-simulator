@@ -108,25 +108,27 @@ implements ActionListener, KeyListener,
 						int xxx = 0;
 						for(int i = 0; i < 8; i++) {
 							xxx += getColumnModel().getColumn(i).getWidth();
-							xx = getColumnModel().getColumn(i).getWidth();
-							int addr = bound[0] + j*8 + i - 1;
+							xx = getColumnModel().getColumn(i+1).getWidth();
+							int addr = bound[0] + j*8 + i;
 							try {
 								if(insCache.getCache().get(addr) != null &&
-										mem.read(DATA, addr, false) == insCache.getCache().get(addr))
+										mem.read(DATA, addr, false) == insCache.getCache().get(addr)) {
 									g.drawImage(new ImageIcon("./img/okI.png").getImage(), 
-									xxx-15, getRowHeight()*j+1, null);
+									xxx+xx-15, getRowHeight()*j+1, null);
+//									System.out.println(":::::::::::::::" + addr + " " + i + " " + j);
+								}
 								else if(insCache.getCache().get(addr) != null &&
 										mem.read(DATA, addr, false) != insCache.getCache().get(addr))
 									g.drawImage(new ImageIcon("./img/warningI.png").getImage(), 
-									xxx-15, getRowHeight()*j+1, null);
+									xxx+xx-15, getRowHeight()*j+1, null);
 								if(dataCache.getCache().get(addr) != null &&
 										mem.read(DATA, addr, false) == dataCache.getCache().get(addr))
 									g.drawImage(new ImageIcon("./img/okD.png").getImage(), 
-									xxx-28, getRowHeight()*j+1, null);
+									xxx+xx-28, getRowHeight()*j+1, null);
 								else if(dataCache.getCache().get(addr) != null &&
 										mem.read(DATA, addr, false) != dataCache.getCache().get(addr))
 									g.drawImage(new ImageIcon("./img/warningD.png").getImage(), 
-									xxx-28, getRowHeight()*j+1, null);
+									xxx+xx-28, getRowHeight()*j+1, null);
 							} catch (DonotExist e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();

@@ -30,7 +30,7 @@ implements Constants {
 	
 	public RegisterHeap() {
 		rs = new Registers();
-		for(int i = 0; i < 31; i++)
+		for(int i = 0; i < 32; i++)
 			try {
 				rs.addReg(String.valueOf(i));
 			} catch (AlreadyExist e) {

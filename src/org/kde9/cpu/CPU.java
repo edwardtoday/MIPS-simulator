@@ -19,10 +19,12 @@ import org.kde9.register.ID2EXEReg;
 import org.kde9.register.IF2IDReg;
 import org.kde9.register.MEM2WBReg;
 import org.kde9.register.RegisterHeap;
+import org.kde9.util.Constants;
 
 import sun.misc.Signal;
 
-public class CPU {
+public class CPU 
+implements Constants {
 	static int circle = 0;
 	String[] T = {"Õý³£", "", "MEM", "WB"};
 	
@@ -44,6 +46,7 @@ public class CPU {
 	MEM2WBReg mem2wb;
 	
 	int stop = -1;
+	int haltloc = 0;
 	
 	public CPU() {
 		pcUnit = UnitPool.getPc();
@@ -69,25 +72,24 @@ public class CPU {
 	}
 	
 	public boolean circle(boolean reset) {
+		Integer ins = SignalPool.getCurrentSignals().getInsOut_IF();
+//		boolean islwsw = SignalPool.getCurrentSignals().isIslwswOut_EXE();
+		if(stop == -1 && ins != null && ins == HALT) {
+			System.out.println("Halt!!!!!!!");
+			haltloc = SignalPool.getCurrentSignals().getPCOut_IF();
+			stop = 4;
+		}
 		if(reset)
 			stop = -1;
-		Integer ins = SignalPool.getCurrentSignals().getIns_Mem();
-		boolean islwsw = SignalPool.getCurrentSignals().isIslwswOut_EXE();
-		if(stop == -1 && !islwsw && ins != null && ins == 0xfc000000) {
-			System.out.println("Halt!!!!!!!");
-//			SignalPool.getCurrentSignals().setLastPC_CPC(
-//					SignalPool.getCurrentSignals().getLastPC_CPC()-1);
-			stop = 5;
-		}
 		if(stop > 0) {
-			SignalPool.getCurrentSignals().setLastPC_CPC(
-					SignalPool.getCurrentSignals().getLastPC_CPC()-1);
 			stop--;
 		}
 		if(stop == 0) {
 			return false;
 		}
 		pcUnit.start(reset);
+		if(stop > 0)
+			SignalPool.getNextSignals().setPC_PC(haltloc);
 		if2id.start(reset);
 		id2exe.start(reset);
 		exe2mem.start(reset);

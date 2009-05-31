@@ -65,8 +65,9 @@ extends JFrame {
 	}
 	
 	public void updata() {
-		Factory.getEdit().updata();
+		Factory.getEdit().update();
 		Factory.getMem().update();
+		Factory.getReg().update();
 	}
 	
 	public static void main(String args[]) {

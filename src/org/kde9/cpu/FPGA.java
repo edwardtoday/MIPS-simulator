@@ -106,9 +106,17 @@ implements Constants {
 		this.circle = circle;
 		this.reset = reset;
 		if(reset) {
+//			run(1);
 			currentPc = 0;
 			count = 0;
 			pcs = new int[] {-1, -1, -1, -1, -1};
+			circle = 0;
+			goon = true;
+//			private int pc;
+//			private int loc;
+			currentPc = 0;
+			UnitPool.getRegisters().clear();
+//			reset = false;
 		}
 		synchronized (thread) {
 			thread.notify();

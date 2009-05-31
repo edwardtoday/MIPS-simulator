@@ -10,8 +10,23 @@ import org.kde9.util.Constants;
 public class Registers 
 implements Constants {
 	HashMap<String, Integer> registers;
+
 	Vector<Integer> read;
 	Vector<Integer> write;
+	
+	String name = "";
+	
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public HashMap<String, Integer> getRegisters() {
+		return registers;
+	}
 	
 	public Registers() {
 		registers = new HashMap<String, Integer>();
@@ -44,8 +59,10 @@ implements Constants {
 			throw new DonotExist("register '" +
 					name +
 					"' you wanted to write does not exist!");
-		else
+		else {
 			registers.put(name, value);
+			this.name = name;
+		}
 	}
 	
 	public int read(String name) 
@@ -55,8 +72,9 @@ implements Constants {
 			throw new DonotExist("register '" +
 					name +
 					"' you wanted to read does not exist!");
-		else
+		else {
 			return r;
+		}
 	}
 	
 	public static void main(String args[]) {
