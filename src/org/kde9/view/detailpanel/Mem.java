@@ -8,10 +8,15 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.Vector;
 
 import javax.swing.BorderFactory;
@@ -46,6 +51,7 @@ public class Mem
 extends JPanel 
 implements ActionListener, KeyListener,
 		MouseListener, TableModelListener, 
+		ItemListener,
 		Constants {
 	Memory mem = UnitPool.getMemory();
 	Cache insCache = UnitPool.getInsCache();
@@ -67,14 +73,19 @@ implements ActionListener, KeyListener,
 	DefaultListModel d1;
 	DefaultListModel d2;
 	
+	HashMap<String, HashMap<Integer, Integer>> savedMem;
+	
 	boolean connectCache = false;
 	boolean keep = false;
 	int addr = 0;
 	int[] bound = {0, 127};
 	int i = -1, j = -1;
 	boolean valueChanfed = true;
+	boolean combobox = true;
+	String justBefore = "Just before clear";
 	
 	public Mem() {
+		savedMem = new HashMap<String, HashMap<Integer,Integer>>();
 		JPanel up = new JPanel();
 		inputLabel = new JLabel("查看内存地址：");
 		input = new JTextField();
@@ -182,9 +193,13 @@ implements ActionListener, KeyListener,
 		
 		JPanel down = new JPanel();
 		clear = new JButton("Clear Memory");
+		clear.addActionListener(this);
 		save = new JButton("Save Memory");
+		save.addActionListener(this);
 		restoreLabel = new JLabel("Restore Memory to");
 		restore = new JComboBox();
+		restore.addItem("");
+		restore.addItemListener(this);
 		restore.setPreferredSize(new Dimension(120, 30));
 		down.add(clear);
 		down.add(save);
@@ -231,9 +246,34 @@ implements ActionListener, KeyListener,
 			connectCache = cache.isSelected();
 		} else if(e.getSource() == keepMem) {
 			keep = keepMem.isSelected();
+		} else if(e.getSource() == clear) {
+			try {
+				saveMem(justBefore);
+				mem.clearMem(DATA);
+				update();
+			} catch (DonotExist e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		} else if(e.getSource() == save) {
+			Date date = new Date();
+			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
+			String dateString = formatter.format(date);
+			
+			saveMem(dateString);
 		}
 	}
 
+	public void saveMem(String name) {
+		HashMap<Integer, Integer> temp = new HashMap<Integer, Integer>();
+		for(int addr : mem.getMem(DATA).keySet()) {
+			temp.put(addr, mem.getMem(DATA).get(addr));
+		}
+		restore.removeItem(name);
+		restore.addItem(name);
+		savedMem.put(name, temp);
+	}
+	
 	public void keyPressed(KeyEvent arg0) {
 		// TODO Auto-generated method stub
 		
@@ -377,6 +417,24 @@ implements ActionListener, KeyListener,
 			}
 			mousePressed(new MouseEvent(table, 0, 0, 0, 0, 0, 0, false));
 			updateList();
+		}
+	}
+
+	public void itemStateChanged(ItemEvent e) {
+		// TODO Auto-generated method stub
+		if(combobox) {
+			combobox = false;
+			System.out.println(e.getItem());
+			HashMap<Integer, Integer> m = mem.getMem(DATA);
+			HashMap<Integer, Integer> r = savedMem.get(e.getItem().toString());
+			if (r != null) {
+				m.clear();
+				for (int addr : r.keySet())
+					m.put(addr, r.get(addr));
+				restore.setSelectedIndex(0);
+				update();
+			}
+			combobox = true;
 		}
 	}
 }

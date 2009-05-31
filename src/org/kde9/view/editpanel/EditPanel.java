@@ -268,7 +268,7 @@ implements ActionListener, KeyListener, MouseListener, Constants {
 						}
 						editable = false;
 						editPane.setEnabled(false);
-						edit.setText("Edit");
+						edit.setText("Edit / Reset");
 						button1.setEnabled(true);
 						button2.setEnabled(true);
 						button3.setEnabled(true);

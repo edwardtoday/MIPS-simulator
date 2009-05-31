@@ -40,6 +40,10 @@ implements Constants{
 			read.remove(0);
 	}
 	
+	public HashMap<Integer, Integer> getMem(String name) {
+		return memorys.get(name);
+	}
+	
 	public Vector<Integer> getWrite() {
 		return write;
 	}
