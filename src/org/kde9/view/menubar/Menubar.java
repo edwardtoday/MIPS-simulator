@@ -1,7 +1,6 @@
 package org.kde9.view.menubar;
 
 import java.awt.Dimension;
-import java.awt.TrayIcon.MessageType;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;

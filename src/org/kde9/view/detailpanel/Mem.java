@@ -206,6 +206,7 @@ implements ActionListener, KeyListener,
 		down.add(save);
 		down.add(restoreLabel);
 		down.add(restore);
+		((FlowLayout)down.getLayout()).setVgap(0);
 		
 		setLayout(new BorderLayout());
 		add("North", up);
@@ -232,7 +233,7 @@ implements ActionListener, KeyListener,
 		if(keep) {
 			input.setText(String.valueOf(addr));
 		}
-		input.dispatchEvent(new KeyEvent(input, KeyEvent.KEY_RELEASED,
+		keyReleased(new KeyEvent(input, KeyEvent.KEY_RELEASED,
 				System.currentTimeMillis(), 0, KeyEvent.VK_ENTER, 'c'));
 	}
 	
@@ -245,6 +246,7 @@ implements ActionListener, KeyListener,
 			else if(mem.getWrite().size() > 0 && 
 					!String.valueOf(mem.getWrite().lastElement()).equals(input.getText()))
 				update(mem.getWrite().lastElement());
+			table.repaint();
 		} else {
 		keyReleased(new KeyEvent(input, KeyEvent.KEY_RELEASED,
 				System.currentTimeMillis(), 0, KeyEvent.VK_ENTER, 'c'));
@@ -407,6 +409,10 @@ implements ActionListener, KeyListener,
 					value = Integer.valueOf(str);
 				try {
 					UnitPool.getMemory().write(DATA, addr, value, true);
+					if(connectCache) {
+						if(UnitPool.getInsCache().getCache().containsKey(addr))
+							UnitPool.getInsCache().load(addr, false);
+					}
 				} catch (DonotExist e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();

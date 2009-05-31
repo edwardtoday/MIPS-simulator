@@ -98,7 +98,7 @@ implements Constants {
 		memInterface.start();
 		stop2Period.start(reset);
 		choRegWVal.start();
-		reg.start(reset);
+		reg.start(false);
 		transfer.start();
 		choALU1.start();
 		choALU2.start();

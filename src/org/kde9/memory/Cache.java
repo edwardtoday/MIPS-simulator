@@ -89,7 +89,7 @@ implements Constants {
 		changeindex.add(0, addr);
 	}
 	
-	private void load(int addr, boolean log) {
+	public void load(int addr, boolean log) {
 		try {
 			if(cache.size() == CACHE_SIZE) {
 				int a = changeindex.lastElement();
