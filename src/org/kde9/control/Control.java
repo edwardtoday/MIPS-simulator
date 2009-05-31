@@ -741,8 +741,8 @@ implements Constants {
 			RegAddr2 = 0;  //输出第二个寄存器号
 			RegAddrE2 = Unable;  //输??第二个寄存器号是否有效，'1'为有??
 			RegWAddr = 0;  //输出要写入的寄存器号
-			int temp = cutInt(Ins, 0, 25);
-			Im = temp > 0x1ffffff ? temp|0xfe000000 : temp;  //输出指令中的立即数	
+			int temp = cutInt(Ins, 0, 15);
+			Im = temp > 0x7fff ? temp|0xffff0000 : temp;  //输出指令中的立即数	
 			CChoALU2 = Im_ALU2;  //ALU第二输入 数据选择器的控制码
 			CChoRegWVal = ALU_RegWVal;  //寄存器的写数据 数据选择器控制码
 			CChoPCCtrl = E0PCIm1PC;  //PC加法 数据选择器??制码
@@ -760,8 +760,8 @@ implements Constants {
 			RegAddr2 = 0;  //输出第二个寄存器号
 			RegAddrE2 = Unable;  //输??第二个寄存器号是否有效，'1'为有??
 			RegWAddr = 0;  //输出要写入的寄存器号
-			int temp = cutInt(Ins, 0, 25);
-			Im = temp > 0x1ffffff ? temp|0xfe000000 : temp;  //输出指令中的立即数	
+			int temp = cutInt(Ins, 0, 15);
+			Im = temp > 0x7fff ? temp|0xffff0000 : temp;  //输出指令中的立即数	
 			CChoALU2 = Im_ALU2;  //ALU第二输入 数据选择器的控制码
 			CChoRegWVal = ALU_RegWVal;  //寄存器的写数据 数据选择器控制码
 			CChoPCCtrl = E0PC1PCIm;  //PC加法 数据选择器??制码

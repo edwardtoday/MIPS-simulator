@@ -3,7 +3,13 @@ package org.kde9.view.menubar;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
@@ -12,13 +18,15 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
+import org.kde9.cpu.UnitPool;
+import org.kde9.util.Constants;
 import org.kde9.view.Factory;
 
 import com.sun.corba.se.impl.protocol.giopmsgheaders.Message;
 
 public class Menubar
 extends JMenuBar 
-implements ActionListener {
+implements ActionListener, Constants {
 	JFileChooser jfc;
 	
 	JMenu file;
@@ -81,32 +89,114 @@ implements ActionListener {
 	}
 	
 	public void saveFile() {
+		if(Factory.getEdit().getFilePathSaved() != null) {
+			try {
+				FileWriter fw = new FileWriter(Factory.getEdit().getFilePathSaved());
+				BufferedWriter bw = new BufferedWriter(fw);
+				String content = Factory.getEdit().getEditPane().getText();
+				bw.write(content);
+				Factory.getEdit().setSaved(true);
+				bw.close();
+				fw.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}else {
+			saveAsFile();
+		}
+	}
+	
+	public void saveAsFile() {
 		jfc = new JFileChooser();
 		jfc.setPreferredSize(new Dimension(700, 400));
 		jfc.setAcceptAllFileFilterUsed(true);
 		int result = jfc.showSaveDialog(Factory.getMain());
 		String path = jfc.getSelectedFile().getAbsolutePath();
 		if(result == JFileChooser.APPROVE_OPTION) {
-			// TODO
+			if(path != null) {
+				Factory.getEdit().setFilePathSaved(path);
+				Factory.getEdit().setSaved(true);
+				try {
+					FileWriter fw = new FileWriter(path);
+					BufferedWriter bw = new BufferedWriter(fw);
+					String content = Factory.getEdit().getEditPane().getText();
+					bw.write(content);
+					bw.close();
+					fw.close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+	
+	public void openFile() {
+		jfc = new JFileChooser();
+		jfc.setPreferredSize(new Dimension(700, 400));
+		jfc.setAcceptAllFileFilterUsed(true);
+		int result = jfc.showOpenDialog(Factory.getMain());
+		String path = jfc.getSelectedFile().getAbsolutePath();
+		if(result == JFileChooser.OPEN_DIALOG) {
+			System.out.println("!!!!!!!!!!!!!!" + path);
+			if (path != null) {
+				Factory.getEdit().setFilePathSaved(path);
+				Factory.getEdit().setSaved(true);
+				try {
+					FileReader fr = new FileReader(path);
+					BufferedReader br = new BufferedReader(fr);
+					String temp = br.readLine();
+					String toPrint = "";
+					String lineNo = "";
+					int i = 1;
+					while (temp != null) {
+						toPrint += temp + NEWLINE;
+						lineNo += String.valueOf(i) + NEWLINE;
+						i++;
+						temp = br.readLine();
+					}
+					Factory.getEdit().getEditPane().setText(toPrint);
+					Factory.getEdit().getLine().setText(lineNo);
+					br.close();
+					fr.close();
+				} catch (FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 		}
 	}
 	
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		if(e.getSource() == newFile) {
-//			String[] options = { "OK", "Cancel", "NO" };
-//			int result=JOptionPane.showOptionDialog(null, "Do you want to save the file existed?", 
-//					"CA-Simulator", 
-//					JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
-//					  null, options, options[0]);
-			
+			String[] options = { "OK", "Cancel", "NO" };
+			if(!Factory.getEdit().isSaved()) {
+				int result = JOptionPane.showOptionDialog(null, "Do you want to save the file existed?", 
+						"CA-Simulator", 
+						JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
+						  null, options, options[0]);
+				if(result == JOptionPane.OK_OPTION) {
+					saveFile();
+				}
+			}
+			Factory.getEdit().getEditPane().setText("");
+			Factory.getEdit().getLine().setText("1");
+			Factory.getEdit().setSaved(false);
+			Factory.getEdit().setFilePathSaved(null);
 			System.out.println("a new file added!");
 		}else if(e.getSource() == openFile) {
+			openFile();
 			System.out.println("open a new file!");
 		}else if(e.getSource() == saveFile) {
+			saveFile();
 			System.out.println("save a new file!");
 		}else if(e.getSource() == saveFileAs) {
-			saveFile();
+			saveAsFile();
 			System.out.println("save a file as...");
 		}else if(e.getSource() == quit) {
 			System.exit(0);

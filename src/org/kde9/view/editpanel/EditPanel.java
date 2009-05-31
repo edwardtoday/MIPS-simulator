@@ -64,6 +64,8 @@ implements ActionListener, KeyListener, MouseListener, Constants {
 	String text;
 	boolean error = false;
 	boolean binary = false;
+	boolean saved = false;
+	String filePathSaved = null;
 	HashMap<Integer, Integer> pc2rownum;
 	HashMap<Integer, Integer> rownum2pc;
 	int[] pcs = new int[] {-1,-1,-1,-1,-1};
@@ -351,6 +353,7 @@ implements ActionListener, KeyListener, MouseListener, Constants {
 	
 	public void keyPressed(KeyEvent e) {
 		error = false;
+		saved = false;
 		// TODO Auto-generated method stub
 		if(e.getKeyCode() == KeyEvent.VK_ENTER || 
 				e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
@@ -370,6 +373,7 @@ implements ActionListener, KeyListener, MouseListener, Constants {
 
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
+		saved = false;
 		if(e.getKeyCode() == KeyEvent.VK_ENTER || 
 				e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
 			System.out.println(editPane.getLineCount());
@@ -425,5 +429,24 @@ implements ActionListener, KeyListener, MouseListener, Constants {
 				fpga.run(pc-1, loc);
 			}
 		}
+	}
+	
+	public JTextArea getEditPane() {
+		return editPane;
+	}
+	public JTextArea getLine() {
+		return line;
+	}
+	public boolean isSaved() {
+		return saved;
+	}
+	public void setSaved(boolean saved) {
+		this.saved = saved;
+	}
+	public String getFilePathSaved() {
+		return filePathSaved;
+	}
+	public void setFilePathSaved(String filePathSaved) {
+		this.filePathSaved = filePathSaved;
 	}
 }
