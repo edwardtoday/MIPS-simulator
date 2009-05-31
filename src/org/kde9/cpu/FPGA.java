@@ -82,7 +82,7 @@ implements Constants {
 							if(!cpu.circle(reset))
 								break;
 							checkPcs();
-							needStop();
+//							needStop();
 							count++;
 							if(reset) {
 								reset = false;
