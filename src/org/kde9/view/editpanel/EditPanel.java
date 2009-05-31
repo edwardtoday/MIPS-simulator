@@ -50,6 +50,8 @@ implements ActionListener, KeyListener, MouseListener, Constants {
 	JTextArea editPane;
 	JScrollPane scroll;
 	JTextArea line;
+	JLabel circle;
+	JLabel pc;
 	
 	Compiler compiler;
 	FPGA fpga;
@@ -118,6 +120,12 @@ implements ActionListener, KeyListener, MouseListener, Constants {
 		inPanel.add(button3);
 		inPanel.add(button4);
 		inPanel.add(button5);
+		inPanel.add(new JLabel("  circle: "));
+		circle = new JLabel("");
+		inPanel.add(circle);
+		inPanel.add(new JLabel("  pc: "));
+		pc = new JLabel("");
+		inPanel.add(pc);
 		inPanel.setOpaque(true);
 		inPanel.setBackground(Color.WHITE);
 		innerPanel.add("North", inPanel);
@@ -216,10 +224,19 @@ implements ActionListener, KeyListener, MouseListener, Constants {
 		setBorder(title);
 	}
 
+	public void setCircle(int c) {
+		circle.setText(String.valueOf(c));
+	}
+	
+	public void setPc(int p) {
+		pc.setText(String.valueOf(p));
+	}
+	
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		if(e.getSource() == edit) {
 			if(edit.isSelected()) {
+				fpga.stop();
 				if(binary) {
 					editPane.setText(text);
 					binary = false;
@@ -232,8 +249,11 @@ implements ActionListener, KeyListener, MouseListener, Constants {
 				button3.setEnabled(false);
 				button4.setEnabled(false);
 				button5.setEnabled(false);
+				circle.setText("0");
+				pc.setText("0");
 			} else {
 				try {
+					fpga.stop();
 					if (compiler.compile(editPane.getText())) {
 						try {
 							UnitPool.getMemory().clearMem(DATA);
@@ -265,6 +285,8 @@ implements ActionListener, KeyListener, MouseListener, Constants {
 							}
 							i++;
 						}
+						circle.setText("0");
+						pc.setText("0");
 						//Factory.getMem().update();
 					} else {
 						error = true;
@@ -305,16 +327,23 @@ implements ActionListener, KeyListener, MouseListener, Constants {
 				binary = true;
 			}
 		} else if(e.getSource() == button3) {
-			
+			fpga.run(-1);
 		} else if(e.getSource() == button4) {
 			fpga.run(1);
 //			editPane.repaint();
 //			Factory.getMem().update();
+		} else if(e.getSource() == button5) {
+			fpga.stop();
 		}
 	}
 
 	public void updata() {
 		editPane.repaint();
+		if(fpga.getCount() > 0)
+			circle.setText(String.valueOf(fpga.getCount()));
+		else
+			circle.setText("0");
+		pc.setText(String.valueOf(fpga.getCurrentPc()));
 	}
 	
 	public void keyPressed(KeyEvent e) {

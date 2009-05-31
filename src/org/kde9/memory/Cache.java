@@ -88,11 +88,11 @@ implements Constants {
 		try {
 			if(cache.size() == CACHE_SIZE) {
 				int a = changeindex.lastElement();
-				if(mem.read(DATA, addr, false) != cache.get(addr))
-					mem.write(DATA, addr, cache.get(addr), true);
+				if(mem.read(DATA, a, false) != cache.get(a))
+					mem.write(DATA, a, cache.get(a), true);
 				cache.remove(a);
 				changeindex.removeElementAt(changeindex.size()-1);
-				showindex[addr2showindex.get(addr)] = -1;
+				showindex[addr2showindex.get(a)] = -1;
 				addr2showindex.remove(a);
 			}
 			int value = mem.read(DATA, addr, log);

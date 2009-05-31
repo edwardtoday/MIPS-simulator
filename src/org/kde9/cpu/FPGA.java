@@ -13,8 +13,18 @@ implements Constants {
 	private boolean reset = false;
 	private int pc;
 	private int loc;
+	private int currentPc;
 	
+	public int getCurrentPc() {
+		return currentPc;
+	}
+
 	private int count = 0;
+	
+	public int getCount() {
+		return count;
+	}
+
 	private int[] pcs = new int[] {-1, -1, -1, -1, -1};
 	
 	public int[] getPcs() {
@@ -23,6 +33,7 @@ implements Constants {
 
 	private void checkPcs() {
 		Signals s = SignalPool.getCurrentSignals();
+		currentPc = s.getPC_PC();
 		if (s.isReady_Mem() && !s.isIslwswOut_EXE())
 			pcs[0] = s.getPC_PC();
 		else
@@ -68,7 +79,8 @@ implements Constants {
 					}
 					if(circle < 0){
 						while(goon) {
-							cpu.circle(reset);
+							if(!cpu.circle(reset))
+								break;
 							checkPcs();
 							needStop();
 							count++;
@@ -77,6 +89,8 @@ implements Constants {
 								pcs = new int[] {-1, -1, -1, -1, -1};
 								count = 0;
 							}
+							Factory.getEdit().setCircle(count);
+							Factory.getEdit().setPc(currentPc);
 						}
 						if(!goon)
 							goon = true;
@@ -91,8 +105,11 @@ implements Constants {
 	public void run(int circle, boolean reset) {
 		this.circle = circle;
 		this.reset = reset;
-		if(reset)
+		if(reset) {
+			currentPc = 0;
+			count = 0;
 			pcs = new int[] {-1, -1, -1, -1, -1};
+		}
 		synchronized (thread) {
 			thread.notify();
 		}

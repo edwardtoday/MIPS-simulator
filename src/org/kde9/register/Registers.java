@@ -1,6 +1,7 @@
 package org.kde9.register;
 
 import java.util.HashMap;
+import java.util.Vector;
 
 import org.kde9.exceptions.AlreadyExist;
 import org.kde9.exceptions.DonotExist;
@@ -9,6 +10,8 @@ import org.kde9.util.Constants;
 public class Registers 
 implements Constants {
 	HashMap<String, Integer> registers;
+	Vector<Integer> read;
+	Vector<Integer> write;
 	
 	public Registers() {
 		registers = new HashMap<String, Integer>();

@@ -11,7 +11,9 @@ public interface Constants {
 	
 	static String DATA = "data";
 	
-	static int MEM_HIS_COUNT = 20;
+	static int MEM_HIS_COUNT = 30;
+	
+	static int CACHE_HIS_COUNT = 30;
 	
 	static int CACHE_SIZE = 128;
 	
