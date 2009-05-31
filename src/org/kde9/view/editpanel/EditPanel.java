@@ -11,6 +11,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Vector;
@@ -36,7 +38,7 @@ import org.kde9.view.Factory;
 
 public class EditPanel 
 extends JPanel 
-implements ActionListener, KeyListener, Constants {
+implements ActionListener, KeyListener, MouseListener, Constants {
 	JToggleButton edit;
 	JRadioButton forward;
 	JRadioButton backward;
@@ -145,8 +147,8 @@ implements ActionListener, KeyListener, Constants {
 							g.drawRoundRect(i*s+1, j*c+1, w/5-2, c-2, 10, 15);
 							g.drawString(items[i], i*s+6, j*c+c-2);
 						}						
-						System.err.println("current " + i + " " + pcs[i]);//////////////////////////////
-						System.err.println("pc2rownum " + pc2rownum);
+//						System.err.println("current " + i + " " + pcs[i]);//////////////////////////////
+//						System.err.println("pc2rownum " + pc2rownum);
 						if(pcs[i] != -1) {
 							Integer row = pc2rownum.get(pcs[i]+1);
 							if(row != null)
@@ -188,6 +190,7 @@ implements ActionListener, KeyListener, Constants {
 		};
 		editPane.addKeyListener(this);
 		editPane.setDisabledTextColor(Color.BLACK);
+		editPane.addMouseListener(this);
 		centerPanel.add("West", line);
 		centerPanel.add("Center", editPane);
 		
@@ -234,8 +237,8 @@ implements ActionListener, KeyListener, Constants {
 					if (compiler.compile(editPane.getText())) {
 						try {
 							UnitPool.getMemory().clearMem(DATA);
-							fpga.run(0, true);
 							UnitPool.getInsCache().clear();
+							fpga.run(0, true);
 						} catch (DonotExist e2) {
 							// TODO Auto-generated catch block
 							e2.printStackTrace();
@@ -261,7 +264,7 @@ implements ActionListener, KeyListener, Constants {
 							}
 							i++;
 						}
-						Factory.getMem().update();
+						//Factory.getMem().update();
 					} else {
 						error = true;
 						edit.setSelected(true);
@@ -352,6 +355,31 @@ implements ActionListener, KeyListener, Constants {
 	}
 
 	public void keyTyped(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void mouseClicked(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void mouseEntered(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void mouseExited(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void mousePressed(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void mouseReleased(MouseEvent arg0) {
 		// TODO Auto-generated method stub
 		
 	}

@@ -43,6 +43,8 @@ public class CPU {
 	RegisterHeap reg;
 	MEM2WBReg mem2wb;
 	
+	int stop = -1;
+	
 	public CPU() {
 		pcUnit = UnitPool.getPc();
 		memInterface = UnitPool.getMemInterface();
@@ -67,10 +69,22 @@ public class CPU {
 	}
 	
 	public boolean circle(boolean reset) {
+		if(reset)
+			stop = -1;
 		Integer ins = SignalPool.getCurrentSignals().getIns_Mem();
 		boolean islwsw = SignalPool.getCurrentSignals().isIslwswOut_EXE();
-		if(!islwsw && ins != null && ins == 0xfc000000) {
+		if(stop == -1 && !islwsw && ins != null && ins == 0xfc000000) {
 			System.out.println("Halt!!!!!!!");
+//			SignalPool.getCurrentSignals().setLastPC_CPC(
+//					SignalPool.getCurrentSignals().getLastPC_CPC()-1);
+			stop = 5;
+		}
+		if(stop > 0) {
+			SignalPool.getCurrentSignals().setLastPC_CPC(
+					SignalPool.getCurrentSignals().getLastPC_CPC()-1);
+			stop--;
+		}
+		if(stop == 0) {
 			return false;
 		}
 		pcUnit.start(reset);
@@ -108,6 +122,7 @@ public class CPU {
 		System.out.println("RegW [" + s.getRegWAddrOut_EXE() + " " + s.isRegWEOut_EXE() + "]" + "  Mem [" + s.getRegValOut2_EXE() + "/" + s.getMemValOut_MEM() + "]");
 		System.out.print("WB:  ");
 		System.out.println("RegW [" + s.getRegWAddrOut_MEM() + "/" + s.getRegWVal_CReg() + " " + s.isRegWEOut_MEM() + "]");
+		System.out.println("DataCache " + UnitPool.getDataCache().getCache());
 		System.out.println("***************************************************");
 		
 		return true;

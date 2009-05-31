@@ -575,7 +575,7 @@ public class Check {
 					if(r1 == null || r2 == null || im == null)
 						return null;
 					else
-						return makeIns("100011", r1, r2, im, "");
+						return makeIns("000011", r1, r2, im, "") | 0x80000000;
 				}
 			} else if(keys.get(0).equals("sw")) {
 				if(keys.size() != 4) {
@@ -588,7 +588,7 @@ public class Check {
 					if(r1 == null || r2 == null || im == null)
 						return null;
 					else
-						return makeIns("101011", r1, r2, im, "");
+						return makeIns("001011", r1, r2, im, "") | 0x80000000;
 				}
 			} else if(keys.get(0).equals("halt")) {
 				if(keys.size() != 1) {

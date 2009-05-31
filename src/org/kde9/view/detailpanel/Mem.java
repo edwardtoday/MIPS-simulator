@@ -267,6 +267,7 @@ implements ActionListener, KeyListener,
 						int value = UnitPool.getMemory().read(DATA, bound[0]+i*8+j, false);
 						row.add(Integer.toHexString(value));
 					}
+//					System.out.println(row);
 					model.addRow(row);
 				}
 			} catch (NumberFormatException ex) {	

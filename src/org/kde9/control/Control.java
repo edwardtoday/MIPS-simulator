@@ -30,10 +30,10 @@ implements Constants {
 	boolean islwsw;
 	
 	private static int cutInt(int ins, int a, int b) {
-		int aa = (int) Math.pow(2, a);
-		int bb = (int) Math.pow(2, b+1);
-		int cc = (int) Math.pow(2, b+1-a);
-		return ins/aa - ins/bb*cc;
+//		int aa = (int) Math.pow(2, a);
+//		int bb = (int) Math.pow(2, b+1);
+//		int cc = (int) Math.pow(2, b+1-a);
+		return (ins >>> a) - ((ins >>> b)/2 << (b+1-a));
 	}
 	
 	public void start() {
@@ -849,6 +849,7 @@ implements Constants {
 	}
 	
 	public static void main(String args[]) {
-		System.out.println(Control.cutInt(0x20, 3, 88));
+		System.out.println(Integer.toBinaryString(Control.cutInt(-1400635391, 0, 18)));
+		// 10101100100001000000000000000001
 	}
 }
