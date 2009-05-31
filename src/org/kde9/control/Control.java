@@ -795,8 +795,8 @@ implements Constants {
 		else if(cutInt(Ins, 26, 31) == 0x2b) {
 			RegAddr1 = cutInt(Ins, 21, 25);  //输出第一个寄存器号
 			RegAddrE1 = Able;  //输出第一个寄存器号是否有效，'1'为有效
-			RegAddr2 = 0;  //输出第二个寄存器号
-			RegAddrE2 = Unable;  //输??第二个寄存器号是否有效，'1'为有??
+			RegAddr2 = cutInt(Ins, 16, 20);;  //输出第二个寄存器号
+			RegAddrE2 = Able;  //输??第二个寄存器号是否有效，'1'为有??
 			RegWAddr = cutInt(Ins, 16, 20);  //输出要写入的寄存器号
 			int temp = cutInt(Ins, 0, 15);
 			Im = temp > 0x7fff ? temp|0xffff0000 : temp;  //输出指令中的立即数	

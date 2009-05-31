@@ -68,7 +68,7 @@ implements Constants {
 	private void run() 
 	throws DonotExist {
 		if(we)
-			insCache.write(memAddr, memWVal);
+			dataCache.write(memAddr, memWVal);
 		Integer i;
 		if (!islwsw) {
 			addr = pc;

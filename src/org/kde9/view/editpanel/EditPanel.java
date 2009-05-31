@@ -238,6 +238,7 @@ implements ActionListener, KeyListener, MouseListener, Constants {
 						try {
 							UnitPool.getMemory().clearMem(DATA);
 							UnitPool.getInsCache().clear();
+							UnitPool.getDataCache().clear();
 							fpga.run(0, true);
 						} catch (DonotExist e2) {
 							// TODO Auto-generated catch block

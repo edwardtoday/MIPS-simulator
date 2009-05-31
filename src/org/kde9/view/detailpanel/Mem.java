@@ -119,14 +119,14 @@ implements ActionListener, KeyListener,
 										mem.read(DATA, addr, false) != insCache.getCache().get(addr))
 									g.drawImage(new ImageIcon("./img/warningI.png").getImage(), 
 									xxx-15, getRowHeight()*j+1, null);
-								else if(dataCache.getCache().get(addr) != null &&
+								if(dataCache.getCache().get(addr) != null &&
 										mem.read(DATA, addr, false) == dataCache.getCache().get(addr))
 									g.drawImage(new ImageIcon("./img/okD.png").getImage(), 
-									xxx-30, getRowHeight()*j+1, null);
+									xxx-28, getRowHeight()*j+1, null);
 								else if(dataCache.getCache().get(addr) != null &&
 										mem.read(DATA, addr, false) != dataCache.getCache().get(addr))
 									g.drawImage(new ImageIcon("./img/warningD.png").getImage(), 
-									xxx-30, getRowHeight()*j+1, null);
+									xxx-28, getRowHeight()*j+1, null);
 							} catch (DonotExist e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();

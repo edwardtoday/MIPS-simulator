@@ -119,7 +119,8 @@ public class CPU {
 		System.out.println("ALU" + "(" + s.getALUCtrlOut_ID() + ")" + " [" + s.getA_CALU1() + " " + s.getB_CALU2() + "] " + s.getRet_ALU());
 		System.out.println("     transfer" + " [1 " + T[s.getTChoALU1_T()] + "] [2 " + T[s.getTChoALU2_T()] + "]" + "  Im " + s.getImOut_ID());
 		System.out.print("MEM: ");
-		System.out.println("RegW [" + s.getRegWAddrOut_EXE() + " " + s.isRegWEOut_EXE() + "]" + "  Mem [" + s.getRegValOut2_EXE() + "/" + s.getMemValOut_MEM() + "]");
+		System.out.println("RegW [" + s.getRegWAddrOut_EXE() + " " + s.isRegWEOut_EXE() + "]" + "  MemR [" + s.getRegValOut2_EXE() + "/" + s.getMemValOut_MEM() + "] " +
+				"MemW [" + s.getALUValOut_EXE() + "/" + s.getRegValOut2_EXE() + "] " + s.isMemWEOut_EXE());
 		System.out.print("WB:  ");
 		System.out.println("RegW [" + s.getRegWAddrOut_MEM() + "/" + s.getRegWVal_CReg() + " " + s.isRegWEOut_MEM() + "]");
 		System.out.println("DataCache " + UnitPool.getDataCache().getCache());
