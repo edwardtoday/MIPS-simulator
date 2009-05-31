@@ -220,12 +220,12 @@ implements ActionListener, KeyListener,
 		d1.removeAllElements();
 		Vector<Integer> r = UnitPool.getMemory().getRead();
 		for(int addr : r)
-			d1.add(0, Integer.toHexString(addr));
+			d1.add(0, "0x" + Integer.toHexString(addr));
 		d1.add(0, "最近读取地址");
 		d2.removeAllElements();
 		Vector<Integer> w = UnitPool.getMemory().getWrite();
 		for(int addr : w)
-			d2.add(0, Integer.toHexString(addr));
+			d2.add(0, "0x" + Integer.toHexString(addr));
 		d2.add(0, "最近写入地址");
 	}
 	
@@ -383,7 +383,7 @@ implements ActionListener, KeyListener,
 				addr = (String) d1.getElementAt(read.getSelectedIndex());
 			else
 				addr = (String) d2.getElementAt(write.getSelectedIndex());
-			input.setText("0x" + addr);
+			input.setText(addr);
 			input.dispatchEvent(new KeyEvent(input, KeyEvent.KEY_RELEASED,
 					System.currentTimeMillis(), 0, KeyEvent.VK_ENTER, 'c'));
 		}
