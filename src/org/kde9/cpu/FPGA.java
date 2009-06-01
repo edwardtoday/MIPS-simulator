@@ -227,7 +227,7 @@ implements Constants {
 								count = 0;
 							}
 							Factory.getEdit().setCircle(count);
-							Factory.getEdit().setPc(currentPc);
+							Factory.getEdit().setPc(insCount);
 						}
 						if(!goon)
 							goon = true;

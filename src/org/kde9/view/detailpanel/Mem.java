@@ -46,6 +46,7 @@ import org.kde9.memory.Cache;
 import org.kde9.memory.Memory;
 import org.kde9.util.Constants;
 import org.kde9.util.Functions;
+import org.kde9.view.Factory;
 
 public class Mem 
 extends JPanel 
@@ -132,21 +133,21 @@ implements ActionListener, KeyListener,
 							try {
 								if(insCache.getCache().get(addr) != null &&
 										mem.read(DATA, addr, false) == insCache.getCache().get(addr)) {
-									g.drawImage(new ImageIcon("./img/okI.png").getImage(), 
+									g.drawImage(new ImageIcon(getClass().getResource("/img/okI.png")).getImage(), 
 									xxx+xx-15, getRowHeight()*j+1, null);
 //									System.out.println(":::::::::::::::" + addr + " " + i + " " + j);
 								}
 								else if(insCache.getCache().get(addr) != null &&
 										mem.read(DATA, addr, false) != insCache.getCache().get(addr))
-									g.drawImage(new ImageIcon("./img/warningI.png").getImage(), 
+									g.drawImage(new ImageIcon(getClass().getResource("/img/warningI.png")).getImage(), 
 									xxx+xx-15, getRowHeight()*j+1, null);
 								if(dataCache.getCache().get(addr) != null &&
 										mem.read(DATA, addr, false) == dataCache.getCache().get(addr))
-									g.drawImage(new ImageIcon("./img/okD.png").getImage(), 
+									g.drawImage(new ImageIcon(getClass().getResource("/img/okD.png")).getImage(), 
 									xxx+xx-28, getRowHeight()*j+1, null);
 								else if(dataCache.getCache().get(addr) != null &&
 										mem.read(DATA, addr, false) != dataCache.getCache().get(addr))
-									g.drawImage(new ImageIcon("./img/warningD.png").getImage(), 
+									g.drawImage(new ImageIcon(getClass().getResource("/img/warningD.png")).getImage(), 
 									xxx+xx-28, getRowHeight()*j+1, null);
 							} catch (DonotExist e) {
 								// TODO Auto-generated catch block
@@ -419,6 +420,9 @@ implements ActionListener, KeyListener,
 					if(connectCache) {
 						if(UnitPool.getInsCache().getCache().containsKey(addr))
 							UnitPool.getInsCache().getCache().put(addr, value);
+						if(UnitPool.getDataCache().getCache().containsKey(addr))
+							UnitPool.getDataCache().getCache().put(addr, value);
+						Factory.getCac().update();
 					}
 				} catch (DonotExist e1) {
 					// TODO Auto-generated catch block

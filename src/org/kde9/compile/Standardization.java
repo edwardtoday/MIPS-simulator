@@ -39,14 +39,14 @@ implements Constants {
 				}
 				for(String flag : flags.keySet()) {
 					if (temp.contains(flag)) {
-						System.err.println(temp);
+//						System.err.println(temp);
 						temp += " ";
 						if (temp.contains("," + flag + ";")
 								|| temp.contains("," + flag + " ")
 								|| temp.contains("," + flag + ",")
 								|| temp.contains(" " + flag + ";")
 								|| temp.contains(" " + flag + " ")) {
-							System.err.println("+++++" + temp);
+//							System.err.println("+++++" + temp);
 							temp = temp.replace(flag, 
 									String.valueOf(flags.get(flag)-i-1)).trim();
 							break;

@@ -86,23 +86,23 @@ implements ActionListener, KeyListener, MouseListener, Constants {
 		flow.setHgap(3);
 		flow.setVgap(2);
 		JPanel inPanel = new JPanel(flow);
-		button1 = new JButton(new ImageIcon("./img/add2.png"));
+		button1 = new JButton(new ImageIcon(getClass().getResource("/img/add2.png")));
 		button1.setPreferredSize(new Dimension(19,14));
 		button1.putClientProperty("Quaqua.Button.style", "toolBarTab");
 		button1.addActionListener(this);
-		button2 = new JButton(new ImageIcon("./img/sub2.png"));
+		button2 = new JButton(new ImageIcon(getClass().getResource("/img/sub2.png")));
 		button2.setPreferredSize(new Dimension(19,14));
 		button2.putClientProperty("Quaqua.Button.style", "toolBarTab");
 		button2.addActionListener(this);
-		button3 = new JButton(new ImageIcon("./img/circle.png"));
+		button3 = new JButton(new ImageIcon(getClass().getResource("/img/circle.png")));
 		button3.setPreferredSize(new Dimension(19,14));
 		button3.putClientProperty("Quaqua.Button.style", "toolBarTab");
 		button3.addActionListener(this);
-		button4 = new JButton(new ImageIcon("./img/one.png"));
+		button4 = new JButton(new ImageIcon(getClass().getResource("/img/one.png")));
 		button4.setPreferredSize(new Dimension(19,14));
 		button4.putClientProperty("Quaqua.Button.style", "toolBarTab");
 		button4.addActionListener(this);
-		button5 = new JButton(new ImageIcon("./img/stop.png"));
+		button5 = new JButton(new ImageIcon(getClass().getResource("/img/stop.png")));
 		button5.setPreferredSize(new Dimension(19,14));
 		button5.putClientProperty("Quaqua.Button.style", "toolBarTab");
 		button5.addActionListener(this);
@@ -179,23 +179,23 @@ implements ActionListener, KeyListener, MouseListener, Constants {
 					for (int row : errors.keySet()) {
 						switch(errors.get(row)) {
 						case 0:
-							g.drawImage(new ImageIcon("./img/e1.png").getImage(), 
+							g.drawImage(new ImageIcon(getClass().getResource("/img/e1.png")).getImage(), 
 									120, row*c-c, null);
 							break;
 						case 1:
-							g.drawImage(new ImageIcon("./img/e2.png").getImage(), 
+							g.drawImage(new ImageIcon(getClass().getResource("/img/e2.png")).getImage(), 
 									120, row*c-c, null);
 							break;
 						case 2:
-							g.drawImage(new ImageIcon("./img/e3.png").getImage(), 
+							g.drawImage(new ImageIcon(getClass().getResource("/img/e3.png")).getImage(), 
 									120, row*c-c, null);
 							break;
 						case 3:
-							g.drawImage(new ImageIcon("./img/e4.png").getImage(), 
+							g.drawImage(new ImageIcon(getClass().getResource("/img/e4.png")).getImage(), 
 									120, row*c-c, null);
 							break;
 						case 4:
-							g.drawImage(new ImageIcon("./img/e5.png").getImage(), 
+							g.drawImage(new ImageIcon(getClass().getResource("/img/e5.png")).getImage(), 
 									120, row*c-c, null);
 							break;
 						default:

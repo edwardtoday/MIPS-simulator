@@ -107,26 +107,26 @@ implements Constants {
 		choPCCtrl.start();
 		SignalPool.next();
 		
-		Signals s = SignalPool.getCurrentSignals();
-		System.out.print("IF:  ");
-		System.out.println("PC " + s.getPC_PC() + "  LastPc " + s.getLastPC_CPC() + "  Ins " + s.getIns_Mem() + "/" + s.isReady_Mem());
-		System.out.print("ID:  ");
-		System.out.print("Ins " + s.getInsOut_IF());
-		System.out.println("  Reg" + " [1 " + s.getRegAddr1_Ctrl() + "/" + s.getRegVal1_Reg() + "]"
-				+ " [2 " + s.getRegAddr2_Ctrl() + "/" + s.getRegVal2_Reg() + "]" + "  Im " + s.getIm_Ctrl());
-		System.out.println("     ChoPcCtrl " + s.getCChoPCCtrl_Ctrl() + "  Val " + s.getVal_T());
-		System.out.print("EXE: ");
-		System.out.print("Reg" + " [1 " + s.getRegAddrOut1_ID() + "/" + s.getRegValOut1_ID() + " " + s.isRegEOut1_ID() + "]"
-				+ " [2 " + s.getRegAddrOut2_ID() + "/" + s.getRegValOut2_ID() + " " + s.isRegEOut2_ID() + "]  ");
-		System.out.println("ALU" + "(" + s.getALUCtrlOut_ID() + ")" + " [" + s.getA_CALU1() + " " + s.getB_CALU2() + "] " + s.getRet_ALU());
-		System.out.println("     transfer" + " [1 " + T[s.getTChoALU1_T()] + "] [2 " + T[s.getTChoALU2_T()] + "]" + "  Im " + s.getImOut_ID());
-		System.out.print("MEM: ");
-		System.out.println("RegW [" + s.getRegWAddrOut_EXE() + " " + s.isRegWEOut_EXE() + "]" + "  MemR [" + s.getRegValOut2_EXE() + "/" + s.getMemValOut_MEM() + "] " +
-				"MemW [" + s.getALUValOut_EXE() + "/" + s.getRegValOut2_EXE() + "] " + s.isMemWEOut_EXE());
-		System.out.print("WB:  ");
-		System.out.println("RegW [" + s.getRegWAddrOut_MEM() + "/" + s.getRegWVal_CReg() + " " + s.isRegWEOut_MEM() + "]");
-		System.out.println("DataCache " + UnitPool.getDataCache().getCache());
-		System.out.println("***************************************************");
+//		Signals s = SignalPool.getCurrentSignals();
+//		System.out.print("IF:  ");
+//		System.out.println("PC " + s.getPC_PC() + "  LastPc " + s.getLastPC_CPC() + "  Ins " + s.getIns_Mem() + "/" + s.isReady_Mem());
+//		System.out.print("ID:  ");
+//		System.out.print("Ins " + s.getInsOut_IF());
+//		System.out.println("  Reg" + " [1 " + s.getRegAddr1_Ctrl() + "/" + s.getRegVal1_Reg() + "]"
+//				+ " [2 " + s.getRegAddr2_Ctrl() + "/" + s.getRegVal2_Reg() + "]" + "  Im " + s.getIm_Ctrl());
+//		System.out.println("     ChoPcCtrl " + s.getCChoPCCtrl_Ctrl() + "  Val " + s.getVal_T());
+//		System.out.print("EXE: ");
+//		System.out.print("Reg" + " [1 " + s.getRegAddrOut1_ID() + "/" + s.getRegValOut1_ID() + " " + s.isRegEOut1_ID() + "]"
+//				+ " [2 " + s.getRegAddrOut2_ID() + "/" + s.getRegValOut2_ID() + " " + s.isRegEOut2_ID() + "]  ");
+//		System.out.println("ALU" + "(" + s.getALUCtrlOut_ID() + ")" + " [" + s.getA_CALU1() + " " + s.getB_CALU2() + "] " + s.getRet_ALU());
+//		System.out.println("     transfer" + " [1 " + T[s.getTChoALU1_T()] + "] [2 " + T[s.getTChoALU2_T()] + "]" + "  Im " + s.getImOut_ID());
+//		System.out.print("MEM: ");
+//		System.out.println("RegW [" + s.getRegWAddrOut_EXE() + " " + s.isRegWEOut_EXE() + "]" + "  MemR [" + s.getRegValOut2_EXE() + "/" + s.getMemValOut_MEM() + "] " +
+//				"MemW [" + s.getALUValOut_EXE() + "/" + s.getRegValOut2_EXE() + "] " + s.isMemWEOut_EXE());
+//		System.out.print("WB:  ");
+//		System.out.println("RegW [" + s.getRegWAddrOut_MEM() + "/" + s.getRegWVal_CReg() + " " + s.isRegWEOut_MEM() + "]");
+//		System.out.println("DataCache " + UnitPool.getDataCache().getCache());
+//		System.out.println("***************************************************");
 		
 		return true;
 	}
