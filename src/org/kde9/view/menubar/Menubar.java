@@ -160,6 +160,9 @@ implements ActionListener, Constants {
 					}
 					Factory.getEdit().getEditPane().setText(toPrint);
 					Factory.getEdit().getLine().setText(lineNo);
+					Factory.getEdit().getEdit().setSelected(true);
+					Factory.getEdit().actionPerformed(new ActionEvent(
+							Factory.getEdit().getEdit(), ActionEvent.ACTION_PERFORMED, ""));
 					br.close();
 					fr.close();
 				} catch (FileNotFoundException e) {
@@ -176,7 +179,7 @@ implements ActionListener, Constants {
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		if(e.getSource() == newFile) {
-			String[] options = { "OK", "Cancel", "NO" };
+			String[] options = { "OK", "NO", "Cancel"};
 			if(!Factory.getEdit().isSaved()) {
 				int result = JOptionPane.showOptionDialog(null, "Do you want to save the file existed?", 
 						"CA-Simulator", 
@@ -184,7 +187,8 @@ implements ActionListener, Constants {
 						  null, options, options[0]);
 				if(result == JOptionPane.OK_OPTION) {
 					saveFile();
-				}
+				} else if(result == JOptionPane.CANCEL_OPTION)
+					return;
 			}
 			Factory.getEdit().getEditPane().setText("");
 			Factory.getEdit().getLine().setText("1");

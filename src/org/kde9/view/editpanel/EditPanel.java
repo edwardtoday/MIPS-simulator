@@ -228,6 +228,10 @@ implements ActionListener, KeyListener, MouseListener, Constants {
 		setBorder(title);
 	}
 
+	public JToggleButton getEdit() {
+		return edit;
+	}
+	
 	public void setCircle(int c) {
 		circle.setText(String.valueOf(c));
 	}
