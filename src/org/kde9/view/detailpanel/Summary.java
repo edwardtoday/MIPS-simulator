@@ -115,11 +115,22 @@ implements Constants {
 		
 		f2.setText("流水线暂停周期数  " + fpga.getPauseSum());
 		temp = "";
+		String tempx = "";
+		int cacheSum = 0;
 		for(Vector<Integer> c : fpga.getPause()) {
-			temp += makePause(c);
+			String str = makePause(c);
+			temp += str;
 			temp += NEWLINE;
 			temp += NEWLINE;
+			if(c.get(2) == 2 || c.get(2) == 3) {
+				cacheSum++;
+				tempx += str;
+				tempx += NEWLINE;
+				tempx += NEWLINE;
+			}
 		}
 		a2.setText(temp);
+		f3.setText("Cache缺失总数  " + cacheSum);
+		a3.setText(tempx);
 	}
 }
