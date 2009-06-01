@@ -159,11 +159,11 @@ implements ActionListener, KeyListener,
 		dataList2.setModel(dataListModel2);
 		
 		JPanel tempIns = new JPanel(new GridLayout(2, 0));
-		tempIns.add(insList1);
-		tempIns.add(insList2);
+//		tempIns.add(insList1);
+//		tempIns.add(insList2);
 		JPanel tempData = new JPanel(new GridLayout(2, 0));
-		tempData.add(dataList1);
-		tempData.add(dataList2);
+//		tempData.add(dataList1);
+//		tempData.add(dataList2);
 		
 		JPanel tempInsB = new JPanel();
 		tempInsB.add(clearInsCache);
