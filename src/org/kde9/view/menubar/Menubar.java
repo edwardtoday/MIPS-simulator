@@ -112,9 +112,10 @@ implements ActionListener, Constants {
 		jfc.setPreferredSize(new Dimension(700, 400));
 		jfc.setAcceptAllFileFilterUsed(true);
 		int result = jfc.showSaveDialog(Factory.getMain());
-		String path = jfc.getSelectedFile().getAbsolutePath();
+		File fileChosen = jfc.getSelectedFile();
 		if(result == JFileChooser.APPROVE_OPTION) {
-			if(path != null) {
+			if(fileChosen != null) {
+				String path = fileChosen.getAbsolutePath();
 				Factory.getEdit().setFilePathSaved(path);
 				Factory.getEdit().setSaved(true);
 				try {
@@ -137,10 +138,11 @@ implements ActionListener, Constants {
 		jfc.setPreferredSize(new Dimension(700, 400));
 		jfc.setAcceptAllFileFilterUsed(true);
 		int result = jfc.showOpenDialog(Factory.getMain());
-		String path = jfc.getSelectedFile().getAbsolutePath();
+		File fileChosen = jfc.getSelectedFile();
 		if(result == JFileChooser.OPEN_DIALOG) {
-			System.out.println("!!!!!!!!!!!!!!" + path);
-			if (path != null) {
+//			System.out.println("!!!!!!!!!!!!!!" + path);
+			if (fileChosen != null) {
+				String path = fileChosen.getAbsolutePath();
 				Factory.getEdit().setFilePathSaved(path);
 				Factory.getEdit().setSaved(true);
 				try {
