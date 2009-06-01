@@ -53,7 +53,7 @@ implements Constants {
 		f3 = new JLabel(" ");
 		a3 = new JTextArea();
 		a3.setEditable(false);
-		TitledBorder t3 = new TitledBorder("数据冲突情况统计");
+		TitledBorder t3 = new TitledBorder("Cache缺失情况统计");
 		t3.setTitleJustification(TitledBorder.CENTER);
 		JPanel p3 = new JPanel(new BorderLayout());
 		p3.setBorder(t3);
@@ -80,7 +80,7 @@ implements Constants {
 	}
 	
 	public void update() {
-		f1.setText("数据冲突总数 " + fpga.getConflictSum());
+		f1.setText("数据冲突总数  " + fpga.getConflictSum());
 		String temp = "";
 		for(Vector<Integer> c : fpga.getConflict()) {
 			temp += makeConflict(c);
