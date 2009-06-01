@@ -66,7 +66,7 @@ implements Constants {
 		add(p3);
 	}
 	
-	public String makeConflict(Vector<Integer> c) {
+	private String makeConflict(Vector<Integer> c) {
 		String temp = "";
 		if(c.get(0) == 2)
 			temp = "circle = " + (c.get(4)+1) + "\tpc = " + c.get(5) + NEWLINE + 
@@ -79,6 +79,30 @@ implements Constants {
 		return temp;
 	}
 	
+	private String makePause(Vector<Integer> c) {
+		String temp = "";
+		if(c.get(2) == 0) {
+			temp = "circle = " + (c.get(0)+1) + "\tpc = " + c.get(1) + NEWLINE + 
+				"第" + (c.get(3)+1) + "条指令为内存读写指令" + NEWLINE +
+				"为避免可能的数据冲突暂停2个周期";
+			if(c.size() == 5)
+				temp += NEWLINE + "(注意：此暂停与上一条暂停重叠，将覆盖上一条暂停)";
+		}
+		else if(c.get(2) == 1)
+			temp = "circle = " + (c.get(0)+1) + "\tpc = " + c.get(1) + NEWLINE + 
+				"第" + (c.get(3)+1) + "条指令需读取内存数据" + NEWLINE +
+				"因结构冲突暂停1个周期";
+		else if(c.get(2) == 3)
+			temp = "circle = " + (c.get(0)+1) + "\tpc = " + c.get(1) + NEWLINE + 
+				"第" + (c.get(3)+1) + "条指令，数据Cache发生缺失" + NEWLINE +
+				"从内存中读取数据，暂停1个周期";
+		else
+			temp = "circle = " + (c.get(0)+1) + "\tpc = " + c.get(1) + NEWLINE + 
+				"第" + (c.get(3)+1) + "条指令，指令Cache发生缺失" + NEWLINE +
+				"从内存中读取指令，暂停1个周期";
+		return temp;
+	}
+	
 	public void update() {
 		f1.setText("数据冲突总数  " + fpga.getConflictSum());
 		String temp = "";
@@ -87,7 +111,15 @@ implements Constants {
 			temp += NEWLINE;
 			temp += NEWLINE;
 		}
-//		System.out.println(temp);
 		a1.setText(temp);
+		
+		f2.setText("流水线暂停周期数  " + fpga.getPauseSum());
+		temp = "";
+		for(Vector<Integer> c : fpga.getPause()) {
+			temp += makePause(c);
+			temp += NEWLINE;
+			temp += NEWLINE;
+		}
+		a2.setText(temp);
 	}
 }

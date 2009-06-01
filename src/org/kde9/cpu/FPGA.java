@@ -21,8 +21,20 @@ implements Constants {
 	
 	private HashMap<Integer, Integer> pc2circle;
 	private HashMap<Integer, Integer> whichPart;
+	
 	private Vector<Vector<Integer>> conflict;
 	private int conflictSum = 0;
+	
+	private Vector<Vector<Integer>> pause;
+	private int pauseSum = 0;
+	
+	public Vector<Vector<Integer>> getPause() {
+		return pause;
+	}
+
+	public int getPauseSum() {
+		return pauseSum;
+	}
 	
 	public Vector<Vector<Integer>> getConflict() {
 		return conflict;
@@ -108,6 +120,51 @@ implements Constants {
 			conflict.add(c);
 			conflictSum++;
 		}
+		int pauseadd = 0;
+		if(s.isIslwswOut_EXE()) {
+			Vector<Integer> c = new Vector<Integer>();
+			c.add(count);
+			c.add(currentPc);
+			if (s.isReady_Mem()) {
+				c.add(1);
+				c.add(pcs[3]);
+				pauseadd = 1;
+				pause.add(c);
+			} else {
+				c.add(3);
+				c.add(pcs[3]);
+				pauseadd = 1;
+				pause.add(c);
+			}
+		}
+		if(!s.isReady_Mem()) {
+			Vector<Integer> c = new Vector<Integer>();
+			c.add(count);
+			c.add(currentPc);
+			if(s.isIslwswOut_EXE()) {
+//				c.add(3);
+//				c.add(pcs[3]);
+//				pauseadd = 1;
+//				pause.add(c);
+			} else {//if(!(s.isHold_Stop() && s.getInsOut_IF() != NOP_INS)){
+				c.add(2);
+				c.add(pcs[0]);
+				pauseadd = 1;
+				pause.add(c);
+			}
+		}
+		if(s.isIslwsw_Ctrl() && s.isHold_Stop() && s.getInsOut_IF() != NOP_INS) {
+			Vector<Integer> c = new Vector<Integer>();
+			c.add(count);
+			c.add(currentPc);
+			c.add(0);
+			c.add(pcs[1]);
+			if(pauseadd != 0)
+				c.add(0);
+			pause.add(c);
+			pauseadd = 2;
+		}
+		pauseSum += pauseadd;
 	}
 	
 	private void needStop() {
@@ -122,6 +179,7 @@ implements Constants {
 		pc2circle = new HashMap<Integer, Integer>();
 		whichPart = new HashMap<Integer, Integer>();
 		conflict = new Vector<Vector<Integer>>();
+		pause = new Vector<Vector<Integer>>();
 		thread = new Thread() {
 			public void run() {
 				while (true) {
@@ -187,6 +245,8 @@ implements Constants {
 			whichPart.clear();
 			conflict.clear();
 			conflictSum = 0;
+			pause.clear();
+			pauseSum = 0;
 //			reset = false;
 		}
 		synchronized (thread) {
