@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Toolkit;
 import java.security.AccessControlException;
 import java.util.Arrays;
+import java.util.ConcurrentModificationException;
 
 import javax.swing.BorderFactory;
 import javax.swing.JDialog;
@@ -67,11 +68,13 @@ extends JFrame {
 	}
 	
 	public void updata() {
-		Factory.getEdit().update();
-		Factory.getMem().update();
-		Factory.getReg().update();
-		Factory.getCac().update();
-		Factory.getSummary().update();
+		try {
+			Factory.getEdit().update();
+			Factory.getMem().update();
+			Factory.getReg().update();
+			Factory.getCac().update();
+			Factory.getSummary().update();
+		} catch (ConcurrentModificationException e) {}
 	}
 	
 	public static void main(String args[]) {

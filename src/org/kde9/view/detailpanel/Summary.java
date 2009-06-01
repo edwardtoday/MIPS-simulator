@@ -104,12 +104,16 @@ implements Constants {
 	}
 	
 	synchronized public void update() {
-		f1.setText("数据冲突总数  " + fpga.getConflictSum());
+		f1.setText("数据冲突总数  " + fpga.getConflictSum() + " [显示前500个]");
 		String temp = "";
+		int ii = 0;
 		for(Vector<Integer> c : fpga.getConflict()) {
+			if(ii > 500)
+				break;
 			temp += makeConflict(c);
 			temp += NEWLINE;
 			temp += NEWLINE;
+			ii++;
 		}
 		a1.setText(temp);
 		
@@ -117,6 +121,7 @@ implements Constants {
 		temp = "";
 		String tempx = "";
 		int cacheSum = 0;
+		ii = 0;
 		for(Vector<Integer> c : fpga.getPause()) {
 			String str = makePause(c);
 			temp += str;
