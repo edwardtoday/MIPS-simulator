@@ -149,7 +149,7 @@ implements ActionListener, KeyListener, MouseListener, Constants {
 				if (!editable && !binary) {
 					int w = getWidth();
 					int h = getLineCount();
-					int s = w/5-5;
+					int s = w/5;
 					int c = getRowHeight();
 					rowHeight = c;
 					g.setColor(new Color(0, 200, 25, 80));
@@ -458,9 +458,9 @@ implements ActionListener, KeyListener, MouseListener, Constants {
 			int h = rowHeight;
 			Integer pc = rownum2pc.get(e.getY() / h + 1);
 			int loc = e.getX() / w;
-			System.out.println(rownum2pc);
-			if (pc != null) {
-				System.out.println(pc + "+++++++" + loc);
+//			System.out.println(rownum2pc);
+			if (pc != null && loc < 5) {
+//				System.out.println(pc + "+++++++" + loc);
 				if(forw) {
 					fpga.run(pc - 1, loc);
 				} else {

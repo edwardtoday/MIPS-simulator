@@ -10,6 +10,7 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
+import javax.swing.JSplitPane;
 import javax.swing.UIManager;
 
 import org.kde9.cpu.CPU;
@@ -37,10 +38,11 @@ extends JFrame {
 		detail = Factory.getDetail();
 		menu = Factory.getMenu();
 		
-		JPanel panel = new JPanel();
-		panel.setLayout(new BorderLayout());
-		panel.add("West", edit);
-		panel.add("Center", detail);
+		JSplitPane panel = new JSplitPane();
+		panel.setLeftComponent(edit);
+		panel.setRightComponent(detail);
+		panel.setDividerLocation(0.3);
+		panel.setDividerSize(3);
 		panel.setBorder(BorderFactory.createEmptyBorder(0, 4, 4, 4));
 		
 		setContentPane(panel);
