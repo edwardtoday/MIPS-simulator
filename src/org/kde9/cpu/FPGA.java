@@ -1,6 +1,7 @@
 package org.kde9.cpu;
 
 import java.util.HashMap;
+import java.util.Vector;
 
 import org.kde9.util.Constants;
 import org.kde9.view.Factory;
@@ -20,7 +21,17 @@ implements Constants {
 	
 	private HashMap<Integer, Integer> pc2circle;
 	private HashMap<Integer, Integer> whichPart;
+	private Vector<Vector<Integer>> conflict;
+	private int conflictSum = 0;
 	
+	public Vector<Vector<Integer>> getConflict() {
+		return conflict;
+	}
+
+	public int getConflictSum() {
+		return conflictSum;
+	}
+
 	public HashMap<Integer, Integer> getWhichPart() {
 		return whichPart;
 	}
@@ -67,6 +78,36 @@ implements Constants {
 		whichPart.put(s.getPCOut_EXE(), 3);
 		pcs[4] = s.getPCOut_MEM();
 		whichPart.put(s.getPCOut_MEM(), 4);
+		if(s.getTChoALU1_T() == 2 || s.getTChoALU1_T() == 3) {
+			Vector<Integer> c = new Vector<Integer>();
+			c.add(s.getTChoALU1_T());
+			c.add(pcs[2]);
+			if(s.getTChoALU1_T() == 2) {
+				c.add(pcs[3]);
+			} else {
+				c.add(pcs[4]);
+			}
+			c.add(s.getRegAddrOut1_ID());
+			c.add(count);
+			c.add(currentPc);
+			conflict.add(c);
+			conflictSum++;
+		}
+		if(!s.isCChoALUOut2_ID() && (s.getTChoALU2_T() == 2 || s.getTChoALU2_T() == 3)) {
+			Vector<Integer> c = new Vector<Integer>();
+			c.add(s.getTChoALU2_T());
+			c.add(pcs[2]);
+			if(s.getTChoALU2_T() == 2) {
+				c.add(pcs[3]);
+			} else {
+				c.add(pcs[4]);
+			}
+			c.add(s.getRegAddrOut2_ID());
+			c.add(count);
+			c.add(currentPc);
+			conflict.add(c);
+			conflictSum++;
+		}
 	}
 	
 	private void needStop() {
@@ -80,6 +121,7 @@ implements Constants {
 		cpu = new CPU();
 		pc2circle = new HashMap<Integer, Integer>();
 		whichPart = new HashMap<Integer, Integer>();
+		conflict = new Vector<Vector<Integer>>();
 		thread = new Thread() {
 			public void run() {
 				while (true) {
@@ -145,6 +187,8 @@ implements Constants {
 			UnitPool.getRegisters().clear();
 			pc2circle.clear();
 			whichPart.clear();
+			conflict.clear();
+			conflictSum = 0;
 //			reset = false;
 		}
 		synchronized (thread) {

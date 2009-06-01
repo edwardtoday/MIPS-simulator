@@ -75,7 +75,7 @@ implements ActionListener, KeyListener, MouseListener, Constants {
 	
 	public EditPanel() {
 		compiler = new Compiler();
-		fpga = new FPGA();
+		fpga = UnitPool.getFpga();
 		
 		setLayout(new BorderLayout());
 		

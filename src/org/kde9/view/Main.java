@@ -69,6 +69,7 @@ extends JFrame {
 		Factory.getMem().update();
 		Factory.getReg().update();
 		Factory.getCac().update();
+		Factory.getSummary().update();
 	}
 	
 	public static void main(String args[]) {

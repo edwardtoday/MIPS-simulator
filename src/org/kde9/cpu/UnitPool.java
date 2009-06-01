@@ -42,7 +42,12 @@ public class UnitPool {
 	static EXE2MEMReg exe2mem = new EXE2MEMReg();
 	static RegisterHeap reg = new RegisterHeap();
 	static MEM2WBReg mem2wb = new MEM2WBReg();
+	static FPGA fpga = new FPGA();
 	
+	public static FPGA getFpga() {
+		return fpga;
+	}
+
 	public static RegisterHeap getReg() {
 		return reg;
 	}
