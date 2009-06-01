@@ -21,7 +21,7 @@ public class Check {
 			String sub = reg.substring(1, reg.length());
 			try {
 				int id = Integer.valueOf(sub);
-				if(id > 0 && id < 31)
+				if(id >= 0 && id < 31)
 					return id;
 				else {
 					errorType = 1;
