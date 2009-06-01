@@ -87,7 +87,7 @@ implements Constants {
 			temp += NEWLINE;
 			temp += NEWLINE;
 		}
-		System.out.println(temp);
+//		System.out.println(temp);
 		a1.setText(temp);
 	}
 }

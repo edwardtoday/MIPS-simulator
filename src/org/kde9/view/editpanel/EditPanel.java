@@ -219,7 +219,7 @@ implements ActionListener, KeyListener, MouseListener, Constants {
 		backward.addActionListener(this);
 		upPanel.add(forward);
 		upPanel.add(backward);
-		add("North", upPanel);
+//		add("North", upPanel);
 		
 		setPreferredSize(new Dimension(300, 200));
 		TitledBorder title = new TitledBorder("edit area");

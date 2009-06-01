@@ -59,13 +59,13 @@ implements Constants {
 	private void checkPcs() {
 		Signals s = SignalPool.getCurrentSignals();
 		currentPc = s.getPC_PC();
-		if (s.isReady_Mem()) {// && !s.isIslwswOut_EXE())
+		//if (s.isReady_Mem()) {// && !s.isIslwswOut_EXE())
 			pcs[0] = s.getPC_PC();
 			pc2circle.put(s.getPC_PC(), count);
 			whichPart.put(s.getPC_PC(), 0);
-		}
-		else
-			pcs[0] = -1;
+//		}
+//		else
+//			pcs[0] = -1;
 		if (s.getInsOut_IF() != NOP_INS) {
 			pcs[1] = s.getPCOut_IF();
 			whichPart.put(s.getPCOut_IF(), 1);
@@ -140,7 +140,6 @@ implements Constants {
 						count++;
 						if(reset) {
 							reset = false;
-							pcs = new int[] {-1, -1, -1, -1, -1};
 							count = 0;
 						}
 						circle--;
@@ -155,7 +154,6 @@ implements Constants {
 							count++;
 							if(reset) {
 								reset = false;
-								pcs = new int[] {-1, -1, -1, -1, -1};
 								count = 0;
 							}
 							Factory.getEdit().setCircle(count);

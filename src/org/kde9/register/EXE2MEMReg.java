@@ -84,8 +84,7 @@ public class EXE2MEMReg {
 				RegWEOut = RegWEIn;
 				CChoRegWValOut = CChoRegWValIn;
 				islwswOut = islwswIn;
-			} else
-				pcout = -1;
+			}
 		}
 	}
 	

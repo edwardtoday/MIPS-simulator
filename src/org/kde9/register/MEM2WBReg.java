@@ -28,6 +28,8 @@ public class MEM2WBReg {
 	boolean reset;  //异步???唬?1'为清零
 	boolean nreset;  //同步复?唬敝由仙厍?为'1'??清零
 	
+	boolean hold;
+	
 	int pcin;
 	int pcout;
 	
@@ -49,6 +51,7 @@ public class MEM2WBReg {
 		CChoRegWValIn = signal.getCChoRegWValOut_EXE();
 		reset = r;
 		nreset = false;
+		hold = signal.isHoldEXE_Stop();
 	}
 	
 	private void run() {
@@ -61,7 +64,10 @@ public class MEM2WBReg {
 			RegWEOut = false;
 			CChoRegWValOut = 0;
 		} else {
-			pcout = pcin;
+			if(!hold)
+				pcout = pcin;
+			else
+				pcout = -1;
 			ALUValOut = ALUValIn;
 			MemValOut = MemValIn;
 			TOut = TIn;
