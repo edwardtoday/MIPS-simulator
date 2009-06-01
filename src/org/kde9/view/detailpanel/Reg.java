@@ -39,6 +39,8 @@ implements KeyListener, ActionListener {
 	JButton showdec;
 	JButton showhex;
 	
+	int[] his = new int[32];
+	
 	public Reg() {
 		JPanel p1 = new JPanel(new GridLayout(16,2));
 		p1.setPreferredSize(new Dimension(150, 300));
@@ -140,21 +142,32 @@ implements KeyListener, ActionListener {
 	public void update() {
 		Registers r = UnitPool.getRegisters();
 		for (int i = 0; i < 32; i++) {
-			if (String.valueOf(i).equals(r.getName())) {
-				String s1 = values.get(i).getText();
-				String s2 = his1.get(i).getText();
-				his1.get(i).setText(s1);
-				his2.get(i).setText(s2);
-				r.setName("");
+			values.get(i).setBackground(Color.WHITE);
+			if(r.getRegisters().get(String.valueOf(i)) != his[i]) {
+				his[i] = r.getRegisters().get(String.valueOf(i));
+				values.get(i).setBackground(new Color(200, 0, 0, 20));
 			}
-			if (dec)
+			if (dec) {
 				values.get(i).setText(
 						String.valueOf(r.getRegisters().get(
 								String.valueOf(i))));
-			else
+				his1.get(i).setText(
+						String.valueOf(r.getHis1().get(
+								String.valueOf(i))));
+				his2.get(i).setText(
+						String.valueOf(r.getHis1().get(
+								String.valueOf(i))));
+			} else {
 				values.get(i).setText(
 						String.valueOf("0x" + Integer.toHexString(r.getRegisters().get(
 								String.valueOf(i)))));
+				his1.get(i).setText(
+						String.valueOf("0x" + Integer.toHexString(r.getHis1().get(
+								String.valueOf(i)))));
+				his2.get(i).setText(
+						String.valueOf("0x" + Integer.toHexString(r.getHis2().get(
+								String.valueOf(i)))));
+			}
 		}
 	}
 

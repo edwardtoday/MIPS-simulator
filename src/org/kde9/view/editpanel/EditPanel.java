@@ -141,30 +141,32 @@ implements ActionListener, KeyListener, MouseListener, Constants {
 		line.setEnabled(false);
 		line.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 1, 
 				new Color(0, 0, 255, 20)));
-		line.setPreferredSize(new Dimension(30, 200));
+		line.setPreferredSize(new Dimension(50, 200));
 		editPane = new JTextArea() {			
 			public void paint(Graphics g) {
 				super.paint(g);
 				if (!editable && !binary) {
 					int w = getWidth();
 					int h = getLineCount();
-					int s = w/5;
+					int s = w/5-5;
 					int c = getRowHeight();
 					rowHeight = c;
-					g.setColor(new Color(0, 0, 255, 40));
+					g.setColor(new Color(0, 200, 25, 80));
 					g.setFont(new Font("", 0, 10));
 					pcs = fpga.getPcs();
 					for (int i = 0; i < 5; i++) {
 						for(int j = 0; j < h; j++) {
-							g.drawRoundRect(i*s+1, j*c+1, w/5-2, c-2, 10, 15);
-							g.drawString(items[i], i*s+6, j*c+c-2);
+							if(rownum2pc.get(j+1) != null) {
+								g.drawRoundRect(i*s+1, j*c+1, s-2, c-2, 10, 15);
+								g.drawString(items[i], i*s+6, j*c+c-2);
+							}
 						}						
 //						System.err.println("current " + i + " " + pcs[i]);//////////////////////////////
 //						System.err.println("pc2rownum " + pc2rownum);
 						if(pcs[i] != -1) {
 							Integer row = pc2rownum.get(pcs[i]+1);
 							if(row != null)
-								g.fillRoundRect(i*s+1, (row-1)*c+1, w/5-2, c-2, 10, 15);
+								g.fillRoundRect(i*s+1, (row-1)*c+1, s-2, c-2, 10, 15);
 						}
 					}
 				}
@@ -228,6 +230,14 @@ implements ActionListener, KeyListener, MouseListener, Constants {
 		setBorder(title);
 	}
 
+	public HashMap<Integer, Integer> getPc2rownum() {
+		return pc2rownum;
+	}
+	
+	public HashMap<Integer, Integer> getRownum2pc() {
+		return rownum2pc;
+	}
+	
 	public JToggleButton getEdit() {
 		return edit;
 	}
@@ -296,6 +306,7 @@ implements ActionListener, KeyListener, MouseListener, Constants {
 						fpga.run(0, true);
 						circle.setText("0");
 						pc.setText("0");
+						updateLine();
 						//Factory.getMem().update();
 					} else {
 						error = true;
@@ -346,6 +357,19 @@ implements ActionListener, KeyListener, MouseListener, Constants {
 		}
 	}
 
+	public void updateLine() {
+		int row = editPane.getLineCount();
+		int space = line.getColumns();
+		String str = "";
+		for (int i = 0; i < row; i++) {
+			str += (i + 1);
+			if(rownum2pc != null && rownum2pc.get(i+1) != null)
+				str += "(" + rownum2pc.get(i+1) + ")";
+			str += NEWLINE;
+		}
+		line.setText(str);
+	}
+	
 	public void update() {
 		editPane.repaint();
 		if(fpga.getCount() > 0)
