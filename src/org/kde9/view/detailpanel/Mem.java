@@ -103,6 +103,13 @@ implements ActionListener, KeyListener,
 		up.add(cache);
 		
 		table = new JTable(0,9) {
+			public boolean isCellEditable(int i, int j) {
+				if(j != 0)
+					return true;
+				else
+					return false;
+			}
+			
 			public void paint(Graphics g) {
 				super.paint(g);
 				if(i != -1 && j != -1) {

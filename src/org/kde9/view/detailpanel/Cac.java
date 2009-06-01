@@ -102,7 +102,9 @@ implements ActionListener, KeyListener,
 		saveDataCache.addActionListener(this);
 		
 		insTable = new JTable(0, 3) {
-			
+			public boolean isCellEditable(int i, int j) {
+				return false;
+			}
 		};
 		insTable.setCellSelectionEnabled(true);
 		insTable.setRowHeight(20);
@@ -114,7 +116,9 @@ implements ActionListener, KeyListener,
 		insPane = new JScrollPane(insTable);
 		insPane.setBorder(BorderFactory.createEtchedBorder());
 		dataTable = new JTable(0, 3) {
-			
+			public boolean isCellEditable(int i, int j) {
+				return false;
+			}
 		};
 		dataTable.setCellSelectionEnabled(true);
 		dataTable.setRowHeight(20);
