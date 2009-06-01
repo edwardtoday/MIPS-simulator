@@ -19,6 +19,9 @@ implements Constants {
 	private int loc;
 	private int currentPc;
 	private boolean runto = false;
+	private int insCount = 0;
+
+	private int instemp = -1;
 	
 	private HashMap<Integer, Integer> pc2circle;
 	private HashMap<Integer, Integer> whichPart;
@@ -28,6 +31,10 @@ implements Constants {
 	
 	private Vector<Vector<Integer>> pause;
 	private int pauseSum = 0;
+
+	public int getInsCount() {
+		return insCount;
+	}
 	
 	public Vector<Vector<Integer>> getPause() {
 		return pause;
@@ -72,6 +79,10 @@ implements Constants {
 	private void checkPcs() {
 		Signals s = SignalPool.getCurrentSignals();
 		currentPc = s.getPC_PC();
+		if(s.getPCOut_MEM() != instemp && s.getPCOut_MEM() != -1) {
+			insCount++;
+			instemp = s.getPCOut_MEM();
+		}
 		//if (s.isReady_Mem()) {// && !s.isIslwswOut_EXE())
 			pcs[0] = s.getPC_PC();
 			pc2circle.put(s.getPC_PC(), count);
@@ -238,6 +249,8 @@ implements Constants {
 			pcs = new int[] {-1, -1, -1, -1, -1};
 			circle = 0;
 			goon = true;
+			insCount = 0;
+			instemp = -1;
 //			private int pc;
 //			private int loc;
 			currentPc = 0;

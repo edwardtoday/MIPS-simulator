@@ -127,7 +127,7 @@ implements ActionListener, KeyListener, MouseListener, Constants {
 		inPanel.add(new JLabel(" circle:"));
 		circle = new JLabel("");
 		inPanel.add(circle);
-		inPanel.add(new JLabel(" pc:"));
+		inPanel.add(new JLabel(" ins:"));
 		pc = new JLabel("");
 		inPanel.add(pc);
 		inPanel.setOpaque(true);
@@ -383,7 +383,7 @@ implements ActionListener, KeyListener, MouseListener, Constants {
 			circle.setText(String.valueOf(fpga.getCount()));
 		else
 			circle.setText("0");
-		pc.setText(String.valueOf(fpga.getCurrentPc()));
+		pc.setText(String.valueOf(fpga.getInsCount()));
 	}
 	
 	public void keyPressed(KeyEvent e) {
