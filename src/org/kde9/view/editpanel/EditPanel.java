@@ -7,6 +7,7 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.GridLayout;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -167,6 +168,8 @@ implements ActionListener, KeyListener, MouseListener, Constants {
 							Integer row = pc2rownum.get(pcs[i]+1);
 							if(row != null)
 								g.fillRoundRect(i*s+1, (row-1)*c+1, s-2, c-2, 10, 15);
+							if(i == 0)
+								scrollRectToVisible(new Rectangle(i*s+1, (row-1)*c+1, 0, 0));
 						}
 					}
 				}
