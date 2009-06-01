@@ -1,5 +1,6 @@
 package org.kde9.cpu;
 
+import java.util.ConcurrentModificationException;
 import java.util.HashMap;
 import java.util.Vector;
 
@@ -241,9 +242,12 @@ implements Constants {
 //			private int loc;
 			currentPc = 0;
 			UnitPool.getRegisters().clear();
-			pc2circle.clear();
-			whichPart.clear();
-			conflict.clear();
+			try {
+				pc2circle.clear();
+				whichPart.clear();
+				conflict.clear();
+			} catch (ConcurrentModificationException e) {
+			}
 			conflictSum = 0;
 			pause.clear();
 			pauseSum = 0;

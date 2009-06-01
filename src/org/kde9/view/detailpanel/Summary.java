@@ -103,7 +103,7 @@ implements Constants {
 		return temp;
 	}
 	
-	public void update() {
+	synchronized public void update() {
 		f1.setText("数据冲突总数  " + fpga.getConflictSum());
 		String temp = "";
 		for(Vector<Integer> c : fpga.getConflict()) {

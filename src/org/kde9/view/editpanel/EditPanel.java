@@ -262,7 +262,7 @@ implements ActionListener, KeyListener, MouseListener, Constants {
 				Factory.getReg().clear();
 			} else {
 				try {
-					fpga.stop();
+//					fpga.stop();
 					if (compiler.compile(editPane.getText())) {
 						try {
 							UnitPool.getMemory().clearMem(DATA);

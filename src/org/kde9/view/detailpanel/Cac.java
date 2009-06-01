@@ -384,13 +384,12 @@ implements ActionListener, KeyListener,
 			if (combobox) {
 				combobox = false;
 				System.out.println(e.getItem());
-				HashMap<Integer, Integer> m = insCache.getCache();
-				HashMap<Integer, Integer> r = savedInsCac.get(e.getItem()
-						.toString());
+				HashMap<Integer, Integer> r = savedInsCac.get(e.getItem().toString());
+				System.out.println(" kkk " + r);
 				if (r != null) {
-					m.clear();
+					insCache.clear();
 					for (int addr : r.keySet())
-						m.put(addr, r.get(addr));
+						insCache.write(addr, r.get(addr));
 					restoreIns.setSelectedIndex(0);
 					update();
 				}
@@ -400,13 +399,11 @@ implements ActionListener, KeyListener,
 			if (combobox) {
 				combobox = false;
 				System.out.println(e.getItem());
-				HashMap<Integer, Integer> m = dataCache.getCache();
-				HashMap<Integer, Integer> r = savedDataCac.get(e.getItem()
-						.toString());
+				HashMap<Integer, Integer> r = savedDataCac.get(e.getItem().toString());
 				if (r != null) {
-					m.clear();
+					dataCache.clear();
 					for (int addr : r.keySet())
-						m.put(addr, r.get(addr));
+						dataCache.write(addr, r.get(addr));
 					restoreData.setSelectedIndex(0);
 					update();
 				}
