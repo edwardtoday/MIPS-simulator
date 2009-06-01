@@ -95,8 +95,9 @@ implements ActionListener, Constants {
 		run.add(runOneStep);
 		run.add(runAll);
 		run.add(stop);
-		runOneStep.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R, Event.CTRL_MASK));
-		stop.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E, Event.CTRL_MASK));
+		runOneStep.setAccelerator(KeyStroke.getKeyStroke("F7"));
+		runAll.setAccelerator(KeyStroke.getKeyStroke("F5"));
+		stop.setAccelerator(KeyStroke.getKeyStroke("F4"));
 		run.addMenuListener(new MenuListener() {
 
 			public void menuCanceled(MenuEvent e) {
@@ -121,7 +122,7 @@ implements ActionListener, Constants {
 		project.add(compile);
 		project.add(code);
 		compile.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_B, Event.CTRL_MASK));
-		code.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, Event.CTRL_MASK));
+		code.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_I, Event.CTRL_MASK));
 		project.addMenuListener(new MenuListener() {
 
 			public void menuCanceled(MenuEvent e) {
