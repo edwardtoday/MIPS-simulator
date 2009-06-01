@@ -1,8 +1,10 @@
 package org.kde9.view.menubar;
 
 import java.awt.Dimension;
+import java.awt.Event;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -11,12 +13,16 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.KeyStroke;
+import javax.swing.event.MenuEvent;
+import javax.swing.event.MenuListener;
 
 import org.kde9.cpu.UnitPool;
 import org.kde9.util.Constants;
@@ -31,6 +37,7 @@ implements ActionListener, Constants {
 	
 	JMenu file;
 	JMenu run;
+	JMenu project;
 	JMenu help;
 	
 	JMenuItem newFile;
@@ -41,6 +48,10 @@ implements ActionListener, Constants {
 	
 	JMenuItem runOneStep;
 	JMenuItem runAll;
+	JMenuItem stop;
+	
+	JMenuItem compile;
+	JMenuItem code;
 	
 	JMenuItem about;
 	
@@ -48,6 +59,7 @@ implements ActionListener, Constants {
 		file = new JMenu("File");
 		run = new JMenu("Run");
 		help = new JMenu("Help");
+		project = new JMenu("Project");
 		
 		newFile = new JMenuItem("New");
 		openFile = new JMenuItem("Open");
@@ -57,10 +69,15 @@ implements ActionListener, Constants {
 		
 		runOneStep = new JMenuItem("Run One Step");
 		runAll = new JMenuItem("Run");
+		stop = new JMenuItem("Stop");
+		
+		compile = new JMenuItem("Binary");
+		code = new JMenuItem("Code");
 		
 		about = new JMenuItem("About");
 		
-		add(file);	
+		add(file);
+		file.setMnemonic('f');
 		file.add(newFile);
 		file.addSeparator();
 		file.add(openFile);
@@ -68,13 +85,66 @@ implements ActionListener, Constants {
 		file.add(saveFileAs);
 		file.addSeparator();
 		file.add(quit);
+		newFile.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, Event.CTRL_MASK));
+		openFile.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, Event.CTRL_MASK));
+		saveFile.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, Event.CTRL_MASK));
+		quit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q, Event.CTRL_MASK));
 		
 		add(run);
+		run.setMnemonic('r');
 		run.add(runOneStep);
 		run.add(runAll);
+		run.add(stop);
+		runOneStep.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R, Event.CTRL_MASK));
+		stop.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E, Event.CTRL_MASK));
+		run.addMenuListener(new MenuListener() {
+
+			public void menuCanceled(MenuEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			public void menuDeselected(MenuEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			public void menuSelected(MenuEvent e) {
+				// TODO Auto-generated method stub
+				setMenu();
+			}
+			
+		});
+		
+		add(project);
+		project.setMnemonic('p');
+		project.add(compile);
+		project.add(code);
+		compile.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_B, Event.CTRL_MASK));
+		code.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, Event.CTRL_MASK));
+		project.addMenuListener(new MenuListener() {
+
+			public void menuCanceled(MenuEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			public void menuDeselected(MenuEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			public void menuSelected(MenuEvent e) {
+				// TODO Auto-generated method stub
+				setMenu();
+			}
+			
+		});
 		
 		add(help);
+		help.setMnemonic('h');
 		help.add(about);
+		about.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, Event.CTRL_MASK));
 		
 		newFile.addActionListener(this);
 		openFile.addActionListener(this);
@@ -84,8 +154,28 @@ implements ActionListener, Constants {
 		
 		runOneStep.addActionListener(this);
 		runAll.addActionListener(this);
+		stop.addActionListener(this);
+		
+		compile.addActionListener(this);
+		code.addActionListener(this);
 		
 		about.addActionListener(this);
+	}
+	
+	public void setMenu() {
+		if(Factory.getEdit().isEditable()) {
+			runOneStep.setEnabled(false);
+			runAll.setEnabled(false);
+			stop.setEnabled(false);
+			compile.setEnabled(false);
+			code.setEnabled(false);
+		}else {
+			runOneStep.setEnabled(true);
+			runAll.setEnabled(true);
+			stop.setEnabled(true);
+			compile.setEnabled(true);
+			code.setEnabled(true);
+		}
 	}
 	
 	public void saveFile() {
@@ -207,9 +297,35 @@ implements ActionListener, Constants {
 		}else if(e.getSource() == quit) {
 			System.exit(0);
 		}else if(e.getSource() == runOneStep) {
+			JButton b4 = Factory.getEdit().getButton4();
+			if(!Factory.getEdit().isEditable())
+				b4.getActionListeners()[0].actionPerformed(
+					new ActionEvent(b4, ActionEvent.ACTION_PERFORMED, ""));
 			System.out.println("run ont step!");
 		}else if(e.getSource() == runAll) {
+			JButton b3 = Factory.getEdit().getButton3();
+			if(!Factory.getEdit().isEditable())
+				b3.getActionListeners()[0].actionPerformed(
+					new ActionEvent(b3, ActionEvent.ACTION_PERFORMED, ""));
 			System.out.println("run All!");
+		}else if(e.getSource() == stop) {
+			JButton b5 = Factory.getEdit().getButton5();
+			if(!Factory.getEdit().isEditable())
+				b5.getActionListeners()[0].actionPerformed(
+					new ActionEvent(b5, ActionEvent.ACTION_PERFORMED, ""));
+			System.out.println("stop");
+		}else if(e.getSource() == compile){
+			JButton b2 = Factory.getEdit().getButton2();
+			if(!Factory.getEdit().isEditable())
+				b2.getActionListeners()[0].actionPerformed(
+					new ActionEvent(b2, ActionEvent.ACTION_PERFORMED, ""));
+			System.out.println("compile");
+		}else if(e.getSource() == code) {
+			JButton b1 = Factory.getEdit().getButton1();
+			if(!Factory.getEdit().isEditable())
+				b1.getActionListeners()[0].actionPerformed(
+					new ActionEvent(b1, ActionEvent.ACTION_PERFORMED, ""));
+			System.out.println("code");
 		}else if(e.getSource() == about) {
 			JOptionPane.showMessageDialog(Factory.getMain(), 
 					"****KDE9 นคื๗สา****\n" +

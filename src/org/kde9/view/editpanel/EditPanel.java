@@ -488,4 +488,44 @@ implements ActionListener, KeyListener, MouseListener, Constants {
 	public void setFilePathSaved(String filePathSaved) {
 		this.filePathSaved = filePathSaved;
 	}
+	/**
+	 * @return the button1
+	 */
+	public JButton getButton1() {
+		return button1;
+	}
+
+	/**
+	 * @return the button2
+	 */
+	public JButton getButton2() {
+		return button2;
+	}
+
+	/**
+	 * @return the button3
+	 */
+	public JButton getButton3() {
+		return button3;
+	}
+
+	/**
+	 * @return the button4
+	 */
+	public JButton getButton4() {
+		return button4;
+	}
+
+	/**
+	 * @return the button5
+	 */
+	public JButton getButton5() {
+		return button5;
+	}
+	/**
+	 * @return the editable
+	 */
+	public boolean isEditable() {
+		return editable;
+	}
 }
