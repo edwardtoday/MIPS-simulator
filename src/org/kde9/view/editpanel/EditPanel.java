@@ -168,8 +168,8 @@ implements ActionListener, KeyListener, MouseListener, Constants {
 							Integer row = pc2rownum.get(pcs[i]+1);
 							if(row != null)
 								g.fillRoundRect(i*s+1, (row-1)*c+1, s-2, c-2, 10, 15);
-							if(i == 0)
-								scrollRectToVisible(new Rectangle(i*s+1, (row-1)*c+1, 0, 0));
+//							if(i == 0)
+//								scrollRectToVisible(new Rectangle(i*s+1, (row-1)*c+1, 0, 0));
 						}
 					}
 				}
@@ -226,7 +226,7 @@ implements ActionListener, KeyListener, MouseListener, Constants {
 		upPanel.add(backward);
 //		add("North", upPanel);
 		
-		setPreferredSize(new Dimension(300, 200));
+		setPreferredSize(new Dimension(320, 200));
 		TitledBorder title = new TitledBorder("edit area");
 		title.setTitleFont(new Font("", 0, 10));
 		title.setTitleJustification(TitledBorder.CENTER);
@@ -353,6 +353,10 @@ implements ActionListener, KeyListener, MouseListener, Constants {
 			fpga.run(-1);
 		} else if(e.getSource() == button4) {
 			fpga.run(1);
+			try {
+				editPane.scrollRectToVisible(new Rectangle(
+						0, rowHeight*pc2rownum.get(pcs[0]), 0, 0));
+			} catch(NullPointerException ex) {}
 //			editPane.repaint();
 //			Factory.getMem().update();
 		} else if(e.getSource() == button5) {

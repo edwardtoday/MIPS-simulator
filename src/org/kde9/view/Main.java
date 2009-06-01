@@ -75,7 +75,7 @@ extends JFrame {
 	public static void main(String args[]) {
 		final java.util.List argList = Arrays.asList(args);
 		
-        System.setProperty("sun.java2d.noddraw", "true");
+//        System.setProperty("sun.java2d.noddraw", "true");
 		
 		if (System.getProperty("os.name").toLowerCase().indexOf("mac") == -1) {
 			System.setProperty("Quaqua.Debug.crossPlatform", "true");
