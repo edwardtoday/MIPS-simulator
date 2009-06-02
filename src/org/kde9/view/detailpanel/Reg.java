@@ -60,7 +60,7 @@ implements KeyListener, ActionListener {
 			l.setFont(new Font("", 0, 12));
 			labels.add(l);
 			JTextField t = new JTextField();
-			if(i == 31)
+			if(i == 0 || i == 31)
 				t.setEnabled(false);
 			else
 				t.addKeyListener(this);

@@ -730,7 +730,7 @@ implements Constants {
 			CALU = B_ALU;  //ALU 控制
 			CRegWE = Unable;  //寄??器堆写使能 控制，'1'为写
 			CMemWE = Unable;  //内存写???? 控制，'1'为写
-			storePC = No;  //是否需要存储PC
+			storePC = Yes;  //是否需要存储PC
 			needStop = No;  //是否需要暂停，'1'为是
 			islwsw = No;
 		}
@@ -749,7 +749,7 @@ implements Constants {
 			CALU = B_ALU;  //ALU 控制
 			CRegWE = Unable;  //寄??器堆写使能 控制，'1'为写
 			CMemWE = Unable;  //内存写???? 控制，'1'为写
-			storePC = No;  //是否需要存储PC
+			storePC = Yes;  //是否需要存储PC
 			needStop = No;  //是否需要暂停，'1'为是
 			islwsw = No;
 		}
@@ -768,7 +768,7 @@ implements Constants {
 			CALU = B_ALU;  //ALU 控制
 			CRegWE = Unable;  //寄??器堆写使能 控制，'1'为写
 			CMemWE = Unable;  //内存写???? 控制，'1'为写
-			storePC = No;  //是否需要存储PC
+			storePC = Yes;  //是否需要存储PC
 			needStop = No;  //是否需要暂停，'1'为是
 			islwsw = No;
 		}

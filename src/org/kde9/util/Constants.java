@@ -20,12 +20,12 @@ public interface Constants {
 	static int HALT = 0xfc000000;
 	
 	// RegisterHeap
-	static int RA_Reg = 14 ;    //RA
-	static int T_Reg = 15 ;     //T
+	static int RA_Reg = 31 ;    //RA
+//	static int T_Reg = 15 ;     //T
 	static int ZERO_Reg = 8 ;   //ZERO
-	static int SP_Reg = 13 ;    //SP
-	static int PC_Reg = 9 ;     //PC
-	static int IH_Reg = 10 ;    //IH
+//	static int SP_Reg = 13 ;    //SP
+	static int PC_Reg = 32 ;     //PC
+//	static int IH_Reg = 10 ;    //IH
 	
 	// ALU
 	static int Zero_ALU = 0;

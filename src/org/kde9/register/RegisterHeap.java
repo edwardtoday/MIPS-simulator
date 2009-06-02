@@ -82,7 +82,7 @@ implements Constants {
 		}
 		if(storePC)
 			rs.write(String.valueOf(RA_Reg), PC);
-		if(RegAddr1 == 9)
+		if(RegAddr1 == PC_Reg)
 			RegVal1 = PC;
 	}
 	
