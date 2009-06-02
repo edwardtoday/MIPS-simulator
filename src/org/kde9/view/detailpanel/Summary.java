@@ -117,25 +117,35 @@ implements Constants {
 		}
 		a1.setText(temp);
 		
-		f2.setText("流水线暂停周期数  " + fpga.getPauseSum());
+		f2.setText("流水线暂停周期数  " + fpga.getPauseSum() + " [显示前500个]");
 		temp = "";
 		String tempx = "";
 		int cacheSum = 0;
 		ii = 0;
 		for(Vector<Integer> c : fpga.getPause()) {
+			if(ii > 500)
+				break;
 			String str = makePause(c);
 			temp += str;
 			temp += NEWLINE;
 			temp += NEWLINE;
+			ii++;
+		}
+		a2.setText(temp);
+		ii = 0;
+		for(Vector<Integer> c : fpga.getPause()) {
+			if(ii > 500)
+				break;
 			if(c.get(2) == 2 || c.get(2) == 3) {
+				String str = makePause(c);
 				cacheSum++;
 				tempx += str;
 				tempx += NEWLINE;
 				tempx += NEWLINE;
 			}
+			ii++;
 		}
-		a2.setText(temp);
-		f3.setText("Cache缺失总数  " + cacheSum);
+		f3.setText("Cache缺失总数  " + cacheSum + " [显示前500个]");
 		a3.setText(tempx);
 	}
 }
