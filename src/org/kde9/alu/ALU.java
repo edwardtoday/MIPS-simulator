@@ -1,8 +1,12 @@
 package org.kde9.alu;
 
+import javax.swing.JDialog;
+import javax.swing.JOptionPane;
+
 import org.kde9.cpu.SignalPool;
 import org.kde9.cpu.Signals;
 import org.kde9.pcunit.PCUnit;
+import org.kde9.view.Factory;
 
 public class ALU {
 	Signals signal;
@@ -84,7 +88,11 @@ public class ALU {
 			ret = a*b;
 			break;
 		case 16:
-			ret = a/b;
+			try {
+				ret = a/b;
+			} catch (ArithmeticException e) {
+				JOptionPane.showMessageDialog(Factory.getMain(), "·¢Éú³ýÒÔ0´íÎó");
+			}
 			break;
 		case 17:
 			ret = b;

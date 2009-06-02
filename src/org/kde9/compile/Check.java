@@ -98,7 +98,7 @@ public class Check {
 					if(r1 == null || r2 == null || r3 == null)
 						return null;
 					else
-						return makeIns("000000", r1, r2, r3, "00000100000");
+						return makeIns("000000", r2, r3, r1, "00000100000");
 				}
 			} else if(keys.get(0).equals("addu")) {
 				if(keys.size() != 4) {
@@ -111,7 +111,7 @@ public class Check {
 					if(r1 == null || r2 == null || r3 == null)
 						return null;
 					else
-						return makeIns("000000", r1, r2, r3, "00000100001");
+						return makeIns("000000", r2, r3, r1, "00000100001");
 				}
 			} else if(keys.get(0).equals("sub")) {
 				if(keys.size() != 4) {
@@ -124,7 +124,7 @@ public class Check {
 					if(r1 == null || r2 == null || r3 == null)
 						return null;
 					else
-						return makeIns("000000", r1, r2, r3, "00000100010");
+						return makeIns("000000", r2, r3, r1, "00000100010");
 				}
 			} else if(keys.get(0).equals("subu")) {
 				if(keys.size() != 4) {
@@ -137,7 +137,7 @@ public class Check {
 					if(r1 == null || r2 == null || r3 == null)
 						return null;
 					else
-						return makeIns("000000", r1, r2, r3, "00000100011");
+						return makeIns("000000", r2, r3, r1, "00000100011");
 				}
 			} else if(keys.get(0).equals("and")) {
 				if(keys.size() != 4) {
@@ -150,7 +150,7 @@ public class Check {
 					if(r1 == null || r2 == null || r3 == null)
 						return null;
 					else
-						return makeIns("000000", r1, r2, r3, "00000100100");
+						return makeIns("000000", r2, r3, r1, "00000100100");
 				}
 			} else if(keys.get(0).equals("or")) {
 				if(keys.size() != 4) {
@@ -163,7 +163,7 @@ public class Check {
 					if(r1 == null || r2 == null || r3 == null)
 						return null;
 					else
-						return makeIns("000000", r1, r2, r3, "00000100101");
+						return makeIns("000000", r2, r3, r1, "00000100101");
 				}
 			} else if(keys.get(0).equals("xor")) {
 				if(keys.size() != 4) {
@@ -176,7 +176,7 @@ public class Check {
 					if(r1 == null || r2 == null || r3 == null)
 						return null;
 					else
-						return makeIns("000000", r1, r2, r3, "00000100110");
+						return makeIns("000000", r2, r3, r1, "00000100110");
 				}
 			} else if(keys.get(0).equals("seq")) {
 				if(keys.size() != 4) {
@@ -189,7 +189,7 @@ public class Check {
 					if(r1 == null || r2 == null || r3 == null)
 						return null;
 					else
-						return makeIns("000000", r1, r2, r3, "00000101000");
+						return makeIns("000000", r2, r3, r1, "00000101000");
 				}
 			} else if(keys.get(0).equals("sne")) {
 				if(keys.size() != 4) {
@@ -202,7 +202,7 @@ public class Check {
 					if(r1 == null || r2 == null || r3 == null)
 						return null;
 					else
-						return makeIns("000000", r1, r2, r3, "00000101001");
+						return makeIns("000000", r2, r3, r1, "00000101001");
 				}
 			} else if(keys.get(0).equals("slt")) {
 				if(keys.size() != 4) {
@@ -215,7 +215,7 @@ public class Check {
 					if(r1 == null || r2 == null || r3 == null)
 						return null;
 					else
-						return makeIns("000000", r1, r2, r3, "00000101010");
+						return makeIns("000000", r2, r3, r1, "00000101010");
 				}
 			} else if(keys.get(0).equals("sgt")) {
 				if(keys.size() != 4) {
@@ -228,7 +228,7 @@ public class Check {
 					if(r1 == null || r2 == null || r3 == null)
 						return null;
 					else
-						return makeIns("000000", r1, r2, r3, "00000101011");
+						return makeIns("000000", r2, r3, r1, "00000101011");
 				}
 			} else if(keys.get(0).equals("sle")) {
 				if(keys.size() != 4) {
@@ -241,7 +241,7 @@ public class Check {
 					if(r1 == null || r2 == null || r3 == null)
 						return null;
 					else
-						return makeIns("000000", r1, r2, r3, "00000101100");
+						return makeIns("000000", r2, r3, r1, "00000101100");
 				}
 			} else if(keys.get(0).equals("mult")) {
 				if(keys.size() != 4) {
@@ -254,7 +254,7 @@ public class Check {
 					if(r1 == null || r2 == null || r3 == null)
 						return null;
 					else
-						return makeIns("000001", r1, r2, r3, "00000001110");
+						return makeIns("000001", r2, r3, r1, "00000001110");
 				}
 			} else if(keys.get(0).equals("div")) {
 				if(keys.size() != 4) {
@@ -267,7 +267,7 @@ public class Check {
 					if(r1 == null || r2 == null || r3 == null)
 						return null;
 					else
-						return makeIns("000001", r1, r2, r3, "00000001111");
+						return makeIns("000001", r2, r3, r1, "00000001111");
 				}
 			} else if(keys.get(0).equals("multu")) {
 				if(keys.size() != 4) {
@@ -280,7 +280,7 @@ public class Check {
 					if(r1 == null || r2 == null || r3 == null)
 						return null;
 					else
-						return makeIns("000001", r1, r2, r3, "00000010110");
+						return makeIns("000001", r2, r3, r1, "00000010110");
 				}
 			} else if(keys.get(0).equals("divu")) {
 				if(keys.size() != 4) {
@@ -293,7 +293,7 @@ public class Check {
 					if(r1 == null || r2 == null || r3 == null)
 						return null;
 					else
-						return makeIns("000001", r1, r2, r3, "00000010111");
+						return makeIns("000001", r2, r3, r1, "00000010111");
 				}
 			} else if(keys.get(0).equals("sll")) {
 				if(keys.size() != 4) {
@@ -306,7 +306,7 @@ public class Check {
 					if(r1 == null || r2 == null || r3 == null)
 						return null;
 					else
-						return makeIns("000000", r1, r2, r3, "00000000100");
+						return makeIns("000000", r2, r3, r1, "00000000100");
 				}
 			} else if(keys.get(0).equals("srl")) {
 				if(keys.size() != 4) {
@@ -319,7 +319,7 @@ public class Check {
 					if(r1 == null || r2 == null || r3 == null)
 						return null;
 					else
-						return makeIns("000000", r1, r2, r3, "00000000110");
+						return makeIns("000000", r2, r3, r1, "00000000110");
 				}
 			} else if(keys.get(0).equals("sra")) {
 				if(keys.size() != 4) {
@@ -332,7 +332,7 @@ public class Check {
 					if(r1 == null || r2 == null || r3 == null)
 						return null;
 					else
-						return makeIns("000000", r1, r2, r3, "00000000111");
+						return makeIns("000000", r2, r3, r1, "00000000111");
 				}
 			} else if(keys.get(0).equals("addi")) {
 				if(keys.size() != 4) {
@@ -345,7 +345,7 @@ public class Check {
 					if(r1 == null || r2 == null || im == null)
 						return null;
 					else
-						return makeIns("001000", r1, r2, im, "");
+						return makeIns("001000", r2, r1, im, "");
 				}
 			} else if(keys.get(0).equals("addui")) {
 				if(keys.size() != 4) {
@@ -358,7 +358,7 @@ public class Check {
 					if(r1 == null || r2 == null || im == null)
 						return null;
 					else
-						return makeIns("001001", r1, r2, im, "");
+						return makeIns("001001", r2, r1, im, "");
 				}
 			} else if(keys.get(0).equals("subi")) {
 				if(keys.size() != 4) {
@@ -371,7 +371,7 @@ public class Check {
 					if(r1 == null || r2 == null || im == null)
 						return null;
 					else
-						return makeIns("001010", r1, r2, im, "");
+						return makeIns("001010", r2, r1, im, "");
 				}
 			} else if(keys.get(0).equals("subui")) {
 				if(keys.size() != 4) {
@@ -384,7 +384,7 @@ public class Check {
 					if(r1 == null || r2 == null || im == null)
 						return null;
 					else
-						return makeIns("001011", r1, r2, im, "");
+						return makeIns("001011", r2, r1, im, "");
 				}
 			} else if(keys.get(0).equals("andi")) {
 				if(keys.size() != 4) {
@@ -397,7 +397,7 @@ public class Check {
 					if(r1 == null || r2 == null || im == null)
 						return null;
 					else
-						return makeIns("001100", r1, r2, im, "");
+						return makeIns("001100", r2, r1, im, "");
 				}
 			} else if(keys.get(0).equals("ori")) {
 				if(keys.size() != 4) {
@@ -410,7 +410,7 @@ public class Check {
 					if(r1 == null || r2 == null || im == null)
 						return null;
 					else
-						return makeIns("001101", r1, r2, im, "");
+						return makeIns("001101", r2, r1, im, "");
 				}
 			} else if(keys.get(0).equals("xori")) {
 				if(keys.size() != 4) {
@@ -423,7 +423,7 @@ public class Check {
 					if(r1 == null || r2 == null || im == null)
 						return null;
 					else
-						return makeIns("001110", r1, r2, im, "");
+						return makeIns("001110", r2, r1, im, "");
 				}
 			} else if(keys.get(0).equals("slli")) {
 				if(keys.size() != 4) {
@@ -436,7 +436,7 @@ public class Check {
 					if(r1 == null || r2 == null || im == null)
 						return null;
 					else
-						return makeIns("010100", r1, r2, im, "");
+						return makeIns("010100", r2, r1, im, "");
 				}
 			} else if(keys.get(0).equals("srli")) {
 				if(keys.size() != 4) {
@@ -449,7 +449,7 @@ public class Check {
 					if(r1 == null || r2 == null || im == null)
 						return null;
 					else
-						return makeIns("010110", r1, r2, im, "");
+						return makeIns("010110", r2, r1, im, "");
 				}
 			} else if(keys.get(0).equals("srai")) {
 				if(keys.size() != 4) {
@@ -462,7 +462,7 @@ public class Check {
 					if(r1 == null || r2 == null || im == null)
 						return null;
 					else
-						return makeIns("010111", r1, r2, im, "");
+						return makeIns("010111", r2, r1, im, "");
 				}
 			} else if(keys.get(0).equals("seqi")) {
 				if(keys.size() != 4) {
@@ -475,7 +475,7 @@ public class Check {
 					if(r1 == null || r2 == null || im == null)
 						return null;
 					else
-						return makeIns("011000", r1, r2, im, "");
+						return makeIns("011000", r2, r1, im, "");
 				}
 			} else if(keys.get(0).equals("snei")) {
 				if(keys.size() != 4) {
@@ -488,7 +488,7 @@ public class Check {
 					if(r1 == null || r2 == null || im == null)
 						return null;
 					else
-						return makeIns("011001", r1, r2, im, "");
+						return makeIns("011001", r2, r1, im, "");
 				}
 			} else if(keys.get(0).equals("slti")) {
 				if(keys.size() != 4) {
@@ -501,7 +501,7 @@ public class Check {
 					if(r1 == null || r2 == null || im == null)
 						return null;
 					else
-						return makeIns("011010", r1, r2, im, "");
+						return makeIns("011010", r2, r1, im, "");
 				}
 			} else if(keys.get(0).equals("sgti")) {
 				if(keys.size() != 4) {
@@ -514,7 +514,7 @@ public class Check {
 					if(r1 == null || r2 == null || im == null)
 						return null;
 					else
-						return makeIns("011011", r1, r2, im, "");
+						return makeIns("011011", r2, r1, im, "");
 				}
 			} else if(keys.get(0).equals("slei")) {
 				if(keys.size() != 4) {
@@ -527,7 +527,7 @@ public class Check {
 					if(r1 == null || r2 == null || im == null)
 						return null;
 					else
-						return makeIns("011100", r1, r2, im, "");
+						return makeIns("011100", r2, r1, im, "");
 				}
 			} else if(keys.get(0).equals("j")) {
 				if(keys.size() != 2) {
