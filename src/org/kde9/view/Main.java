@@ -42,7 +42,7 @@ extends JFrame {
 		JSplitPane panel = new JSplitPane();
 		panel.setLeftComponent(edit);
 		panel.setRightComponent(detail);
-		panel.setDividerLocation(0.3);
+		panel.setDividerLocation(300);
 		panel.setDividerSize(3);
 		panel.setBorder(BorderFactory.createEmptyBorder(0, 4, 4, 4));
 		

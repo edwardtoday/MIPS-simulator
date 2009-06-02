@@ -77,7 +77,7 @@ implements Constants {
 			int i = temp.indexOf(';');
 			if(i != -1)
 				temp = temp.substring(0, i);
-			if(temp.startsWith("sw")) {
+			if(temp.startsWith("sw") || temp.startsWith("lw")) {
 				// TODO
 				temp = temp.replace('(', ' ');
 				temp = temp.replace(')', ' ');

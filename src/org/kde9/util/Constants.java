@@ -22,7 +22,7 @@ public interface Constants {
 	// RegisterHeap
 	static int RA_Reg = 31 ;    //RA
 //	static int T_Reg = 15 ;     //T
-	static int ZERO_Reg = 8 ;   //ZERO
+//	static int ZERO_Reg = 0 ;   //ZERO
 //	static int SP_Reg = 13 ;    //SP
 	static int PC_Reg = 32 ;     //PC
 //	static int IH_Reg = 10 ;    //IH
