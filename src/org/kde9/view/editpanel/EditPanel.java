@@ -355,7 +355,7 @@ implements ActionListener, KeyListener, MouseListener, Constants {
 			fpga.run(1);
 			try {
 				editPane.scrollRectToVisible(new Rectangle(
-						0, rowHeight*pc2rownum.get(pcs[0]), 0, 0));
+						0, rowHeight*pc2rownum.get(pcs[0]+1), 0, 0));
 			} catch(NullPointerException ex) {}
 //			editPane.repaint();
 //			Factory.getMem().update();
