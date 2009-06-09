@@ -49,7 +49,7 @@ extends JFrame {
 		setContentPane(panel);
 		setJMenuBar(menu);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(1000, 600);
+		setSize(1100, 600);
 		setVisible(true);
 		
 		int screenHeight = Toolkit.getDefaultToolkit().getScreenSize().height;

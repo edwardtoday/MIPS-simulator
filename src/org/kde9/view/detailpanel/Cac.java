@@ -33,9 +33,11 @@ import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 
 import org.kde9.cpu.UnitPool;
+import org.kde9.exceptions.DonotExist;
 import org.kde9.memory.Cache;
 import org.kde9.memory.Memory;
 import org.kde9.util.Constants;
+import org.kde9.view.Factory;
 
 public class Cac 
 extends JPanel 
@@ -67,6 +69,7 @@ implements ActionListener, KeyListener,
 	JButton saveInsCache;
 	JButton clearDataCache;
 	JButton saveDataCache;
+	JButton toMem;
 	JComboBox restoreIns;
 	JComboBox restoreData;
 	JButton hexb;
@@ -169,12 +172,16 @@ implements ActionListener, KeyListener,
 //		tempData.add(dataList1);
 //		tempData.add(dataList2);
 		
+		toMem = new JButton("toMem");
+		toMem.addActionListener(this);
+		
 		JPanel tempInsB = new JPanel();
 		tempInsB.add(clearInsCache);
 		tempInsB.add(saveInsCache);
 		tempInsB.add(restoreInsLabel);
 		tempInsB.add(restoreIns);
 		JPanel tempDataB = new JPanel();
+		tempDataB.add(toMem);
 		tempDataB.add(clearDataCache);
 		tempDataB.add(saveDataCache);
 		tempDataB.add(restoreDataLabel);
@@ -310,6 +317,20 @@ implements ActionListener, KeyListener,
 			String dateString = formatter.format(date);
 			
 			saveDataCac(dateString);
+		}else if(e.getSource() == toMem) {
+			HashMap<Integer, Integer> c = UnitPool.getDataCache().getCache();
+			if(c != null) {
+				for(int addr : c.keySet())
+					try {
+						UnitPool.getMemory().write(DATA, addr, c.get(addr), false);
+					} catch (DonotExist e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				try {
+					Factory.getMem().update();
+				} catch (Exception exc) {}
+			}
 		}
 	}
 	
